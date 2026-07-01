@@ -57,13 +57,13 @@ export default function LosAngelesPage() {
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
                 href="#booking"
-                className="bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-3 rounded-lg transition-colors"
+                className="bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-3 rounded-[3px] transition-colors"
               >
                 Book a Visit
               </a>
               <a
                 href="tel:+17474631853"
-                className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-8 py-3 rounded-lg transition-colors"
+                className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-8 py-3 rounded-[3px] transition-colors"
               >
                 Call (747) 463-1853
               </a>
@@ -86,7 +86,7 @@ export default function LosAngelesPage() {
         </section>
 
         {/* Cities */}
-        <section className="py-12 px-4 sm:px-6 bg-gray-50">
+        <section className="py-12 px-4 sm:px-6 bg-brand-light">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Cities We Serve</h2>
             <p className="text-gray-500 text-sm mb-6">

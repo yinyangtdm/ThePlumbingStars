@@ -22,7 +22,7 @@ export default function MobileMenu({ links = defaultLinks }: { links?: NavLink[]
       <button
         onClick={() => setOpen(!open)}
         aria-label="Toggle menu"
-        className="p-2 text-white"
+        className="p-2 text-brand-navy"
       >
         {open ? (
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

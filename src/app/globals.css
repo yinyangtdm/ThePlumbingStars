@@ -9,6 +9,7 @@
   --brand-sky: #92b7e2;
   --brand-sky-light: #e9f0f9;
   --brand-gold: #f5c518;
+  --brand-light: #f5f7fb;
   --background: #ffffff;
   --foreground: #0c1b30;
 }
@@ -24,6 +25,7 @@
   --color-brand-sky: var(--brand-sky);
   --color-brand-sky-light: var(--brand-sky-light);
   --color-brand-gold: var(--brand-gold);
+  --color-brand-light: var(--brand-light);
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
 }
@@ -43,4 +45,6 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display), Georgia, serif;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }

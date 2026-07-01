@@ -34,13 +34,13 @@ export default function ServiceShell({ title, intro, faqs, children }: ServiceSh
             <div className="flex flex-col sm:flex-row gap-4">
               <a
                 href="#book"
-                className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-7 py-3 rounded-lg transition-colors"
+                className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
               >
                 Book a Visit
               </a>
               <a
                 href="tel:+17474631853"
-                className="inline-block bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-7 py-3 rounded-lg transition-colors"
+                className="inline-block bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
               >
                 Call (747) 463-1853
               </a>
@@ -62,7 +62,7 @@ export default function ServiceShell({ title, intro, faqs, children }: ServiceSh
         {children}
 
         {/* FAQ */}
-        <section className="py-14 px-4 sm:px-6 bg-gray-50">
+        <section className="py-14 px-4 sm:px-6 bg-brand-light">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">Common Questions</h2>
             <div className="space-y-6">

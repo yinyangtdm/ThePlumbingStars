@@ -168,7 +168,7 @@ export default function BookingForm({ region }: { region: "losangeles" | "ventur
       <button
         type="submit"
         disabled={submitting}
-        className="w-full bg-brand-red hover:bg-brand-red-dark disabled:opacity-60 text-white font-bold py-4 px-6 rounded-lg text-lg transition-colors"
+        className="w-full bg-brand-red hover:bg-brand-red-dark disabled:opacity-60 text-white font-bold py-4 px-6 rounded-[3px] text-lg uppercase tracking-wider transition-colors"
       >
         {submitting ? "Sending…" : "Send My Request"}
       </button>

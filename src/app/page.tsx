@@ -117,13 +117,13 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
               <a
                 href="tel:+17474631853"
-                className="bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-4 rounded-lg text-lg transition-colors"
+                className="bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-4 rounded-[3px] text-lg transition-colors"
               >
                 Call (747) 463-1853
               </a>
               <a
                 href="#service-areas"
-                className="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-lg text-lg transition-colors border border-white/30"
+                className="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-[3px] text-lg transition-colors border border-white/30"
               >
                 Book a Visit
               </a>
@@ -192,7 +192,7 @@ export default function Home() {
             </p>
             <a
               href="#service-areas"
-              className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-4 rounded-lg text-lg transition-colors"
+              className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-4 rounded-[3px] text-lg transition-colors"
             >
               Book a Visit
             </a>
@@ -200,7 +200,7 @@ export default function Home() {
         </section>
 
         {/* Why Us */}
-        <section id="why-us" className="py-16 px-4 sm:px-6 bg-gray-50">
+        <section id="why-us" className="py-16 px-4 sm:px-6 bg-brand-light">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 text-center mb-2">
               A different kind of plumber.
@@ -232,7 +232,7 @@ export default function Home() {
         </section>
 
         {/* FAQ */}
-        <section id="faq" className="py-16 px-4 sm:px-6 bg-gray-50">
+        <section id="faq" className="py-16 px-4 sm:px-6 bg-brand-light">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 text-center mb-10">
               Common questions.
@@ -258,7 +258,7 @@ export default function Home() {
             <p className="text-white/80 mb-6">Call us 24/7 — real people answer the phone.</p>
             <a
               href="tel:+17474631853"
-              className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-10 py-4 rounded-lg text-xl transition-colors mb-4"
+              className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-10 py-4 rounded-[3px] text-xl transition-colors mb-4"
             >
               (747) 463-1853
             </a>
