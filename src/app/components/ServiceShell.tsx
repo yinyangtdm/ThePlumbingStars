@@ -27,7 +27,7 @@ export default function ServiceShell({ title, intro, faqs, children }: ServiceSh
       <Header links={navLinks} />
       <main>
         {/* Hero */}
-        <section className="bg-brand-navy text-white py-14 px-4 sm:px-6">
+        <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{title}</h1>
             <p className="text-white/80 text-lg max-w-2xl mb-8">{intro}</p>

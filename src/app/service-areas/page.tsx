@@ -143,7 +143,7 @@ export default function ServiceAreasPage() {
         </section>
 
         {/* CTA */}
-        <section className="bg-brand-navy text-white py-16 px-4 sm:px-6 text-center">
+        <section className="bg-brand-navy chev-pattern text-white py-16 px-4 sm:px-6 text-center">
           <div className="max-w-xl mx-auto">
             <p className="text-brand-red font-bold uppercase tracking-[0.12em] text-sm mb-2">
               Same-Day Service

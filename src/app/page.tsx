@@ -100,7 +100,7 @@ export default function Home() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="bg-brand-navy text-white py-20 px-4 sm:px-6">
+        <section className="bg-brand-navy chev-pattern text-white py-20 px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-3">
               Los Angeles &amp; Ventura County
@@ -183,7 +183,7 @@ export default function Home() {
         </section>
 
         {/* Special offer */}
-        <section className="bg-brand-navy text-white py-14 px-4 sm:px-6">
+        <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
           <div className="max-w-xl mx-auto text-center">
             <p className="text-brand-red text-6xl font-bold mb-2">$63</p>
             <h2 className="text-2xl font-bold mb-3">Main-line drain cleaning — flat rate.</h2>
@@ -252,7 +252,7 @@ export default function Home() {
         </section>
 
         {/* Contact CTA */}
-        <section id="contact" className="py-16 px-4 sm:px-6 bg-brand-navy text-white text-center">
+        <section id="contact" className="py-16 px-4 sm:px-6 bg-brand-navy chev-pattern text-white text-center">
           <div className="max-w-xl mx-auto">
             <h2 className="text-3xl font-bold mb-3">Ready to get it fixed?</h2>
             <p className="text-white/80 mb-6">Call us 24/7 — real people answer the phone.</p>

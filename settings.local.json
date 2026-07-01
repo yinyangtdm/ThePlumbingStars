@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:theplumbingstarsventura.com)",
+      "WebFetch(domain:theplumbingstarslosangeles.com)",
+      "WebFetch(domain:losangelestrenchlesssewer.com)"
+    ]
+  }
+}

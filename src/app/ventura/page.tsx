@@ -38,7 +38,7 @@ export default function VenturaPage() {
       <Header links={navLinks} />
       <main>
         {/* Hero */}
-        <section className="bg-brand-navy text-white py-14 px-4 sm:px-6">
+        <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-2">
               Ventura County

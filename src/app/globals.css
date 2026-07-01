@@ -48,3 +48,9 @@ h4 {
   text-transform: uppercase;
   letter-spacing: 0.01em;
 }
+
+.chev-pattern {
+  background-image:
+    repeating-linear-gradient(135deg, transparent 0px, transparent 80px, rgba(255,255,255,0.04) 80px, rgba(255,255,255,0.04) 82px),
+    repeating-linear-gradient(135deg, transparent 0px, transparent 30px, rgba(255,255,255,0.04) 30px, rgba(255,255,255,0.04) 32px);
+}
