@@ -3,7 +3,6 @@
 import { MapContainer, TileLayer, Polygon, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Simplified LA County boundary polygon
 const LA_POLYGON: [number, number][] = [
   [34.8233, -118.9200],
   [34.8600, -118.3500],
@@ -21,7 +20,6 @@ const LA_POLYGON: [number, number][] = [
   [34.8233, -118.9200],
 ];
 
-// Simplified Ventura County boundary polygon
 const VENTURA_POLYGON: [number, number][] = [
   [34.1100, -119.0000],
   [34.8233, -118.9200],
@@ -35,11 +33,23 @@ const VENTURA_POLYGON: [number, number][] = [
   [34.1100, -119.0000],
 ];
 
-export default function ServiceMapClient() {
+const CONFIGS = {
+  both:    { center: [34.3, -118.7] as [number, number], zoom: 9 },
+  la:      { center: [34.15, -118.2] as [number, number], zoom: 10 },
+  ventura: { center: [34.45, -119.2] as [number, number], zoom: 10 },
+};
+
+interface Props {
+  county?: "la" | "ventura" | "both";
+}
+
+export default function ServiceMapClient({ county = "both" }: Props) {
+  const { center, zoom } = CONFIGS[county];
+
   return (
     <MapContainer
-      center={[34.3, -118.7]}
-      zoom={9}
+      center={center}
+      zoom={zoom}
       scrollWheelZoom={false}
       style={{ height: "380px", width: "100%" }}
       className="rounded-lg"
@@ -48,18 +58,22 @@ export default function ServiceMapClient() {
         attribution='&copy; <a href="https://carto.com/">CARTO</a>'
         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
       />
-      <Polygon
-        positions={LA_POLYGON}
-        pathOptions={{ color: "#1D4B91", fillColor: "#1D4B91", fillOpacity: 0.25, weight: 2 }}
-      >
-        <Tooltip sticky>The Plumbing Stars — Los Angeles</Tooltip>
-      </Polygon>
-      <Polygon
-        positions={VENTURA_POLYGON}
-        pathOptions={{ color: "#e0656f", fillColor: "#e0656f", fillOpacity: 0.25, weight: 2 }}
-      >
-        <Tooltip sticky>The Plumbing Stars — Ventura County</Tooltip>
-      </Polygon>
+      {(county === "la" || county === "both") && (
+        <Polygon
+          positions={LA_POLYGON}
+          pathOptions={{ color: "#1D4B91", fillColor: "#1D4B91", fillOpacity: 0.25, weight: 2 }}
+        >
+          <Tooltip sticky>The Plumbing Stars — Los Angeles</Tooltip>
+        </Polygon>
+      )}
+      {(county === "ventura" || county === "both") && (
+        <Polygon
+          positions={VENTURA_POLYGON}
+          pathOptions={{ color: "#e0656f", fillColor: "#e0656f", fillOpacity: 0.25, weight: 2 }}
+        >
+          <Tooltip sticky>The Plumbing Stars — Ventura County</Tooltip>
+        </Polygon>
+      )}
     </MapContainer>
   );
 }

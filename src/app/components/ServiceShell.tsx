@@ -53,7 +53,7 @@ export default function ServiceShell({ title, intro, faqs, children }: ServiceSh
           <div className="max-w-4xl mx-auto px-4 flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium text-center">
             <span>&#10003; CA Lic. #998456</span>
             <span>&#10003; Flat-Rate Pricing</span>
-            <span>&#10003; 5-Year Written Guarantee</span>
+            <span>&#10003; Written Guarantee</span>
             <span>&#10003; 24/7 Emergency Service</span>
           </div>
         </div>

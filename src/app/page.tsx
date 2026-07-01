@@ -58,8 +58,8 @@ const whyUs = [
     body: "You see exactly what we see — before, during, and after. Footage and photos are yours to keep.",
   },
   {
-    title: "5-Year Written Guarantee",
-    body: "Our workmanship guarantee is in writing and lasts up to five years. If it fails, we come back — no charge.",
+    title: "Written Guarantee",
+    body: "Our workmanship guarantee is in writing. If something we fixed fails, we come back and fix it — no charge.",
   },
   {
     title: "No Trip Charges. Ever.",
@@ -85,7 +85,7 @@ const faqs = [
     a: "Never. Our 24/7 service comes at the same flat rate no matter when you call.",
   },
   {
-    q: "What does the 5-year guarantee cover?",
+    q: "What does your guarantee cover?",
     a: "Any workmanship defect on the repair we performed. If something we fixed fails, we come back and fix it — no charge.",
   },
   {
@@ -149,7 +149,7 @@ export default function Home() {
         <div className="bg-brand-red-dark text-white py-3">
           <div className="max-w-4xl mx-auto px-4 flex flex-wrap justify-center gap-x-8 gap-y-1 text-sm font-medium text-center">
             <span>&#10003; Licensed &amp; Bonded — CA Lic. #998456</span>
-            <span>&#10003; 5-Year Written Guarantee</span>
+            <span>&#10003; Written Guarantee</span>
             <span>&#10003; Flat-Rate Pricing</span>
             <span>&#10003; No Trip Charges</span>
           </div>

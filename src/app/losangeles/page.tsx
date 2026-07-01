@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import BookingForm from "@/app/components/BookingForm";
+import ServiceMap from "@/app/components/ServiceMap";
 
 export const metadata: Metadata = {
   title: "The Plumbing Stars | Los Angeles Plumbing Services",
@@ -72,17 +73,10 @@ export default function LosAngelesPage() {
         </section>
 
         {/* Map */}
-        <section className="w-full h-80 sm:h-96">
-          <iframe
-            src="https://maps.google.com/maps?q=Los+Angeles+County,CA&t=&z=9&ie=UTF8&iwloc=&output=embed"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Los Angeles County service area map"
-          />
+        <section className="px-4 sm:px-6 py-2">
+          <div className="max-w-5xl mx-auto">
+            <ServiceMap county="la" />
+          </div>
         </section>
 
         {/* Cities */}

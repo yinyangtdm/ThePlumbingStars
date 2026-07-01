@@ -2,4 +2,8 @@
 
 import dynamic from "next/dynamic";
 
-export default dynamic(() => import("./ServiceMapClient"), { ssr: false });
+const ServiceMapClient = dynamic(() => import("./ServiceMapClient"), { ssr: false });
+
+export default function ServiceMap({ county }: { county?: "la" | "ventura" | "both" }) {
+  return <ServiceMapClient county={county} />;
+}
