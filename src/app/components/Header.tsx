@@ -12,7 +12,7 @@ const defaultLinks: NavLink[] = [
 
 export default function Header({ links = defaultLinks }: { links?: NavLink[] }) {
   return (
-    <header className="bg-[#edecec] sticky top-0 z-40 border-b-2 border-brand-navy">
+    <header className="bg-[#eceff4] sticky top-0 z-40 border-b-2 border-brand-navy">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="relative flex items-center justify-between py-4 min-h-[96px]">
 
