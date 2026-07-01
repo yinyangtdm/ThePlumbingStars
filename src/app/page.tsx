@@ -1,65 +1,280 @@
-import Image from "next/image";
+import Header from "@/app/components/Header";
+import Footer from "@/app/components/Footer";
+import ServiceAreaRouter from "@/app/components/ServiceAreaRouter";
+
+const services = [
+  {
+    name: "Drain Cleaning",
+    description:
+      "Kitchens, bathrooms, laundry rooms, and main lines — diagnosed by camera, cleared at a flat rate, and guaranteed for thirty days.",
+    href: "/services/drain-cleaning",
+  },
+  {
+    name: "Sewer Line Repair",
+    description:
+      "From a hairline crack to a collapsed main line, we'll show you the footage, propose two options, and finish on time.",
+    href: "/services/sewer-repair",
+  },
+  {
+    name: "Hydro Jetting",
+    description:
+      "The pressurised, no-chemical method that scours roots, grease, and scale until pipes look factory-new.",
+    href: "/services/hydro-jetting",
+  },
+  {
+    name: "Camera Inspection",
+    description: "HD video down the line so you understand the problem before you understand the bill.",
+    href: "/services/camera-inspection",
+  },
+  {
+    name: "Trenchless Replacement",
+    description:
+      "No-dig pipe bursting and lining — for the homeowner who'd rather not lose a driveway, lawn, or weekend.",
+    href: "/services/trenchless-replacement",
+  },
+  {
+    name: "Pipe Lining",
+    description: "CIPP trenchless lining restores aging pipes from the inside without excavation.",
+    href: "/services/pipe-lining",
+  },
+  {
+    name: "Water Heater Replacement",
+    description: "Tank & tankless replacement — install, haul-away, same-afternoon turnaround.",
+    href: "/services/water-heater",
+  },
+];
+
+const whyUs = [
+  {
+    title: "Flat-Rate Pricing",
+    body: "You get the price in writing before the wrench comes out. No hourly billing, no surprises on the invoice.",
+  },
+  {
+    title: "True 24/7 Response",
+    body: "Real humans answer the phone around the clock. No surcharges for nights, weekends, or holidays.",
+  },
+  {
+    title: "HD Camera Documentation",
+    body: "You see exactly what we see — before, during, and after. Footage and photos are yours to keep.",
+  },
+  {
+    title: "5-Year Written Guarantee",
+    body: "Our workmanship guarantee is in writing and lasts up to five years. If it fails, we come back — no charge.",
+  },
+  {
+    title: "No Trip Charges. Ever.",
+    body: "We will never charge you just to show up. Free diagnosis, flat quote, work only begins when you approve.",
+  },
+  {
+    title: "50% from Referrals",
+    body: "Half our business comes from neighbors recommending us to neighbors. That number keeps us honest.",
+  },
+];
+
+const faqs = [
+  {
+    q: "How quickly can you get here?",
+    a: "We typically arrive within 60 minutes for emergency calls. For scheduled service we offer 2-hour arrival windows with a text when we're on our way.",
+  },
+  {
+    q: "Do you charge for estimates?",
+    a: "No. We diagnose the problem, explain what we found, and give you a flat-rate price in writing — before any work begins.",
+  },
+  {
+    q: "Do you charge extra for nights, weekends, or holidays?",
+    a: "Never. Our 24/7 service comes at the same flat rate no matter when you call.",
+  },
+  {
+    q: "What does the 5-year guarantee cover?",
+    a: "Any workmanship defect on the repair we performed. If something we fixed fails, we come back and fix it — no charge.",
+  },
+  {
+    q: "Which areas do you serve?",
+    a: "We serve 75+ communities across Los Angeles County and all of Ventura County, including Ventura, Oxnard, Thousand Oaks, Camarillo, and Simi Valley.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <Header />
+      <main>
+        {/* Hero */}
+        <section className="bg-brand-navy text-white py-20 px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-3">
+              Los Angeles &amp; Ventura County
+            </p>
+            <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
+              Expert Drain &amp; Sewer Pros.
+              <br className="hidden sm:block" />
+              No surprises. Ever.
+            </h1>
+            <p className="text-white/80 text-lg sm:text-xl max-w-2xl mx-auto mb-8">
+              Licensed technicians with 25+ years on the job. We show up fast, quote flat rates in
+              writing, and back every job with a written guarantee.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+              <a
+                href="tel:+17474631853"
+                className="bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-4 rounded-lg text-lg transition-colors"
+              >
+                Call (747) 463-1853
+              </a>
+              <a
+                href="#service-areas"
+                className="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-lg text-lg transition-colors border border-white/30"
+              >
+                Book a Visit
+              </a>
+            </div>
+            <div className="grid grid-cols-3 gap-6 max-w-xs mx-auto text-center">
+              <div>
+                <p className="text-2xl font-bold text-brand-red">25+</p>
+                <p className="text-white/60 text-xs mt-1">Years in Business</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-brand-red">24/7</p>
+                <p className="text-white/60 text-xs mt-1">Emergency Dispatch</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-brand-red">$0</p>
+                <p className="text-white/60 text-xs mt-1">Trip Charges</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Trust bar */}
+        <div className="bg-brand-red-dark text-white py-3">
+          <div className="max-w-4xl mx-auto px-4 flex flex-wrap justify-center gap-x-8 gap-y-1 text-sm font-medium text-center">
+            <span>&#10003; Licensed &amp; Bonded — CA Lic. #998456</span>
+            <span>&#10003; 5-Year Written Guarantee</span>
+            <span>&#10003; Flat-Rate Pricing</span>
+            <span>&#10003; No Trip Charges</span>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+        {/* Services */}
+        <section id="services" className="py-16 px-4 sm:px-6">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold text-gray-900 text-center mb-2">
+              Every drain &amp; sewer service you need.
+            </h2>
+            <p className="text-gray-500 text-center mb-10">
+              Same technicians, same flat rates, across both counties.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services.map((service) => (
+                <a
+                  key={service.name}
+                  href={service.href}
+                  className="group border border-gray-200 rounded-xl p-6 hover:border-brand-navy hover:shadow-sm transition-all"
+                >
+                  <h3 className="font-bold text-gray-900 mb-2 group-hover:text-brand-navy transition-colors">
+                    {service.name}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-3">{service.description}</p>
+                  <span className="text-brand-navy text-sm font-medium">Learn more &rarr;</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Special offer */}
+        <section className="bg-brand-navy text-white py-14 px-4 sm:px-6">
+          <div className="max-w-xl mx-auto text-center">
+            <p className="text-brand-red text-6xl font-bold mb-2">$63</p>
+            <h2 className="text-2xl font-bold mb-3">Main-line drain cleaning — flat rate.</h2>
+            <p className="text-white/80 mb-6">
+              And if we can&apos;t clear it, you owe us nothing.
+            </p>
+            <a
+              href="#service-areas"
+              className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-4 rounded-lg text-lg transition-colors"
+            >
+              Book a Visit
+            </a>
+          </div>
+        </section>
+
+        {/* Why Us */}
+        <section id="why-us" className="py-16 px-4 sm:px-6 bg-gray-50">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-gray-900 text-center mb-2">
+              A different kind of plumber.
+            </h2>
+            <p className="text-gray-500 text-center mb-10">
+              Considered, careful, and a little quieter than the competition.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {whyUs.map((reason) => (
+                <div key={reason.title} className="bg-white rounded-xl p-6 shadow-sm">
+                  <h3 className="font-bold text-gray-900 mb-2">{reason.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{reason.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Service Areas */}
+        <section id="service-areas" className="py-16 px-4 sm:px-6">
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Find your service area.</h2>
+            <p className="text-gray-500 mb-8">
+              Enter your ZIP code or choose your county to book a visit and see area-specific
+              pricing and availability.
+            </p>
+            <ServiceAreaRouter />
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="py-16 px-4 sm:px-6 bg-gray-50">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold text-gray-900 text-center mb-10">
+              Common questions.
+            </h2>
+            <div className="space-y-6">
+              {faqs.map((faq) => (
+                <div
+                  key={faq.q}
+                  className="border-b border-gray-200 pb-6 last:border-0 last:pb-0"
+                >
+                  <h3 className="font-bold text-gray-900 mb-2">{faq.q}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{faq.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Contact CTA */}
+        <section id="contact" className="py-16 px-4 sm:px-6 bg-brand-navy text-white text-center">
+          <div className="max-w-xl mx-auto">
+            <h2 className="text-3xl font-bold mb-3">Ready to get it fixed?</h2>
+            <p className="text-white/80 mb-6">Call us 24/7 — real people answer the phone.</p>
+            <a
+              href="tel:+17474631853"
+              className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-10 py-4 rounded-lg text-xl transition-colors mb-4"
+            >
+              (747) 463-1853
+            </a>
+            <p className="text-white/60 text-sm">
+              Or email{" "}
+              <a
+                href="mailto:info@theplumbingstars.com"
+                className="underline hover:text-white transition-colors"
+              >
+                info@theplumbingstars.com
+              </a>
+            </p>
+          </div>
+        </section>
       </main>
-    </div>
+      <Footer />
+    </>
   );
 }
