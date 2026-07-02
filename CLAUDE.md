@@ -18,10 +18,13 @@ There is no test suite configured.
 
 Next.js App Router site for a local plumbing business ("The Plumbing Stars"). All routes live under `src/app/`.
 
+**Next.js 16 + React 19** — both are cutting-edge; see AGENTS.md before writing any framework code.
+
 **Route map:**
 - `/` (`page.tsx`) — main landing page: hero, services grid, special offer, why-us, service area router, FAQ, contact CTA
-- `/losangeles` — LA county landing with city list, Google Maps embed, and `BookingForm`
-- `/ventura` — Ventura county landing with city list, Google Maps embed, and `BookingForm`
+- `/losangeles` — LA county landing with city list, Leaflet map, and `BookingForm`
+- `/ventura` — Ventura county landing with city list, Leaflet map, and `BookingForm`
+- `/service-areas` — full coverage map with grouped city lists (SFV, Westside, Eastside, Ventura) and `ServiceMap`
 - `/services/[drain-cleaning|sewer-repair|hydro-jetting|camera-inspection|trenchless-replacement|pipe-lining|water-heater]` — 7 individual service pages, all built with `ServiceShell`
 - `/api/book` — POST endpoint that receives booking form submissions and emails them via nodemailer
 
@@ -32,6 +35,8 @@ Next.js App Router site for a local plumbing business ("The Plumbing Stars"). Al
 - `ServiceAreaRouter` — `"use client"` ZIP code lookup that pushes to `/losangeles` or `/ventura` using `getRegionByZip`; also renders two manual county buttons
 - `BookingForm` — `"use client"` form that POSTs to `/api/book` with a `region` prop (`"losangeles" | "ventura"`)
 - `ServiceShell` — server component wrapper for all service pages: renders `Header` (with back-to-home nav), trust bar, `children` (page-specific content), FAQ section, and a `ServiceAreaRouter` booking CTA at the bottom
+- `ServiceMap` — thin server-safe wrapper that uses `next/dynamic` with `ssr: false` to lazy-load `ServiceMapClient` (Leaflet requires the DOM). Accepts `county?: "la" | "ventura" | "both"` (defaults to `"both"`).
+- `ServiceMapClient` — `"use client"` Leaflet map rendering LA and/or Ventura county polygons via `react-leaflet`. Polygon coordinates are hardcoded in this file.
 
 **Data / lib:**
 - `src/lib/zipLookup.ts` — exports `getRegionByZip(zip)` returning `"losangeles" | "ventura" | null`; backed by two hardcoded `Set`s. Add ZIPs here to expand coverage.
