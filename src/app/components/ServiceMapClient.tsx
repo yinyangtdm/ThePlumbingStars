@@ -119,8 +119,9 @@ interface Props {
 export default function ServiceMapClient({ county = "both" }: Props) {
   // Normalize coordinate order once (memoized) and allow overriding from GeoJSON.
   const defaultLeafletLa = useMemo(() => normalizeRing(LA_POLYGON), []);
-  const leafletVentura = useMemo(() => normalizeRing(VENTURA_POLYGON), []);
+  const defaultLeafletVentura = useMemo(() => normalizeRing(VENTURA_POLYGON), []);
   const [leafletLa, setLeafletLa] = useState<[number, number][]>(defaultLeafletLa);
+  const [leafletVentura, setLeafletVentura] = useState<[number, number][]>(defaultLeafletVentura);
 
   // Convert GeoJSON ring to Leaflet [lat, lng], detecting whether the file
   // used [lng, lat] (GeoJSON standard) or [lat, lng] (user-edited).
@@ -163,6 +164,31 @@ export default function ServiceMapClient({ county = "both" }: Props) {
       }
     }
     load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Load Ventura geojson if present and replace default polygon.
+  useEffect(() => {
+    let cancelled = false;
+    async function loadVentura() {
+      try {
+        const res = await fetch("/ventura-service-area.geojson");
+        if (!res.ok) return;
+        const json = await res.json();
+        const feat = Array.isArray(json.features) && json.features[0];
+        const coords = feat?.geometry?.coordinates;
+        if (!coords) return;
+        const ring: [number, number][] =
+          feat.geometry.type === "Polygon" ? coords[0] : coords[0][0];
+        const converted = normalizeGeoJsonRing(ring);
+        if (!cancelled) setLeafletVentura(converted);
+      } catch {
+        // keep default
+      }
+    }
+    loadVentura();
     return () => {
       cancelled = true;
     };
