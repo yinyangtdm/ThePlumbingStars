@@ -1,90 +1,50 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
-import BookingForm from "@/app/components/BookingForm";
 import ServiceMap from "@/app/components/ServiceMap";
+import { venturaCities } from "@/lib/navLinks";
 
 export const metadata: Metadata = {
-  title: "The Plumbing Stars | Ventura County Plumbing Services",
+  title: "Ventura County Service Areas | The Plumbing Stars",
   description:
-    "Licensed plumbers serving Ventura, Oxnard, Thousand Oaks, Camarillo & Simi Valley. Drain cleaning, sewer repair, hydro jetting. 24/7. (747) 463-1853.",
+    "The Plumbing Stars serves Ventura, Oxnard, Thousand Oaks, Camarillo, Simi Valley and all of Ventura County. Book a visit today.",
 };
 
 const navLinks = [
-  { label: "All Areas", href: "/" },
+  { label: "Home", href: "/" },
   { label: "Services", href: "/#services" },
-  { label: "Book Now", href: "#booking" },
-];
-
-const cities = [
-  "Ventura",
-  "Oxnard",
-  "Thousand Oaks",
-  "Camarillo",
-  "Simi Valley",
-  "Moorpark",
-  "Newbury Park",
-  "Santa Paula",
-  "Fillmore",
-  "Ojai",
-  "Port Hueneme",
-  "Oak View",
-  "Somis",
-  "Westlake Village",
+  { label: "Book Now", href: "/#service-areas" },
 ];
 
 export default function VenturaPage() {
   return (
     <>
-      <Header links={navLinks} />
+      <Header items={navLinks} />
       <main>
-        {/* Hero */}
-        <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
+        <section className="bg-brand-light py-14 px-4 sm:px-6">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-2">
-              Ventura County
+            <p className="text-brand-red font-bold uppercase tracking-[0.12em] text-sm mb-2">
+              Coverage Area
             </p>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-              Expert Plumbing for Ventura County.
+            <h1 className="text-4xl sm:text-5xl font-bold text-brand-navy mb-4">
+              Ventura County{" "}
+              <span className="text-brand-red">Service Areas.</span>
             </h1>
-            <p className="text-white/80 text-lg max-w-xl mx-auto mb-6">
-              Family-owned since 1998. Licensed technicians serving Ventura, Oxnard, Thousand
-              Oaks, Camarillo, Simi Valley, and surrounding communities. Flat-rate pricing, zero
-              trip charges.
+            <p className="text-gray-500 text-lg max-w-xl mx-auto">
+              Family-owned since 1998, serving every community in Ventura County.
+              Not sure if we reach you? Give us a call — we&apos;ve got you covered.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a
-                href="#booking"
-                className="bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-3 rounded-[3px] transition-colors"
-              >
-                Book a Visit
-              </a>
-              <a
-                href="tel:+17474631853"
-                className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-8 py-3 rounded-[3px] transition-colors"
-              >
-                Call (747) 463-1853
-              </a>
-            </div>
           </div>
         </section>
 
-        {/* Map */}
-        <section className="px-4 sm:px-6 py-2">
+        <section className="py-12 px-4 sm:px-6">
           <div className="max-w-5xl mx-auto">
-            <ServiceMap county="ventura" />
-          </div>
-        </section>
-
-        {/* Cities */}
-        <section className="py-12 px-4 sm:px-6 bg-brand-light">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Cities We Serve</h2>
-            <p className="text-gray-500 text-sm mb-6">
-              Serving all of Ventura County. Don&apos;t see your city? Give us a call.
-            </p>
+            <h2 className="text-2xl font-bold text-brand-navy mb-6">
+              Cities We Serve
+            </h2>
             <div className="flex flex-wrap gap-3">
-              {cities.map((city) => (
+              {venturaCities.map((city) => (
                 <span
                   key={city}
                   className="bg-white border border-gray-200 rounded-full px-4 py-1.5 text-sm text-gray-700"
@@ -93,18 +53,51 @@ export default function VenturaPage() {
                 </span>
               ))}
             </div>
+            <p className="text-gray-400 text-sm mt-6">
+              Don&apos;t see your city? Call us — our coverage is always expanding.
+            </p>
+            <p className="text-gray-500 text-sm mt-4">
+              <Link href="/losangeles" className="text-brand-red font-bold hover:underline">
+                View Los Angeles County service areas →
+              </Link>
+            </p>
           </div>
         </section>
 
-        {/* Booking form */}
-        <section id="booking" className="py-12 px-4 sm:px-6">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">Book a Visit</h2>
-            <p className="text-gray-500 text-sm mb-6">
-              Two-hour arrival windows with a text confirmation when we&apos;re on our way. A real
-              person will follow up within 5 minutes during business hours.
+        <section className="px-4 sm:px-6 pb-12">
+          <div className="max-w-5xl mx-auto">
+            <ServiceMap county="ventura" />
+            <div className="flex items-center gap-6 mt-3 text-xs text-gray-500 font-medium">
+              <span className="flex items-center gap-1.5">
+                <span className="inline-block w-3 h-3 rounded-full bg-[#e0656f]" />
+                The Plumbing Stars Ventura County
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-brand-navy chev-pattern text-white py-16 px-4 sm:px-6 text-center">
+          <div className="max-w-xl mx-auto">
+            <p className="text-brand-red font-bold uppercase tracking-[0.12em] text-sm mb-2">
+              Same-Day Service
             </p>
-            <BookingForm region="ventura" />
+            <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+              In Your Neighborhood Today.
+            </h2>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a
+                href="tel:+17474631853"
+                className="bg-brand-red hover:bg-brand-red-dark text-white font-bold uppercase tracking-wider px-8 py-4 rounded-[3px] text-sm transition-colors"
+              >
+                Call (747) 463-1853
+              </a>
+              <Link
+                href="/#service-areas"
+                className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold uppercase tracking-wider px-8 py-4 rounded-[3px] text-sm transition-colors"
+              >
+                Book Online
+              </Link>
+            </div>
           </div>
         </section>
       </main>

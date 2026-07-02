@@ -1,12 +1,11 @@
 import Header from "./Header";
 import Footer from "./Footer";
 import ServiceAreaRouter from "./ServiceAreaRouter";
+import { defaultNavItems, type NavItem } from "@/lib/navLinks";
 
-const navLinks = [
+const serviceNavItems: NavItem[] = [
   { label: "Home", href: "/" },
-  { label: "Services", href: "/#services" },
-  { label: "Service Areas", href: "/#service-areas" },
-  { label: "Contact", href: "/#contact" },
+  ...defaultNavItems,
 ];
 
 interface FAQ {
@@ -24,7 +23,7 @@ interface ServiceShellProps {
 export default function ServiceShell({ title, intro, faqs, children }: ServiceShellProps) {
   return (
     <>
-      <Header links={navLinks} />
+      <Header items={serviceNavItems} />
       <main>
         {/* Hero */}
         <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
