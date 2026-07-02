@@ -17,9 +17,9 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
         <div className="relative flex items-center justify-between py-4 min-h-[144px]">
 
           {/* Left: hamburger (mobile) + desktop nav */}
-          <div className="flex items-center gap-6 flex-1">
+          <div className="flex items-center gap-6 flex-1 h-full">
             <MobileMenu links={links} />
-            <nav className="hidden md:flex items-center gap-6">
+            <nav className="hidden md:flex items-center gap-6 h-full">
               {/* Areas dropdown */}
               <div className="relative group h-full">
                 <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
