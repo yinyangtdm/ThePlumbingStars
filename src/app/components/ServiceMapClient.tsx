@@ -1,7 +1,9 @@
-"use client";
+\"use client\";
 
-import { MapContainer, TileLayer, Polygon, Tooltip } from "react-leaflet";
+import { MapContainer, TileLayer, Polygon, Tooltip, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { useEffect, useMemo } from "react";
+import L from "leaflet";
 
 const LA_POLYGON: [number, number][] = [
   [34.2776, -118.4862],
@@ -83,11 +85,42 @@ const CONFIGS = {
   ventura: { center: [34.15, -118.87] as [number, number], zoom: 10 },
 };
 
+// Utility: detect and normalize coordinate order.
+// Leaflet expects [lat, lng]. GeoJSON commonly provides [lng, lat].
+function normalizeRing(ring: [number, number][]) {
+  if (!ring || ring.length === 0) return ring;
+  const first = ring[0];
+  // If the first value is > 90 in absolute value, it's almost certainly a longitude,
+  // so the ring is [lng, lat] and needs swapping.
+  const looksLikeLonFirst = Math.abs(first[0]) > 90;
+  if (!looksLikeLonFirst) return ring;
+  return ring.map(([a, b]) => [b, a] as [number, number]);
+}
+
+function FitToBounds({ polygons }: { polygons: ([number, number][] | null)[] }) {
+  const map = useMap();
+  useEffect(() => {
+    const bounds = L.latLngBounds([]);
+    polygons.forEach((poly) => {
+      if (!poly || poly.length === 0) return;
+      poly.forEach((coord) => bounds.extend(coord));
+    });
+    if (bounds.isValid()) {
+      map.fitBounds(bounds, { padding: [20, 20] });
+    }
+  }, [map, polygons]);
+  return null;
+}
+
 interface Props {
   county?: "la" | "ventura" | "both";
 }
 
 export default function ServiceMapClient({ county = "both" }: Props) {
+  // Normalize coordinate order once (memoized).
+  const leafletLa = useMemo(() => normalizeRing(LA_POLYGON), []);
+  const leafletVentura = useMemo(() => normalizeRing(VENTURA_POLYGON), []);
+
   const { center, zoom } = CONFIGS[county];
 
   return (
@@ -104,7 +137,7 @@ export default function ServiceMapClient({ county = "both" }: Props) {
       />
       {(county === "la" || county === "both") && (
         <Polygon
-          positions={LA_POLYGON}
+          positions={leafletLa}
           pathOptions={{ color: "#1D4B91", fillColor: "#1D4B91", fillOpacity: 0.25, weight: 2 }}
         >
           <Tooltip sticky>The Plumbing Stars — Los Angeles</Tooltip>
@@ -112,12 +145,19 @@ export default function ServiceMapClient({ county = "both" }: Props) {
       )}
       {(county === "ventura" || county === "both") && (
         <Polygon
-          positions={VENTURA_POLYGON}
+          positions={leafletVentura}
           pathOptions={{ color: "#e0656f", fillColor: "#e0656f", fillOpacity: 0.25, weight: 2 }}
         >
           <Tooltip sticky>The Plumbing Stars — Ventura County</Tooltip>
         </Polygon>
       )}
+      {/* Auto-fit to shown polygons */}
+      <FitToBounds
+        polygons={[
+          county === "la" || county === "both" ? leafletLa : null,
+          county === "ventura" || county === "both" ? leafletVentura : null,
+        ]}
+      />
     </MapContainer>
   );
 }
