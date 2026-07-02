@@ -39,16 +39,9 @@ export default function MobileMenu({ links = defaultLinks }: { links?: NavLink[]
       {open && (
         <div className="absolute top-16 left-0 right-0 bg-brand-navy border-t border-blue-800 z-50 shadow-lg">
           <nav className="flex flex-col">
-            {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium"
-              >
-                {link.label}
-              </a>
-            ))}
+            <a href="/service-areas" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Areas</a>
+            <a href="/services" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Services</a>
+            <a href="/contact" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Contacts</a>
             <div className="px-6 py-4">
               <a
                 href="tel:+17474631853"
