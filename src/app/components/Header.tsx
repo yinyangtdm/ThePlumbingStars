@@ -22,30 +22,30 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
             <nav className="hidden md:flex items-center gap-6">
               {links.map((link) => {
                 if (link.label.toLowerCase().includes("area")) {
-                  return (
-                    <div key="areas" className="relative">
-                      <button
-                        aria-haspopup="true"
-                        className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors"
+                return (
+                  <div key="areas" className="relative group">
+                    <button
+                      aria-haspopup="true"
+                      className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors"
+                    >
+                      Areas
+                    </button>
+                    <div className="hidden group-hover:block absolute left-1/2 -translate-x-1/2 mt-2 w-44 bg-white border shadow-lg rounded-md z-50">
+                      <a
+                        href="/losangeles"
+                        className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light"
                       >
-                        Areas
-                      </button>
-                      <div className="absolute right-0 mt-2 w-44 bg-white border shadow-lg rounded-md z-50">
-                        <a
-                          href="/losangeles"
-                          className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light"
-                        >
-                          Los Angeles
-                        </a>
-                        <a
-                          href="/ventura"
-                          className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light"
-                        >
-                          Ventura
-                        </a>
-                      </div>
+                        Los Angeles
+                      </a>
+                      <a
+                        href="/ventura"
+                        className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light"
+                      >
+                        Ventura
+                      </a>
                     </div>
-                  );
+                  </div>
+                );
                 }
                 return (
                   <a
