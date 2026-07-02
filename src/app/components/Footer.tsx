@@ -5,8 +5,8 @@ export default function Footer() {
     <footer className="bg-brand-navy-dark text-white/70 py-10 mt-auto">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between gap-8">
         <div>
-          <p className="text-white font-bold text-lg mb-1 flex items-center gap-3">
-            <Image src="/logo.svg" alt="" width={36} height={36} unoptimized />
+          <p className="text-white font-bold text-lg mb-1 flex items-center gap-4">
+            <Image src="/logo.svg" alt="" width={144} height={144} unoptimized />
             The Plumbing Stars
           </p>
           <p className="text-sm">Family-owned since 1998. Licensed &amp; bonded in California.</p>
