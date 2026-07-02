@@ -75,6 +75,9 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
               <a href="/contact" className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors">
                 Contact
               </a>
+              <a href="/resources" className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors">
+                Resources
+              </a>
             </nav>
           </div>
 

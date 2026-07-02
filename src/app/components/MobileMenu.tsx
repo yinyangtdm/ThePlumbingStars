@@ -41,7 +41,8 @@ export default function MobileMenu({ links = defaultLinks }: { links?: NavLink[]
           <nav className="flex flex-col">
             <a href="/service-areas" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Areas</a>
             <a href="/services" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Services</a>
-            <a href="/contact" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Contacts</a>
+            <a href="/resources" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Resources</a>
+            <a href="/contact" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Contact</a>
             <div className="px-6 py-4">
               <a
                 href="tel:+17474631853"
