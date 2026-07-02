@@ -201,8 +201,8 @@ export default function ServiceMapClient({ county = "both" }: Props) {
       center={center}
       zoom={zoom}
       scrollWheelZoom={false}
-      style={{ height: "380px", width: "100%" }}
-      className="rounded-lg"
+      style={{ height: "380px", width: "100%", zIndex: 0 }}
+      className="rounded-lg relative z-0"
     >
       <TileLayer
         attribution='&copy; <a href="https://carto.com/">CARTO</a>'
