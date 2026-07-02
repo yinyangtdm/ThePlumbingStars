@@ -7,7 +7,7 @@ export default function Header({ items = defaultNavItems }: { items?: NavItem[] 
   return (
     <header className="bg-[#eceff4] sticky top-0 z-40 border-b-2 border-brand-navy">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="relative flex items-center justify-between py-4 min-h-[96px]">
+        <div className="relative flex items-center justify-between py-4 min-h-[144px]">
 
           <div className="flex items-center gap-6 flex-1">
             <MobileMenu items={items} />
@@ -56,8 +56,8 @@ export default function Header({ items = defaultNavItems }: { items?: NavItem[] 
             <Image
               src="/logo.svg"
               alt="The Plumbing Stars"
-              width={96}
-              height={96}
+              width={144}
+              height={144}
               priority
               unoptimized
             />

@@ -1,4 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
+
+const footerNavClass =
+  "text-sm font-bold uppercase tracking-[0.1em] hover:text-white transition-colors";
 
 export default function Footer() {
   return (
@@ -6,39 +10,41 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between gap-8">
         <div>
           <p className="text-white font-bold text-lg mb-1 flex items-center gap-2">
-            <Image src="/logo.svg" alt="" width={24} height={24} unoptimized />
+            <Image src="/logo.svg" alt="" width={36} height={36} unoptimized />
             The Plumbing Stars
           </p>
           <p className="text-sm">Family-owned since 1998. Licensed &amp; bonded in California.</p>
           <p className="text-xs mt-1">License #998456</p>
         </div>
 
-        <div className="text-sm space-y-1">
-          <p className="text-white font-medium mb-1">Contact</p>
+        <div className="space-y-2">
+          <p className="text-white text-sm font-bold uppercase tracking-[0.1em] mb-2">Contact</p>
           <p>
-            <a href="tel:+17474631853" className="hover:text-white transition-colors">
+            <a href="tel:+17474631853" className={footerNavClass}>
               (747) 463-1853
             </a>
           </p>
           <p>
-            <a href="mailto:info@theplumbingstars.com" className="hover:text-white transition-colors">
+            <a href="mailto:info@theplumbingstars.com" className={footerNavClass}>
               info@theplumbingstars.com
             </a>
           </p>
-          <p>24/7 Emergency Service</p>
+          <p className="text-sm font-bold uppercase tracking-[0.1em] text-white/70">
+            24/7 Emergency Service
+          </p>
         </div>
 
-        <div className="text-sm space-y-1">
-          <p className="text-white font-medium mb-1">Service Areas</p>
+        <div className="space-y-2">
+          <p className="text-white text-sm font-bold uppercase tracking-[0.1em] mb-2">Service Areas</p>
           <p>
-            <a href="/losangeles" className="hover:text-white transition-colors">
+            <Link href="/losangeles" className={footerNavClass}>
               Los Angeles County
-            </a>
+            </Link>
           </p>
           <p>
-            <a href="/ventura" className="hover:text-white transition-colors">
+            <Link href="/ventura" className={footerNavClass}>
               Ventura County
-            </a>
+            </Link>
           </p>
         </div>
       </div>
