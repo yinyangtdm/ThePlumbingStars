@@ -16,8 +16,13 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="relative flex items-center justify-between py-4 min-h-[144px]">
 
-          {/* Left: hamburger (mobile) + desktop nav */}
+          {/* Left: desktop logo + nav; mobile: hamburger + centered logo */}
           <div className="flex items-center gap-6 flex-1 h-full">
+            {/* Desktop logo on the left */}
+            <Link href="/" className="hidden md:flex items-center">
+              <Image src="/logo.svg" alt="The Plumbing Stars" width={144} height={144} unoptimized />
+            </Link>
+
             <MobileMenu links={links} />
             <nav className="hidden md:flex items-center gap-6 h-full min-h-[144px]">
               {/* Areas dropdown */}
@@ -73,13 +78,13 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
             </nav>
           </div>
 
-          {/* Center: logo (absolute so it doesn't affect flex layout) */}
-          <Link href="/" className="absolute left-1/2 -translate-x-1/2">
+          {/* Center logo for mobile */}
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2 md:hidden">
             <Image
               src="/logo.svg"
               alt="The Plumbing Stars"
-              width={144}
-              height={144}
+              width={96}
+              height={96}
               priority
               unoptimized
             />
