@@ -4,6 +4,7 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import BookingForm from "@/app/components/BookingForm";
 import { useEffect, useRef, useState } from "react";
+import { getRegionByZip } from "@/lib/zipLookup";
 
 type Region = "losangeles" | "ventura";
 
@@ -60,87 +61,80 @@ function LocationCTA({ onSelect }: { onSelect: (r: Region | null) => void }) {
   const { laRing, venturaRing } = useServiceAreas();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [detected, setDetected] = useState<Region | null | "unknown">("unknown");
 
-  async function detect() {
-    setLoading(true);
-    setMessage(null);
-    try {
-      let pos: { lat: number; lon: number } | null = null;
-      // Try browser geolocation first
-      if ("geolocation" in navigator) {
-        pos = await new Promise((resolve, reject) => {
-          const timer = setTimeout(() => reject(new Error("timeout")), 8000);
-          navigator.geolocation.getCurrentPosition(
-            (p) => {
-              clearTimeout(timer);
-              resolve({ lat: p.coords.latitude, lon: p.coords.longitude });
-            },
-            (err) => {
-              clearTimeout(timer);
-              reject(err);
-            },
-            { maximumAge: 60 * 1000, timeout: 8000 }
-          );
-        }).catch(() => null);
-      }
-      // Fallback to IP-based location if geolocation failed
-      if (!pos) {
-        try {
-          const r = await fetch("https://ipapi.co/json/");
-          if (r.ok) {
-            const j = await r.json();
-            pos = { lat: Number(j.latitude), lon: Number(j.longitude) };
-          }
-        } catch {
-          pos = null;
+  // Silent IP lookup on mount (no prompt)
+  useEffect(() => {
+    let mounted = true;
+    async function silentLookup() {
+      try {
+        const r = await fetch("https://ipapi.co/json/");
+        if (!r.ok) throw new Error("ip lookup failed");
+        const j = await r.json();
+        const lat = Number(j.latitude);
+        const lon = Number(j.longitude);
+        if (isNaN(lat) || isNaN(lon)) {
+          if (!mounted) return;
+          setDetected(null);
+          setMessage("Could not determine your location.");
+          onSelect(null);
+          return;
         }
-      }
-
-      if (!pos) {
+        // check rings
+        if (laRing && pointInRing(lat, lon, laRing)) {
+          if (!mounted) return;
+          setDetected("losangeles");
+          setMessage("Detected: Los Angeles service area.");
+          onSelect("losangeles");
+          return;
+        }
+        if (venturaRing && pointInRing(lat, lon, venturaRing)) {
+          if (!mounted) return;
+          setDetected("ventura");
+          setMessage("Detected: Ventura service area.");
+          onSelect("ventura");
+          return;
+        }
+        if (!mounted) return;
+        setDetected(null);
+        setMessage("It seems you are not within our service areas.");
+        onSelect(null);
+      } catch {
+        if (!mounted) return;
+        setDetected(null);
         setMessage("Could not determine your location.");
         onSelect(null);
-        return;
       }
-
-      const { lat, lon } = pos;
-      // check against loaded rings (GeoJSON coords are [lng, lat])
-      if (laRing && pointInRing(lat, lon, laRing)) {
-        setMessage("You're inside Los Angeles service area.");
-        onSelect("losangeles");
-        return;
-      }
-      if (venturaRing && pointInRing(lat, lon, venturaRing)) {
-        setMessage("You're inside Ventura service area.");
-        onSelect("ventura");
-        return;
-      }
-
-      setMessage("It seems you are not within our service areas.");
-      onSelect(null);
-    } finally {
-      setLoading(false);
     }
-  }
+    silentLookup();
+    return () => {
+      mounted = false;
+    };
+  }, [laRing, venturaRing, onSelect]);
 
   return (
     <div>
-      <button
-        onClick={detect}
-        className="w-full md:w-auto bg-brand-sky text-brand-navy font-bold px-6 py-3 rounded-md"
-        disabled={loading}
-      >
-        {loading ? "Detecting location…" : "Detect my location"}
-      </button>
-      {message && (
-        <div className="mt-3 text-sm text-gray-700">
-          {message}
-          {message.includes("not within") && (
-            <div className="mt-2 flex gap-2">
-              <a href="/losangeles" className="px-3 py-2 bg-white border rounded text-sm">Los Angeles</a>
-              <a href="/ventura" className="px-3 py-2 bg-white border rounded text-sm">Ventura</a>
-            </div>
-          )}
+      {detected === "losangeles" && (
+        <a href="/losangeles" className="w-full md:w-auto inline-block bg-brand-sky text-brand-navy font-bold px-6 py-3 rounded-md text-center">
+          View Los Angeles service area
+        </a>
+      )}
+      {detected === "ventura" && (
+        <a href="/ventura" className="w-full md:w-auto inline-block bg-brand-sky text-brand-navy font-bold px-6 py-3 rounded-md text-center">
+          View Ventura service area
+        </a>
+      )}
+      {detected === null && (
+        <div>
+          <div className="text-sm text-gray-700 mb-2">{message}</div>
+          <div className="flex gap-2">
+            <a href="/losangeles" className="px-3 py-2 bg-white border rounded text-sm">Los Angeles</a>
+            <a href="/ventura" className="px-3 py-2 bg-white border rounded text-sm">Ventura</a>
+          </div>
         </div>
+      )}
+      {detected === "unknown" && (
+        <div className="text-sm text-gray-700">Detecting location…</div>
       )}
     </div>
   );
@@ -150,6 +144,8 @@ export default function ContactPage() {
   const [region, setRegion] = useState<Region>("losangeles");
   const formRef = useRef<HTMLDivElement | null>(null);
   const [detectedRegion, setDetectedRegion] = useState<Region | null | "unknown">("unknown");
+  const [zip, setZip] = useState("");
+  const [zipMessage, setZipMessage] = useState<string | null>(null);
 
   function scrollToForm() {
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -184,6 +180,40 @@ export default function ContactPage() {
             <a href="mailto:info@theplumbingstars.com" className="bg-white border text-brand-navy font-bold px-6 py-3 rounded-md text-center">
               Email Us
             </a>
+          </div>
+
+          {/* ZIP lookup */}
+          <div className="max-w-md mx-auto mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Check your ZIP code</label>
+            <div className="flex gap-2">
+              <input
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
+                placeholder="Enter ZIP code"
+                className="flex-1 px-3 py-2 border rounded"
+              />
+              <button
+                onClick={() => {
+                  setZipMessage(null);
+                  const r = getRegionByZip(zip.trim());
+                  if (r === "losangeles") {
+                    window.location.href = "/losangeles";
+                    return;
+                  }
+                  if (r === "ventura") {
+                    window.location.href = "/ventura";
+                    return;
+                  }
+                  setZipMessage(
+                    "We're sorry, but you are not within our service area. However, our service area is constantly expanding, so feel free to contact us to see if we can help you or point you in the right direction!"
+                  );
+                }}
+                className="bg-brand-navy text-white px-4 py-2 rounded"
+              >
+                Check
+              </button>
+            </div>
+            {zipMessage && <p className="text-sm text-gray-700 mt-2">{zipMessage}</p>}
           </div>
 
           <div ref={formRef} className="bg-white rounded-xl p-6 shadow-sm">
