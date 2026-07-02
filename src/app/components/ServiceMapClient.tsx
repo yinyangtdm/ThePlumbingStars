@@ -122,8 +122,23 @@ export default function ServiceMapClient({ county = "both" }: Props) {
   const leafletVentura = useMemo(() => normalizeRing(VENTURA_POLYGON), []);
   const [leafletLa, setLeafletLa] = useState<[number, number][]>(defaultLeafletLa);
 
-  // Convert GeoJSON [lng, lat] ring -> Leaflet [lat, lng]
-  function geoJsonRingToLeaflet(ring: [number, number][]) {
+  // Convert GeoJSON ring to Leaflet [lat, lng], detecting whether the file
+  // used [lng, lat] (GeoJSON standard) or [lat, lng] (user-edited).
+  function normalizeGeoJsonRing(ring: [number, number][]) {
+    if (!ring || ring.length === 0) return ring;
+    const [a, b] = ring[0];
+    const aIsLon = Math.abs(a) > 90;
+    const bIsLon = Math.abs(b) > 90;
+    // If first value looks like longitude (abs > 90) then ring is [lng, lat]
+    // and needs swapping to [lat, lng].
+    if (aIsLon && !bIsLon) {
+      return ring.map(([lng, lat]) => [lat, lng] as [number, number]);
+    }
+    // If second value looks like longitude then ring is already [lat, lng].
+    if (bIsLon && !aIsLon) {
+      return ring as [number, number][];
+    }
+    // Fallback: assume standard GeoJSON [lng, lat] and swap.
     return ring.map(([lng, lat]) => [lat, lng] as [number, number]);
   }
 
@@ -141,7 +156,7 @@ export default function ServiceMapClient({ county = "both" }: Props) {
         // support Polygon and MultiPolygon
         const ring: [number, number][] =
           feat.geometry.type === "Polygon" ? coords[0] : coords[0][0];
-        const converted = geoJsonRingToLeaflet(ring);
+        const converted = normalizeGeoJsonRing(ring);
         if (!cancelled) setLeafletLa(converted);
       } catch {
         // swallow, keep default
