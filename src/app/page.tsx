@@ -155,6 +155,21 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Quick service-area lookup (below hero) */}
+        <section className="py-8 px-4 sm:px-6 bg-white">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-xl shadow-sm p-6 flex flex-col md:flex-row items-center gap-4">
+              <div className="flex-1">
+                <h3 className="text-xl font-bold text-gray-900">Find your service area</h3>
+                <p className="text-gray-500 text-sm">Enter a ZIP or choose Los Angeles / Ventura to see availability.</p>
+              </div>
+              <div className="w-full md:w-1/2">
+                <ServiceAreaRouter />
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Services */}
         <section id="services" className="py-16 px-4 sm:px-6">
           <div className="max-w-5xl mx-auto">
