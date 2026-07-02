@@ -2,7 +2,7 @@
 
 import { MapContainer, TileLayer, Polygon, Tooltip, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import L from "leaflet";
 
 const LA_POLYGON: [number, number][] = [
@@ -117,9 +117,41 @@ interface Props {
 }
 
 export default function ServiceMapClient({ county = "both" }: Props) {
-  // Normalize coordinate order once (memoized).
-  const leafletLa = useMemo(() => normalizeRing(LA_POLYGON), []);
+  // Normalize coordinate order once (memoized) and allow overriding from GeoJSON.
+  const defaultLeafletLa = useMemo(() => normalizeRing(LA_POLYGON), []);
   const leafletVentura = useMemo(() => normalizeRing(VENTURA_POLYGON), []);
+  const [leafletLa, setLeafletLa] = useState<[number, number][]>(defaultLeafletLa);
+
+  // Convert GeoJSON [lng, lat] ring -> Leaflet [lat, lng]
+  function geoJsonRingToLeaflet(ring: [number, number][]) {
+    return ring.map(([lng, lat]) => [lat, lng] as [number, number]);
+  }
+
+  // Try to fetch editable LA GeoJSON from public/ and replace default polygon.
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      try {
+        const res = await fetch("/la-service-area.geojson");
+        if (!res.ok) return;
+        const json = await res.json();
+        const feat = Array.isArray(json.features) && json.features[0];
+        const coords = feat?.geometry?.coordinates;
+        if (!coords) return;
+        // support Polygon and MultiPolygon
+        const ring: [number, number][] =
+          feat.geometry.type === "Polygon" ? coords[0] : coords[0][0];
+        const converted = geoJsonRingToLeaflet(ring);
+        if (!cancelled) setLeafletLa(converted);
+      } catch {
+        // swallow, keep default
+      }
+    }
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const { center, zoom } = CONFIGS[county];
 
