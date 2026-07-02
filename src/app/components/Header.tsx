@@ -19,9 +19,9 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
           {/* Left: hamburger (mobile) + desktop nav */}
           <div className="flex items-center gap-6 flex-1 h-full">
             <MobileMenu links={links} />
-            <nav className="hidden md:flex items-center gap-6 h-full">
+            <nav className="hidden md:flex items-center gap-6 h-full min-h-[144px]">
               {/* Areas dropdown */}
-              <div className="relative group h-full">
+              <div className="relative group h-[144px]">
                 <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
                   Areas
                 </button>
@@ -36,7 +36,7 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
               </div>
 
               {/* Services dropdown */}
-              <div className="relative group h-full">
+              <div className="relative group h-[144px]">
                 <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
                   Services
                 </button>
