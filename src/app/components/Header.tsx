@@ -20,15 +20,43 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
           <div className="flex items-center gap-6 flex-1">
             <MobileMenu links={links} />
             <nav className="hidden md:flex items-center gap-6">
-              {links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {links.map((link) => {
+                if (link.label.toLowerCase().includes("area")) {
+                  return (
+                    <div key="areas" className="relative">
+                      <button
+                        aria-haspopup="true"
+                        className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors"
+                      >
+                        Areas
+                      </button>
+                      <div className="absolute right-0 mt-2 w-44 bg-white border shadow-lg rounded-md z-50">
+                        <a
+                          href="/losangeles"
+                          className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light"
+                        >
+                          Los Angeles
+                        </a>
+                        <a
+                          href="/ventura"
+                          className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light"
+                        >
+                          Ventura
+                        </a>
+                      </div>
+                    </div>
+                  );
+                }
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
             </nav>
           </div>
 

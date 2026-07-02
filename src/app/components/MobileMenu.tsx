@@ -10,7 +10,8 @@ export interface NavLink {
 const defaultLinks: NavLink[] = [
   { label: "Services", href: "#services" },
   { label: "Why Us", href: "#why-us" },
-  { label: "Service Areas", href: "#service-areas" },
+  { label: "Los Angeles", href: "/losangeles" },
+  { label: "Ventura", href: "/ventura" },
   { label: "Contact", href: "#contact" },
 ];
 
