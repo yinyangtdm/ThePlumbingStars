@@ -1,3 +1,5 @@
+ "use client";
+
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import BookingForm from "@/app/components/BookingForm";
