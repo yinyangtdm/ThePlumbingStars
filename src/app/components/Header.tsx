@@ -20,12 +20,53 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
           <div className="flex items-center gap-6 flex-1">
             <MobileMenu links={links} />
             <nav className="hidden md:flex items-center gap-6">
-              <a href="/service-areas" className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors">
-                Areas
-              </a>
-              <a href="/services" className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors">
-                Services
-              </a>
+              {/* Areas dropdown */}
+              <div className="relative group h-full">
+                <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
+                  Areas
+                </button>
+                <div className="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full mt-0 w-44 bg-white border shadow-lg rounded-md z-50">
+                  <a href="/losangeles" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                    Los Angeles
+                  </a>
+                  <a href="/ventura" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                    Ventura
+                  </a>
+                </div>
+              </div>
+
+              {/* Services dropdown */}
+              <div className="relative group h-full">
+                <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
+                  Services
+                </button>
+                <div className="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full mt-0 w-64 bg-white border shadow-lg rounded-md z-50 p-3">
+                  <div className="grid grid-cols-1 gap-1">
+                    <a href="/services/drain-cleaning" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
+                      Drain Cleaning
+                    </a>
+                    <a href="/services/sewer-repair" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
+                      Sewer Repair
+                    </a>
+                    <a href="/services/hydro-jetting" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
+                      Hydro Jetting
+                    </a>
+                    <a href="/services/camera-inspection" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
+                      Camera Inspection
+                    </a>
+                    <a href="/services/trenchless-replacement" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
+                      Trenchless Replacement
+                    </a>
+                    <a href="/services/pipe-lining" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
+                      Pipe Lining
+                    </a>
+                    <a href="/services/water-heater" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
+                      Water Heater
+                    </a>
+                  </div>
+                </div>
+              </div>
+
               <a href="/contact" className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors">
                 Contacts
               </a>
