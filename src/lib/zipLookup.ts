@@ -64,3 +64,32 @@ export function getRegionByZip(zip: string): "losangeles" | "ventura" | null {
   if (venturaZips.has(zip)) return "ventura";
   return null;
 }
+
+/** Approximate [lat, lng] for distance sorting — not precise geocoding. */
+const LA_PREFIX_COORDS: Record<string, [number, number]> = {
+  "900": [34.06, -118.3],
+  "902": [34.04, -118.42],
+  "904": [34.02, -118.49],
+  "910": [34.2, -118.15],
+  "911": [34.15, -118.14],
+  "912": [34.18, -118.31],
+  "913": [34.18, -118.55],
+  "914": [34.19, -118.45],
+  "915": [34.14, -118.26],
+  "916": [34.17, -118.39],
+};
+
+const VENTURA_PREFIX_COORDS: Record<string, [number, number]> = {
+  "913": [34.17, -118.84],
+  "930": [34.22, -119.05],
+};
+
+export function getZipCoordinates(zip: string): [number, number] | null {
+  const region = getRegionByZip(zip);
+  if (!region) return null;
+  const prefix = zip.slice(0, 3);
+  if (region === "losangeles") {
+    return LA_PREFIX_COORDS[prefix] ?? [34.11, -118.35];
+  }
+  return VENTURA_PREFIX_COORDS[prefix] ?? [34.2, -119.1];
+}

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ServiceShell from "@/app/components/ServiceShell";
+import ServiceShell from "@/components/ServiceShell";
 
 export const metadata: Metadata = {
   title: "Trenchless Sewer Replacement in Los Angeles & Ventura County | The Plumbing Stars",

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import Header from "@/app/components/Header";
-import Footer from "@/app/components/Footer";
-import BookingForm from "@/app/components/BookingForm";
-import ServiceMap from "@/app/components/ServiceMap";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import CountyServiceExplorer from "@/components/CountyServiceExplorer";
+import { buildLocationsFromGeoJson } from "@/lib/serviceLocations";
+import fs from "fs";
+import path from "path";
 
 export const metadata: Metadata = {
   title: "The Plumbing Stars | Los Angeles Plumbing Services",
@@ -13,7 +15,7 @@ export const metadata: Metadata = {
 const navLinks = [
   { label: "All Areas", href: "/" },
   { label: "Services", href: "/#services" },
-  { label: "Book Now", href: "#booking" },
+  { label: "Book Now", href: "/schedule" },
 ];
 
 const cities = [
@@ -37,12 +39,33 @@ const cities = [
   "Winnetka", "Woodland Hills",
 ];
 
-export default function LosAngelesPage() {
+function loadInitialLocations() {
+  try {
+    const jsonPath = path.join(process.cwd(), "public", "la-service-area.geojson");
+    if (fs.existsSync(jsonPath)) {
+      const raw = fs.readFileSync(jsonPath, "utf8");
+      const geo = JSON.parse(raw);
+      return buildLocationsFromGeoJson(geo, "losangeles");
+    }
+  } catch {
+    // fall through
+  }
+  return [];
+}
+
+export default async function LosAngelesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ zip?: string }>;
+}) {
+  const params = await searchParams;
+  const initialZip = params.zip ?? "";
+  const initialLocations = loadInitialLocations();
+
   return (
     <>
       <Header links={navLinks} />
       <main>
-        {/* Hero */}
         <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-2">
@@ -57,7 +80,7 @@ export default function LosAngelesPage() {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
-                href="#booking"
+                href="/schedule"
                 className="bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-3 rounded-[3px] transition-colors"
               >
                 Book a Visit
@@ -72,39 +95,12 @@ export default function LosAngelesPage() {
           </div>
         </section>
 
-        {/* Map */}
-        <section className="px-4 sm:px-6 py-2">
-          <div className="max-w-5xl mx-auto">
-            <ServiceMap county="la" />
-          </div>
-        </section>
-
-        {/* Cities */}
-        <section className="py-12 px-4 sm:px-6 bg-brand-light">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Cities We Serve</h2>
-            <p className="text-gray-500 text-sm mb-6">
-              75+ communities across Los Angeles County. Don&apos;t see yours? Call us — we&apos;re always expanding.
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-1.5 text-sm text-gray-600">
-              {cities.map((city) => (
-                <p key={city}>{city}</p>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Booking form */}
-        <section id="booking" className="py-12 px-4 sm:px-6">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">Book a Visit</h2>
-            <p className="text-gray-500 text-sm mb-6">
-              A real person will follow up within 5 minutes during business hours. Emergency calls
-              go out 24/7.
-            </p>
-            <BookingForm region="losangeles" />
-          </div>
-        </section>
+        <CountyServiceExplorer
+          initialLocations={initialLocations}
+          region="losangeles"
+          fallbackCities={cities}
+          initialZip={initialZip}
+        />
       </main>
       <Footer />
     </>

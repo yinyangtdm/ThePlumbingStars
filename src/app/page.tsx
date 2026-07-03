@@ -1,6 +1,6 @@
-import Header from "@/app/components/Header";
-import Footer from "@/app/components/Footer";
-import ServiceAreaRouter from "@/app/components/ServiceAreaRouter";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import ServiceAreaRouter from "@/components/ServiceAreaRouter";
 
 const services = [
   {

@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Header from "@/app/components/Header";
-import Footer from "@/app/components/Footer";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const services = [
   { name: "Drain Cleaning", href: "/services/drain-cleaning" },
