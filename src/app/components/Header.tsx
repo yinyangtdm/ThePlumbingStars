@@ -5,7 +5,7 @@ import MobileMenu, { type NavLink } from "./MobileMenu";
 const defaultLinks: NavLink[] = [
   { label: "Services", href: "/#services" },
   { label: "Why Us", href: "/#why-us" },
-  { label: "Areas", href: "/service-areas" },
+  { label: "Areas", href: "/areas" },
   { label: "FAQ", href: "/#faq" },
   { label: "Contact", href: "/#contact" },
 ];
@@ -14,19 +14,26 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
   return (
     <header className="bg-[#eceff4] sticky top-0 z-40 border-b-2 border-brand-navy">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="relative flex items-center justify-between py-4 min-h-[144px]">
+        <div className="relative flex items-center justify-between py-0 md:py-2 min-h-[140px] md:min-h-[96px]">
 
           {/* Left: desktop logo + nav; mobile: hamburger + centered logo */}
           <div className="flex items-center gap-6 flex-1 h-full">
             {/* Desktop logo on the left */}
-            <Link href="/" className="hidden md:flex items-center">
-              <Image src="/logo.svg" alt="The Plumbing Stars" width={144} height={144} unoptimized />
+            <Link href="/" className="hidden md:flex items-center flex-none">
+              <Image
+                src="/logo.svg"
+                alt="The Plumbing Stars"
+                width={260}
+                height={260}
+                className="h-[128px] w-auto self-center"
+                unoptimized
+              />
             </Link>
 
             <MobileMenu links={links} />
-            <nav className="hidden md:flex items-center gap-6 h-full min-h-[144px]">
+            <nav className="hidden md:flex items-center gap-6 h-full min-h-[96px]">
               {/* Areas dropdown */}
-              <div className="relative group h-[144px]">
+              <div className="relative group h-[96px]">
                 <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
                   Areas
                 </button>
@@ -41,7 +48,7 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
               </div>
 
               {/* Services dropdown */}
-              <div className="relative group h-[144px]">
+              <div className="relative group h-[96px]">
                 <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
                   Services
                 </button>
@@ -82,12 +89,13 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
           </div>
 
           {/* Center logo for mobile */}
-          <Link href="/" className="absolute left-1/2 -translate-x-1/2 md:hidden">
+          <Link href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:hidden">
             <Image
               src="/logo.svg"
               alt="The Plumbing Stars"
-              width={96}
-              height={96}
+              width={160}
+              height={160}
+              className="h-[136px] md:h-[112px] w-auto self-center"
               priority
               unoptimized
             />
@@ -110,9 +118,23 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
             {/* Mobile call button */}
             <a
               href="tel:+17474631853"
-              className="md:hidden bg-brand-red hover:bg-brand-red-dark text-white font-bold text-sm uppercase tracking-wider px-4 py-2 rounded-[3px] transition-colors"
+              className="md:hidden bg-brand-red hover:bg-brand-red-dark text-white flex items-center justify-center w-10 h-10 rounded-[3px] transition-colors"
+              aria-label="Call now"
             >
-              Call Now
+              <span className="sr-only">Call Now</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12 1.05.3 2.07.54 3.05a2 2 0 0 1-.45 1.95l-1.27 1.27a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 1.95-.45c.98.24 2 .42 3.05.54A2 2 0 0 1 22 16.92z" />
+              </svg>
             </a>
           </div>
 

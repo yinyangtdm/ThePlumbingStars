@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 const services = [
+  "General Inquiry",
   "Drain Cleaning",
   "Sewer Line Repair",
   "Hydro Jetting",

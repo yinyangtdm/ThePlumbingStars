@@ -10,8 +10,7 @@ export interface NavLink {
 const defaultLinks: NavLink[] = [
   { label: "Services", href: "#services" },
   { label: "Why Us", href: "#why-us" },
-  { label: "Los Angeles", href: "/losangeles" },
-  { label: "Ventura", href: "/ventura" },
+  { label: "Areas", href: "/areas" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -37,9 +36,9 @@ export default function MobileMenu({ links = defaultLinks }: { links?: NavLink[]
       </button>
 
       {open && (
-        <div className="absolute top-16 left-0 right-0 bg-brand-navy border-t border-blue-800 z-50 shadow-lg">
+        <div className="absolute top-full left-1/2 -translate-x-1/2 w-screen bg-brand-navy border-t border-blue-800 z-50 shadow-lg">
           <nav className="flex flex-col">
-            <a href="/service-areas" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Areas</a>
+            <a href="/areas" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Areas</a>
             <a href="/services" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Services</a>
             <a href="/resources" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Resources</a>
             <a href="/contact" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Contact</a>
