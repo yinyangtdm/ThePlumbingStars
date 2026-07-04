@@ -6,7 +6,7 @@ const defaultLinks: NavLink[] = [
   { label: "Services", href: "/#services" },
   { label: "Why Us", href: "/#why-us" },
   { label: "Areas", href: "/areas" },
-  { label: "FAQ", href: "/#faq" },
+  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -73,18 +73,47 @@ export default function Header({ links = defaultLinks }: { links?: NavLink[] }) 
                       Pipe Lining
                     </a>
                     <a href="/services/water-heater" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
-                      Water Heater
+                      Water Heater Replacement
                     </a>
                   </div>
                 </div>
               </div>
 
-              <a href="/contact" className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors">
-                Contact
-              </a>
-              <a href="/resources" className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors">
-                Resources
-              </a>
+              {/* Contact dropdown */}
+              <div className="relative group h-[96px]">
+                <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
+                  Contact
+                </button>
+                <div className="hidden group-hover:block absolute left-0 top-full -mt-6 w-64 bg-white border shadow-lg rounded-md z-50">
+                  <a href="/schedule" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                    Schedule a Service
+                  </a>
+                  <a href="/search" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                    Find a Plumbing Star Nearby
+                  </a>
+                  <a href="/leave-review" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                    Leave a Review
+                  </a>
+                </div>
+              </div>
+
+              {/* Resources dropdown */}
+              <div className="relative group h-[96px]">
+                <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
+                  Resources
+                </button>
+                <div className="hidden group-hover:block absolute left-0 top-full -mt-6 w-44 bg-white border shadow-lg rounded-md z-50">
+                  <a href="/coupons" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                    Coupons
+                  </a>
+                  <a href="/faq" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                    FAQ
+                  </a>
+                  <a href="/reviews" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                    Reviews
+                  </a>
+                </div>
+              </div>
             </nav>
           </div>
 

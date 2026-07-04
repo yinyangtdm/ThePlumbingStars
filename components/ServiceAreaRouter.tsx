@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { getRegionByZip } from "@/lib/zipLookup";
+import { countyPathForRegion } from "@/lib/serviceLocations";
 
 export default function ServiceAreaRouter() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function ServiceAreaRouter() {
     }
     const region = getRegionByZip(trimmed);
     if (region) {
-      router.push(`/${region}`);
+      router.push(`${countyPathForRegion(region)}?zip=${trimmed}`);
     } else {
       setError("We couldn't match that ZIP to a service area. Please select your region below or call us.");
     }

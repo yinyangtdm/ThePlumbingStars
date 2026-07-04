@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ServiceMap from "./ServiceMap";
 import {
   sortLocationsByDistance,
@@ -18,6 +18,8 @@ interface Props {
   region: ServiceRegion;
   fallbackCities?: string[];
   initialZip?: string;
+  geoAnchor?: [number, number] | null;
+  geoPrimaryId?: string;
 }
 
 function countyForRegion(region: ServiceRegion): "la" | "ventura" {
@@ -39,32 +41,80 @@ function sortedFromZip(
   return sortLocationsByDistance(locations, coords);
 }
 
+function nearestIdFromZip(
+  locations: ServiceLocation[],
+  zipCode: string,
+  region: ServiceRegion
+): string | undefined {
+  const sorted = sortedFromZip(locations, zipCode, region);
+  return sorted?.[0]?.id;
+}
+
 export default function CountyServiceExplorer({
   initialLocations,
   region,
   fallbackCities = [],
   initialZip = "",
+  geoAnchor = null,
+  geoPrimaryId,
 }: Props) {
   const router = useRouter();
   const [locations, setLocations] = useState(() =>
     sortedFromZip(initialLocations, initialZip, region) ?? initialLocations
   );
-  const [primaryId, setPrimaryId] = useState<string | undefined>();
+  const [primaryId, setPrimaryId] = useState<string | undefined>(() =>
+    initialZip ? nearestIdFromZip(initialLocations, initialZip, region) : undefined
+  );
   const [zip, setZip] = useState(initialZip);
   const [zipError, setZipError] = useState("");
-  const cardRefs = useRef<Record<string, HTMLElement | null>>({});
-
-  const scrollCardIntoView = useCallback((id: string) => {
-    cardRefs.current[id]?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, []);
+  const citiesHeadingRef = useRef<HTMLHeadingElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const mobileScrollDone = useRef(false);
 
   const applySort = useCallback(
     (anchor: [number, number], primary?: string) => {
       setLocations(sortLocationsByDistance(initialLocations, anchor, primary));
       setPrimaryId(primary);
+      requestAnimationFrame(() => {
+        if (listRef.current) {
+          listRef.current.scrollTop = 0;
+        }
+      });
     },
     [initialLocations]
   );
+
+  useEffect(() => {
+    if (initialZip || !geoAnchor) return;
+    applySort(geoAnchor, geoPrimaryId);
+  }, [initialZip, geoAnchor, geoPrimaryId, applySort]);
+
+  useEffect(() => {
+    if (mobileScrollDone.current) return;
+    if (typeof window === "undefined") return;
+    if (!window.matchMedia("(max-width: 1023px)").matches) return;
+    if (locations.length === 0) return;
+
+    const scrollMobileView = () => {
+      const heading = citiesHeadingRef.current;
+      if (!heading) return;
+
+      const headerOffset = 100;
+      const headingBottom = heading.getBoundingClientRect().bottom + window.scrollY;
+      const target = headingBottom - headerOffset;
+
+      if (window.scrollY >= target - 8) return;
+
+      window.scrollTo({ top: Math.max(0, target), behavior: "auto" });
+      mobileScrollDone.current = true;
+    };
+
+    const timer = window.setTimeout(() => {
+      window.requestAnimationFrame(scrollMobileView);
+    }, 300);
+
+    return () => window.clearTimeout(timer);
+  }, [locations]);
 
   const handleZipSearch = useCallback(
     (zipCode: string) => {
@@ -90,13 +140,10 @@ export default function CountyServiceExplorer({
         return;
       }
       setZipError("");
-      applySort(coords, undefined);
-      requestAnimationFrame(() => {
-        const nearest = sortLocationsByDistance(initialLocations, coords)[0];
-        if (nearest) scrollCardIntoView(nearest.id);
-      });
+      const nearest = sortLocationsByDistance(initialLocations, coords)[0];
+      applySort(coords, nearest?.id);
     },
-    [applySort, initialLocations, region, router, scrollCardIntoView]
+    [applySort, initialLocations, region, router]
   );
 
   function handleZipSubmit(e: React.FormEvent) {
@@ -108,16 +155,12 @@ export default function CountyServiceExplorer({
     const loc = initialLocations.find((l) => l.id === id);
     if (!loc) return;
     applySort(loc.coords, id);
-    requestAnimationFrame(() => scrollCardIntoView(id));
   }
 
   function renderLocationCard(loc: ServiceLocation) {
     return (
       <article
         key={loc.id}
-        ref={(el) => {
-          cardRefs.current[loc.id] = el;
-        }}
         className={`bg-white rounded shadow p-4 transition ring-2 shrink-0 ${
           loc.id === primaryId ? "ring-brand-red" : "ring-transparent"
         }`}
@@ -161,7 +204,12 @@ export default function CountyServiceExplorer({
   return (
     <section id="cities-section" className="py-12 px-4 sm:px-6 bg-brand-light">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Cities We Serve</h2>
+        <h2
+          ref={citiesHeadingRef}
+          className="text-2xl font-bold text-gray-900 mb-2"
+        >
+          Cities We Serve
+        </h2>
         <p className="text-gray-500 text-sm mb-6">
           Highlighted service cities — search your ZIP or click a star on the map.
         </p>
@@ -197,7 +245,10 @@ export default function CountyServiceExplorer({
         >
           {/* Cards — left on desktop */}
           <div className="order-2 lg:order-1 lg:flex-1 lg:min-w-0">
-            <div className="flex flex-col gap-4 overflow-visible lg:h-[var(--explorer-height)] lg:overflow-y-auto lg:pr-1">
+            <div
+              ref={listRef}
+              className="flex flex-col gap-4 overflow-visible lg:h-[var(--explorer-height)] lg:overflow-y-auto lg:p-1"
+            >
               {locations.length === 0 ? (
                 <>
                   <p className="text-sm text-gray-600">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
+import { waterHeaterFaqs } from "@/lib/faqs";
 
 export const metadata: Metadata = {
   title: "Water Heater Replacement in Los Angeles & Ventura County | The Plumbing Stars",
@@ -7,31 +8,13 @@ export const metadata: Metadata = {
     "Tank and tankless water heater replacement. Same-day installation, haul-away included. Flat-rate pricing. LA and Ventura County. (747) 463-1853.",
 };
 
-const faqs = [
-  {
-    q: "Can I upgrade from a tank to a tankless heater?",
-    a: "Yes. Tankless installation typically requires a larger gas line and dedicated venting. We assess your current setup, provide a flat-rate quote, and complete the upgrade in a single visit if the infrastructure supports it.",
-  },
-  {
-    q: "How long does water heater replacement take?",
-    a: "Standard tank replacement takes 2–3 hours. Tankless installation with gas line work runs 3–5 hours.",
-  },
-  {
-    q: "My water heater is leaking — is it an emergency?",
-    a: "A slow seep from the pressure relief valve is a warning sign but not immediately critical. Water actively pooling from the tank base or connections warrants same-day service. Call us and we will tell you whether to shut off the gas and water supply in the meantime.",
-  },
-  {
-    q: "Do you install both gas and electric water heaters?",
-    a: "Yes. We service and replace all fuel types — natural gas, propane, and electric, both tank and tankless.",
-  },
-];
-
 export default function WaterHeaterPage() {
   return (
     <ServiceShell
       title="Water Heater Replacement in Los Angeles & Ventura County"
       intro="Tank and tankless replacement, same-day installation, haul-away included — no second trips."
-      faqs={faqs}
+      scheduleLabel="Schedule a Water Heater Replacement"
+      faqs={waterHeaterFaqs}
     >
       {/* Signs it needs replacing */}
       <section className="py-12 px-4 sm:px-6">

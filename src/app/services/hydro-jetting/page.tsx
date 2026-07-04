@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
+import { hydroJettingFaqs } from "@/lib/faqs";
 
 export const metadata: Metadata = {
   title: "Hydro Jetting Services in Los Angeles & Ventura County | The Plumbing Stars",
@@ -7,31 +8,13 @@ export const metadata: Metadata = {
     "High-pressure water clearing for grease, roots, and mineral scale. No chemicals. Flat-rate pricing. LA and Ventura County. (747) 463-1853.",
 };
 
-const faqs = [
-  {
-    q: "Can hydro jetting damage older pipes?",
-    a: "Done correctly, no. We always run a camera inspection first to assess pipe condition and material. If a pipe has structural damage — cracks, root punctures, significant corrosion — we identify it before jetting and address it first.",
-  },
-  {
-    q: "How often should drain lines be hydro jetted?",
-    a: "For most homes, once every 18–24 months for kitchen lines and every few years for the main sewer line. Commercial kitchens and high-volume buildings typically need more frequent service.",
-  },
-  {
-    q: "Is hydro jetting the same as regular snaking?",
-    a: "No. A snake removes soft blockages by mechanical action — hooking or breaking up the clog. Hydro jetting removes the clog and scours the pipe wall clean, eliminating the residue that causes recurrence. It's a more thorough treatment.",
-  },
-  {
-    q: "Will hydro jetting remove tree roots permanently?",
-    a: "It flushes out root debris after mechanical cutting, but doesn't prevent regrowth. If root intrusion is ongoing, pipe lining is the long-term fix — the epoxy surface creates a barrier roots cannot penetrate.",
-  },
-];
-
 export default function HydroJettingPage() {
   return (
     <ServiceShell
       title="Hydro Jetting Services in Los Angeles & Ventura County"
       intro="High-pressure water that scours pipe walls completely clean — no chemicals, no residue, no recurrence."
-      faqs={faqs}
+      scheduleLabel="Schedule a Hydro Jetting"
+      faqs={hydroJettingFaqs}
     >
       {/* What is hydro jetting */}
       <section className="py-12 px-4 sm:px-6">

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getRegionByZip } from "@/lib/zipLookup";
+import { countyPathForRegion } from "@/lib/serviceLocations";
 
 export default function ChooseArea() {
   const [zip, setZip] = useState("");
@@ -19,7 +20,7 @@ export default function ChooseArea() {
     }
     const region = getRegionByZip(cleaned);
     if (region) {
-      router.push(`/${region}`);
+      router.push(`${countyPathForRegion(region)}?zip=${cleaned}`);
     } else {
       setError("We don't currently service that ZIP code. Try another or contact us.");
     }

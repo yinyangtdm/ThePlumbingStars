@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
+import { pipeLiningFaqs } from "@/lib/faqs";
 
 export const metadata: Metadata = {
   title: "CIPP Pipe Lining in Los Angeles & Ventura County | The Plumbing Stars",
@@ -7,31 +8,13 @@ export const metadata: Metadata = {
     "Cured-In-Place Pipe lining restores damaged sewer lines without excavation. 50-year service life. Flat-rate pricing. LA and Ventura County. (747) 463-1853.",
 };
 
-const faqs = [
-  {
-    q: "Will lining reduce my pipe's interior diameter?",
-    a: "Slightly. The liner wall is typically 5–8mm thick. For a standard 4-inch residential pipe, this reduces the interior by less than 10% and has no measurable impact on flow — the smooth epoxy surface actually improves flow compared to a corroded or scale-coated original.",
-  },
-  {
-    q: "Can you line a pipe that has tree roots in it?",
-    a: "Yes, but the roots must be removed first. We use mechanical cutting followed by hydro jetting to clear the pipe completely. The cured epoxy liner then creates a sealed interior surface that roots cannot penetrate.",
-  },
-  {
-    q: "How does CIPP compare to pipe bursting?",
-    a: "CIPP lining is ideal when the existing pipe's structure is largely intact but has cracks, leaks, or root entry points — the liner reinforces what is already there. Pipe bursting is used when the pipe is too deteriorated to serve as a structural guide and a completely new pipe is needed.",
-  },
-  {
-    q: "How long does CIPP installation take?",
-    a: "Most residential lining jobs complete in a single day. The curing process takes 2–4 hours depending on the liner material and method used.",
-  },
-];
-
 export default function PipeLiningPage() {
   return (
     <ServiceShell
       title="CIPP Pipe Lining in Los Angeles & Ventura County"
       intro="A new pipe inside your existing one — no digging, no disruption, 50-year service life."
-      faqs={faqs}
+      scheduleLabel="Schedule a Pipe Lining"
+      faqs={pipeLiningFaqs}
     >
       {/* What CIPP is */}
       <section className="py-12 px-4 sm:px-6">

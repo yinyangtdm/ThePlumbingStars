@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
+import { sewerRepairFaqs } from "@/lib/faqs";
 
 export const metadata: Metadata = {
   title: "Sewer Line Repair in Los Angeles & Ventura County | The Plumbing Stars",
@@ -7,31 +8,13 @@ export const metadata: Metadata = {
     "HD camera diagnosis, two written options, flat-rate repair. Serving LA and Ventura County 24/7. Spot repairs to full replacements. (747) 463-1853.",
 };
 
-const faqs = [
-  {
-    q: "How do I know if it's a clog or a sewer line problem?",
-    a: "A single slow drain is usually a localized clog. When two or more fixtures back up simultaneously, or flushing one toilet causes gurgling in a nearby sink or tub, the problem is almost certainly in the main sewer line.",
-  },
-  {
-    q: "How long does a sewer line repair take?",
-    a: "A targeted spot repair typically takes 3–6 hours. Larger repairs or full section replacements may run 1–2 days depending on access and site conditions.",
-  },
-  {
-    q: "Do you work on commercial properties?",
-    a: "Yes. We handle residential and commercial properties, including apartment buildings, retail spaces, and restaurants.",
-  },
-  {
-    q: "What is the difference between a spot repair and full replacement?",
-    a: "A spot repair addresses a single localized failure — we open a small access point, cut out the damaged section, and replace it. Full replacement (or trenchless lining/bursting) makes more sense when the pipe has multiple problem areas or has reached the end of its service life.",
-  },
-];
-
 export default function SewerRepairPage() {
   return (
     <ServiceShell
       title="Sewer Line Repair in Los Angeles & Ventura County"
       intro="We show you the footage, present two written options, and fix it on schedule — no guesswork, no surprises."
-      faqs={faqs}
+      scheduleLabel="Schedule a Sewer Line Repair"
+      faqs={sewerRepairFaqs}
     >
       {/* Warning signs */}
       <section className="py-12 px-4 sm:px-6">

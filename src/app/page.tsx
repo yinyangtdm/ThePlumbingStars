@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ServiceAreaRouter from "@/components/ServiceAreaRouter";
+import ContactCards from "@/components/ContactCards";
 
 const services = [
   {
@@ -71,29 +72,6 @@ const whyUs = [
   },
 ];
 
-const faqs = [
-  {
-    q: "How quickly can you get here?",
-    a: "We typically arrive within 60 minutes for emergency calls. For scheduled service we offer 2-hour arrival windows with a text when we're on our way.",
-  },
-  {
-    q: "Do you charge for estimates?",
-    a: "No. We diagnose the problem, explain what we found, and give you a flat-rate price in writing — before any work begins.",
-  },
-  {
-    q: "Do you charge extra for nights, weekends, or holidays?",
-    a: "Never. Our 24/7 service comes at the same flat rate no matter when you call.",
-  },
-  {
-    q: "What does your guarantee cover?",
-    a: "Any workmanship defect on the repair we performed. If something we fixed fails, we come back and fix it — no charge.",
-  },
-  {
-    q: "Which areas do you serve?",
-    a: "We serve 75+ communities across Los Angeles County and all of Ventura County, including Ventura, Oxnard, Thousand Oaks, Camarillo, and Simi Valley.",
-  },
-];
-
 export default function Home() {
   return (
     <>
@@ -122,10 +100,10 @@ export default function Home() {
                 Call (747) 463-1853
               </a>
               <a
-                href="#service-areas"
+                href="/schedule"
                 className="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-[3px] text-lg transition-colors border border-white/30"
               >
-                Book a Visit
+                Schedule a Service
               </a>
             </div>
             <div className="grid grid-cols-3 gap-6 max-w-xs mx-auto text-center">
@@ -193,10 +171,10 @@ export default function Home() {
               And if we can&apos;t clear it, you owe us nothing.
             </p>
             <a
-              href="#service-areas"
+              href="/schedule"
               className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-4 rounded-[3px] text-lg transition-colors"
             >
-              Book a Visit
+              Schedule a Service
             </a>
           </div>
         </section>
@@ -226,53 +204,20 @@ export default function Home() {
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Find your service area.</h2>
             <p className="text-gray-500 mb-8">
-              Enter your ZIP code or choose your county to book a visit and see area-specific
+              Enter your ZIP code or choose your county to schedule a service and see area-specific
               pricing and availability.
             </p>
             <ServiceAreaRouter />
           </div>
         </section>
 
-        {/* FAQ */}
-        <section id="faq" className="py-16 px-4 sm:px-6 bg-brand-light">
-          <div className="max-w-2xl mx-auto">
+        {/* Contact */}
+        <section id="contact" className="py-16 px-4 sm:px-6 bg-brand-light">
+          <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 text-center mb-10">
-              Common questions.
+              How can we help?
             </h2>
-            <div className="space-y-6">
-              {faqs.map((faq) => (
-                <div
-                  key={faq.q}
-                  className="border-b border-gray-200 pb-6 last:border-0 last:pb-0"
-                >
-                  <h3 className="font-bold text-gray-900 mb-2">{faq.q}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{faq.a}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Contact CTA */}
-        <section id="contact" className="py-16 px-4 sm:px-6 bg-brand-navy chev-pattern text-white text-center">
-          <div className="max-w-xl mx-auto">
-            <h2 className="text-3xl font-bold mb-3">Ready to get it fixed?</h2>
-            <p className="text-white/80 mb-6">Call us 24/7 — real people answer the phone.</p>
-            <a
-              href="tel:+17474631853"
-              className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-10 py-4 rounded-[3px] text-xl transition-colors mb-4"
-            >
-              (747) 463-1853
-            </a>
-            <p className="text-white/60 text-sm">
-              Or email{" "}
-              <a
-                href="mailto:info@theplumbingstars.com"
-                className="underline hover:text-white transition-colors"
-              >
-                info@theplumbingstars.com
-              </a>
-            </p>
+            <ContactCards />
           </div>
         </section>
       </main>

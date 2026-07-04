@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
+import { trenchlessReplacementFaqs } from "@/lib/faqs";
 
 export const metadata: Metadata = {
   title: "Trenchless Sewer Replacement in Los Angeles & Ventura County | The Plumbing Stars",
@@ -7,31 +8,13 @@ export const metadata: Metadata = {
     "Replace your sewer line without excavation. Pipe bursting and CIPP lining. No driveway damage, 1–2 day completion. LA and Ventura County. (747) 463-1853.",
 };
 
-const faqs = [
-  {
-    q: "How do I know if my pipe qualifies for trenchless?",
-    a: "A camera inspection tells us definitively. If the pipe has a passable interior, consistent diameter, and no extreme bends, trenchless is almost always an option.",
-  },
-  {
-    q: "Is a trenchlessly replaced pipe as good as a newly excavated one?",
-    a: "In most cases better. HDPE pipe (pipe bursting) and cured epoxy liners are non-corrosive, root-resistant, and rated for 50+ year service life — outperforming the original clay or cast iron.",
-  },
-  {
-    q: "How long does trenchless replacement take?",
-    a: "Most residential projects complete in one to two days — camera inspection, access preparation, lining or bursting, and final verification included.",
-  },
-  {
-    q: "Is trenchless covered by homeowners insurance?",
-    a: "It depends on the policy and cause of failure. Sudden failures from root intrusion or external damage are more commonly covered than gradual deterioration. We provide photo and video documentation of the cause that you can submit with a claim.",
-  },
-];
-
 export default function TrenchlessReplacementPage() {
   return (
     <ServiceShell
       title="Trenchless Sewer Replacement in Los Angeles & Ventura County"
       intro="A new sewer line without excavating your yard, driveway, or landscaping — completed in one to two days."
-      faqs={faqs}
+      scheduleLabel="Schedule a Trenchless Replacement"
+      faqs={trenchlessReplacementFaqs}
     >
       {/* What trenchless means */}
       <section className="py-12 px-4 sm:px-6">

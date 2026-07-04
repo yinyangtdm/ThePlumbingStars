@@ -69,7 +69,7 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": { "name": "Moorpark" },
       "geometry": {
         "type": "Point",
         "coordinates": [-118.8844211, 34.2792479]

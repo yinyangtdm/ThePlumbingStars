@@ -18,6 +18,15 @@ export default function MobileMenu({ links = defaultLinks }: { links?: NavLink[]
   const [open, setOpen] = useState(false);
   const [areasOpen, setAreasOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
+
+  function closeOthers(except?: "areas" | "services" | "contact" | "resources") {
+    if (except !== "areas") setAreasOpen(false);
+    if (except !== "services") setServicesOpen(false);
+    if (except !== "contact") setContactOpen(false);
+    if (except !== "resources") setResourcesOpen(false);
+  }
 
   return (
     <div className="md:hidden">
@@ -45,7 +54,7 @@ export default function MobileMenu({ links = defaultLinks }: { links?: NavLink[]
               <button
                 onClick={() => {
                   setAreasOpen(!areasOpen);
-                  setServicesOpen(false);
+                  closeOthers(areasOpen ? undefined : "areas");
                 }}
                 className="w-full text-left px-6 py-4 text-white hover:bg-brand-navy-dark flex items-center justify-between"
                 aria-expanded={areasOpen}
@@ -72,7 +81,7 @@ export default function MobileMenu({ links = defaultLinks }: { links?: NavLink[]
               <button
                 onClick={() => {
                   setServicesOpen(!servicesOpen);
-                  setAreasOpen(false);
+                  closeOthers(servicesOpen ? undefined : "services");
                 }}
                 className="w-full text-left px-6 py-4 text-white hover:bg-brand-navy-dark flex items-center justify-between"
                 aria-expanded={servicesOpen}
@@ -104,15 +113,72 @@ export default function MobileMenu({ links = defaultLinks }: { links?: NavLink[]
                       Pipe Lining
                     </a>
                     <a href="/services/water-heater" onClick={() => setOpen(false)} className="block px-3 py-2 text-white hover:bg-brand-navy-dark rounded">
-                      Water Heater
+                      Water Heater Replacement
                     </a>
                   </div>
                 </div>
               )}
             </div>
 
-            <a href="/resources" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Resources</a>
-            <a href="/contact" onClick={() => setOpen(false)} className="px-6 py-4 text-white hover:bg-brand-navy-dark border-b border-blue-800 font-medium">Contact</a>
+            {/* Contact dropdown */}
+            <div className="border-b border-blue-800">
+              <button
+                onClick={() => {
+                  setContactOpen(!contactOpen);
+                  closeOthers(contactOpen ? undefined : "contact");
+                }}
+                className="w-full text-left px-6 py-4 text-white hover:bg-brand-navy-dark flex items-center justify-between"
+                aria-expanded={contactOpen}
+              >
+                <span className="font-medium">Contact</span>
+                <svg className={`w-4 h-4 transform ${contactOpen ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 8l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              {contactOpen && (
+                <div className="bg-brand-navy-dark">
+                  <a href="/schedule" onClick={() => setOpen(false)} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
+                    Schedule a Service
+                  </a>
+                  <a href="/search" onClick={() => setOpen(false)} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
+                    Find a Plumbing Star Nearby
+                  </a>
+                  <a href="/leave-review" onClick={() => setOpen(false)} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
+                    Leave a Review
+                  </a>
+                </div>
+              )}
+            </div>
+
+            {/* Resources dropdown */}
+            <div className="border-b border-blue-800">
+              <button
+                onClick={() => {
+                  setResourcesOpen(!resourcesOpen);
+                  closeOthers(resourcesOpen ? undefined : "resources");
+                }}
+                className="w-full text-left px-6 py-4 text-white hover:bg-brand-navy-dark flex items-center justify-between"
+                aria-expanded={resourcesOpen}
+              >
+                <span className="font-medium">Resources</span>
+                <svg className={`w-4 h-4 transform ${resourcesOpen ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 8l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              {resourcesOpen && (
+                <div className="bg-brand-navy-dark">
+                  <a href="/coupons" onClick={() => setOpen(false)} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
+                    Coupons
+                  </a>
+                  <a href="/faq" onClick={() => setOpen(false)} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
+                    FAQ
+                  </a>
+                  <a href="/reviews" onClick={() => setOpen(false)} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
+                    Reviews
+                  </a>
+                </div>
+              )}
+            </div>
           </nav>
         </div>
       )}

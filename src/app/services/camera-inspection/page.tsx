@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
+import { cameraInspectionFaqs } from "@/lib/faqs";
 
 export const metadata: Metadata = {
   title: "Sewer Camera Inspection in Los Angeles & Ventura County | The Plumbing Stars",
@@ -7,31 +8,13 @@ export const metadata: Metadata = {
     "HD sewer camera inspection — see inside your pipes before any work begins. Footage is yours to keep. Serving LA and Ventura County. (747) 463-1853.",
 };
 
-const faqs = [
-  {
-    q: "How far does the camera go?",
-    a: "Standard residential inspections cover from the clean-out to the city main — typically 75 to 100 feet. Longer runs require additional access points, which we can set up on the same visit.",
-  },
-  {
-    q: "Does a camera inspection require any digging?",
-    a: "No. The camera enters through an existing clean-out access point or through a toilet or clean drain. No digging, no wall openings, no damage to your property.",
-  },
-  {
-    q: "How long does it take?",
-    a: "A single-run residential inspection takes about 45 minutes to an hour, including setup, the full run, and reviewing the footage with you on-site.",
-  },
-  {
-    q: "What pipe types can you inspect?",
-    a: "Our cameras are sized for 2-inch through 10-inch diameter pipe and work in ABS plastic, PVC, cast iron, clay tile, and Orangeburg.",
-  },
-];
-
 export default function CameraInspectionPage() {
   return (
     <ServiceShell
       title="Sewer Camera Inspection in Los Angeles & Ventura County"
       intro="See exactly what is inside your pipes — before you agree to anything, before any work begins."
-      faqs={faqs}
+      scheduleLabel="Schedule a Camera Inspection"
+      faqs={cameraInspectionFaqs}
     >
       {/* What it does */}
       <section className="py-12 px-4 sm:px-6">

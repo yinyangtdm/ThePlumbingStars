@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
+import { drainCleaningFaqs } from "@/lib/faqs";
 
 export const metadata: Metadata = {
   title: "Drain Cleaning in Los Angeles & Ventura County | The Plumbing Stars",
@@ -7,31 +8,13 @@ export const metadata: Metadata = {
     "Professional drain cleaning starting at $63. Camera-diagnosed, flat-rate cleared, 30-day guarantee. Serving LA and Ventura County 24/7. (747) 463-1853.",
 };
 
-const faqs = [
-  {
-    q: "Can I just use a hardware-store snake?",
-    a: "For a shallow clog in a single fixture, sometimes. Consumer snakes reach about 25 feet and are difficult to control — they can scratch pipe walls or push a clog deeper rather than retrieve it. If the problem is in the main line or involves root intrusion, a professional tool and camera diagnosis is the right approach.",
-  },
-  {
-    q: "What causes drains to keep clogging repeatedly?",
-    a: "Recurring clogs usually mean one of three things: the blockage was never fully cleared, structural buildup (grease, mineral scale, or root intrusion) has narrowed the main line, or an offset joint or low spot in the pipe is collecting debris. A camera inspection tells us which.",
-  },
-  {
-    q: "How long does a drain cleaning visit take?",
-    a: "Most residential drain cleanings take 45 minutes to 90 minutes from arrival — camera inspection, clearing, and post-clearance verification included.",
-  },
-  {
-    q: "Will there be a mess?",
-    a: "We use drop cloths and shoe covers. The camera and snake go through an existing clean-out or fixture drain — no wall openings, no excavation. We leave the area the way we found it.",
-  },
-];
-
 export default function DrainCleaningPage() {
   return (
     <ServiceShell
       title="Professional Drain Cleaning in Los Angeles & Ventura County"
       intro="Camera-diagnosed, flat-rate cleared, guaranteed for 30 days — or you don't pay."
-      faqs={faqs}
+      scheduleLabel="Schedule a Drain Cleaning"
+      faqs={drainCleaningFaqs}
     >
       {/* Warning signs */}
       <section className="py-12 px-4 sm:px-6">

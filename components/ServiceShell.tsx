@@ -1,6 +1,5 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import ServiceAreaRouter from "./ServiceAreaRouter";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -17,11 +16,18 @@ interface FAQ {
 interface ServiceShellProps {
   title: string;
   intro: string;
+  scheduleLabel: string;
   faqs: FAQ[];
   children: React.ReactNode;
 }
 
-export default function ServiceShell({ title, intro, faqs, children }: ServiceShellProps) {
+export default function ServiceShell({
+  title,
+  intro,
+  scheduleLabel,
+  faqs,
+  children,
+}: ServiceShellProps) {
   return (
     <>
       <Header links={navLinks} />
@@ -33,10 +39,10 @@ export default function ServiceShell({ title, intro, faqs, children }: ServiceSh
             <p className="text-white/80 text-lg max-w-2xl mb-8">{intro}</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a
-                href="#book"
+                href="/schedule"
                 className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
               >
-                Book a Visit
+                {scheduleLabel}
               </a>
               <a
                 href="tel:+17474631853"
@@ -73,17 +79,6 @@ export default function ServiceShell({ title, intro, faqs, children }: ServiceSh
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Book CTA */}
-        <section id="book" className="py-14 px-4 sm:px-6">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Ready to schedule?</h2>
-            <p className="text-gray-500 mb-8">
-              Enter your ZIP code to reach your area&apos;s booking page.
-            </p>
-            <ServiceAreaRouter />
           </div>
         </section>
       </main>
