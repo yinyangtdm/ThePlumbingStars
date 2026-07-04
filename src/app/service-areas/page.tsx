@@ -33,11 +33,17 @@ export default function ServiceAreasPage() {
         <Breadcrumbs items={[{ name: "Home", path: "/" }, { name: "Service Areas", path: "/service-areas" }]} />
 
         {/* Hero */}
-        <section className="py-12 px-4 sm:px-6">
+        <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-3xl sm:text-4xl font-bold text-brand-navy mb-4">
-              Where We Serve
-            </h1>
+            <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-2">
+              Los Angeles &amp; Ventura County
+            </p>
+            <h1 className="text-4xl sm:text-5xl font-bold">Where We Serve</h1>
+          </div>
+        </section>
+
+        <section className="pt-12 px-4 sm:px-6">
+          <div className="max-w-3xl mx-auto text-center">
             <p className="text-gray-600">
               Select your county below, or enter your ZIP code to jump straight to the cities we
               cover near you.

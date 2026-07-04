@@ -27,17 +27,29 @@ export default async function SchedulePage({
   return (
     <>
       <Header />
-      <main className="py-16 px-4 sm:px-6">
+      <main>
         <Breadcrumbs items={[{ name: "Home", path: "/" }, { name: "Schedule", path: "/schedule" }]} />
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold mb-4">Schedule Online</h1>
-          <p className="text-gray-600 mb-6">
-            {coupon
-              ? "Your coupon is applied below. Complete the form to request your visit."
-              : "Choose your service and request a visit below."}
-          </p>
-          <div className="bg-white rounded-xl p-6 shadow-sm">
-            <BookingForm region={region} coupon={coupon} />
+
+        {/* Hero */}
+        <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-2">
+              Book Online
+            </p>
+            <h1 className="text-4xl sm:text-5xl font-bold">Schedule Online</h1>
+          </div>
+        </section>
+
+        <div className="py-16 px-4 sm:px-6">
+          <div className="max-w-3xl mx-auto">
+            <p className="text-gray-600 mb-6">
+              {coupon
+                ? "Your coupon is applied below. Complete the form to request your visit."
+                : "Choose your service and request a visit below."}
+            </p>
+            <div className="bg-white rounded-xl p-6 shadow-sm">
+              <BookingForm region={region} coupon={coupon} />
+            </div>
           </div>
         </div>
       </main>

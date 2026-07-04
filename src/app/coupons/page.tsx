@@ -19,14 +19,26 @@ export default function CouponsPage() {
   return (
     <>
       <Header />
-      <main className="py-16 px-4 sm:px-6 bg-brand-light min-h-[60vh]">
+      <main className="bg-brand-light min-h-[60vh]">
         <Breadcrumbs items={[{ name: "Home", path: "/" }, { name: "Coupons", path: "/coupons" }]} />
-        <div className="max-w-3xl mx-auto">
-          <h1 className="font-sans normal-case text-3xl font-bold text-gray-900 mb-2">Coupons</h1>
-          <p className="text-gray-500 mb-8">
-            Save on drain, sewer, and water heater services across Los Angeles and Ventura County.
-          </p>
-          <CouponGrid />
+
+        {/* Hero */}
+        <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-2">
+              Special Offers
+            </p>
+            <h1 className="text-4xl sm:text-5xl font-bold">Coupons</h1>
+          </div>
+        </section>
+
+        <div className="py-16 px-4 sm:px-6">
+          <div className="max-w-3xl mx-auto">
+            <p className="text-gray-500 mb-8">
+              Save on drain, sewer, and water heater services across Los Angeles and Ventura County.
+            </p>
+            <CouponGrid />
+          </div>
         </div>
       </main>
       <Footer />

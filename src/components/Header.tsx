@@ -5,7 +5,7 @@ import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 export default function Header() {
   return (
-    <header className="bg-brand-light sticky top-0 z-40 border-b-2 border-brand-navy">
+    <header className="bg-brand-header sticky top-0 z-40 border-b-2 border-brand-navy">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="relative flex items-center justify-between py-0 md:py-2 min-h-[140px] md:min-h-[96px]">
 

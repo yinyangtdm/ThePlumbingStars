@@ -10,6 +10,7 @@
   --brand-sky-light: #e9f0f9;
   --brand-gold: #f5c518;
   --brand-light: #f5f7fb;
+  --brand-header: #eceff4;
   --background: #ffffff;
   --foreground: #0c1b30;
 }
@@ -26,6 +27,7 @@
   --color-brand-sky-light: var(--brand-sky-light);
   --color-brand-gold: var(--brand-gold);
   --color-brand-light: var(--brand-light);
+  --color-brand-header: var(--brand-header);
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
 }

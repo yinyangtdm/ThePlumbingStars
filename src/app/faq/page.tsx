@@ -25,13 +25,23 @@ export default function FaqPage() {
     <>
       <JsonLd data={faqPageSchema(allFaqs)} />
       <Header />
-      <main className="py-16 px-4 sm:px-6 bg-brand-light min-h-[60vh]">
+      <main className="bg-brand-light min-h-[60vh]">
         <Breadcrumbs items={[{ name: "Home", path: "/" }, { name: "FAQ", path: "/faq" }]} />
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-10">
-            Frequently Asked Questions
-          </h1>
-          <FaqTabs groups={faqGroups} />
+
+        {/* Hero */}
+        <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-2">
+              Got Questions?
+            </p>
+            <h1 className="text-4xl sm:text-5xl font-bold">Frequently Asked Questions</h1>
+          </div>
+        </section>
+
+        <div className="py-16 px-4 sm:px-6">
+          <div className="max-w-2xl mx-auto">
+            <FaqTabs groups={faqGroups} />
+          </div>
         </div>
       </main>
       <Footer />

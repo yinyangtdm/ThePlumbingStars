@@ -15,11 +15,23 @@ export default function SearchPage() {
   return (
     <>
       <Header />
-      <main className="py-16 px-4 sm:px-6">
+      <main>
         <Breadcrumbs items={[{ name: "Home", path: "/" }, { name: "Search", path: "/search" }]} />
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold mb-6">Search by City or ZIP</h1>
-          <SearchForm />
+
+        {/* Hero */}
+        <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-2">
+              Find Your Area
+            </p>
+            <h1 className="text-4xl sm:text-5xl font-bold">Search by City or ZIP</h1>
+          </div>
+        </section>
+
+        <div className="py-16 px-4 sm:px-6">
+          <div className="max-w-3xl mx-auto">
+            <SearchForm />
+          </div>
         </div>
       </main>
       <Footer />
