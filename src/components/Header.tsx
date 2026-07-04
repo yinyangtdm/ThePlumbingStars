@@ -30,7 +30,7 @@ export default function Header() {
                 <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
                   Areas
                 </button>
-                <div className="hidden group-hover:block absolute left-0 top-full -mt-6 w-52 bg-white border shadow-lg rounded-md z-50 p-3">
+                <div className="hidden group-hover:block absolute left-2 top-full w-52 bg-white border shadow-lg rounded-md z-50 p-3">
                   <Link href="/losangeles" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Los Angeles County
                   </Link>
@@ -48,7 +48,7 @@ export default function Header() {
                 <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
                   Services
                 </button>
-                <div className="hidden group-hover:block absolute left-0 top-full -mt-6 w-64 bg-white border shadow-lg rounded-md z-50 p-3">
+                <div className="hidden group-hover:block absolute left-2 top-full w-64 bg-white border shadow-lg rounded-md z-50 p-3">
                   <div className="grid grid-cols-1 gap-1">
                     <Link href="/services/drain-cleaning" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                       Drain Cleaning
@@ -80,7 +80,7 @@ export default function Header() {
                 <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
                   Contact
                 </button>
-                <div className="hidden group-hover:block absolute left-0 top-full -mt-6 w-64 bg-white border shadow-lg rounded-md z-50 p-3">
+                <div className="hidden group-hover:block absolute left-2 top-full w-64 bg-white border shadow-lg rounded-md z-50 p-3">
                   <Link href="/schedule" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Schedule a Service
                   </Link>
@@ -98,7 +98,7 @@ export default function Header() {
                 <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
                   Resources
                 </button>
-                <div className="hidden group-hover:block absolute left-0 top-full -mt-6 w-44 bg-white border shadow-lg rounded-md z-50 p-3">
+                <div className="hidden group-hover:block absolute left-2 top-full w-44 bg-white border shadow-lg rounded-md z-50 p-3">
                   <Link href="/coupons" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Coupons
                   </Link>
