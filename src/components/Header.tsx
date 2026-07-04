@@ -30,14 +30,14 @@ export default function Header() {
                 <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
                   Areas
                 </button>
-                <div className="hidden group-hover:block absolute left-0 top-full -mt-6 w-52 bg-white border shadow-lg rounded-md z-50">
-                  <Link href="/losangeles" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                <div className="hidden group-hover:block absolute left-0 top-full -mt-6 w-52 bg-white border shadow-lg rounded-md z-50 p-3">
+                  <Link href="/losangeles" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Los Angeles County
                   </Link>
-                  <Link href="/ventura" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                  <Link href="/ventura" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Ventura County
                   </Link>
-                  <Link href="/service-areas" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light border-t border-gray-100">
+                  <Link href="/service-areas" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light border-t border-gray-100 rounded">
                     All Service Areas
                   </Link>
                 </div>
@@ -80,14 +80,14 @@ export default function Header() {
                 <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
                   Contact
                 </button>
-                <div className="hidden group-hover:block absolute left-0 top-full -mt-6 w-64 bg-white border shadow-lg rounded-md z-50">
-                  <Link href="/schedule" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                <div className="hidden group-hover:block absolute left-0 top-full -mt-6 w-64 bg-white border shadow-lg rounded-md z-50 p-3">
+                  <Link href="/schedule" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Schedule a Service
                   </Link>
-                  <Link href="/search" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                  <Link href="/search" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Find a Plumbing Star Nearby
                   </Link>
-                  <Link href="/leave-review" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                  <Link href="/leave-review" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Leave a Review
                   </Link>
                 </div>
@@ -98,14 +98,14 @@ export default function Header() {
                 <button className="text-brand-navy text-sm font-bold uppercase tracking-[0.1em] hover:text-brand-red transition-colors h-full flex items-center px-2">
                   Resources
                 </button>
-                <div className="hidden group-hover:block absolute left-0 top-full -mt-6 w-44 bg-white border shadow-lg rounded-md z-50">
-                  <Link href="/coupons" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                <div className="hidden group-hover:block absolute left-0 top-full -mt-6 w-44 bg-white border shadow-lg rounded-md z-50 p-3">
+                  <Link href="/coupons" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Coupons
                   </Link>
-                  <Link href="/faq" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                  <Link href="/faq" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     FAQ
                   </Link>
-                  <Link href="/reviews" className="block px-4 py-2 text-sm text-brand-navy hover:bg-brand-sky-light">
+                  <Link href="/reviews" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Reviews
                   </Link>
                 </div>
