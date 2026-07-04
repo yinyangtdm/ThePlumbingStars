@@ -2,15 +2,22 @@ import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
 import { drainCleaningFaqs } from "@/lib/faqs";
 
+const title = "Drain Cleaning in Los Angeles & Ventura County";
+const description =
+  "Professional drain cleaning starting at $63. Camera-diagnosed, flat-rate cleared, 30-day guarantee. Serving LA and Ventura County 24/7. (747) 463-1853.";
+
 export const metadata: Metadata = {
-  title: "Drain Cleaning in Los Angeles & Ventura County | The Plumbing Stars",
-  description:
-    "Professional drain cleaning starting at $63. Camera-diagnosed, flat-rate cleared, 30-day guarantee. Serving LA and Ventura County 24/7. (747) 463-1853.",
+  title,
+  description,
+  alternates: { canonical: "/services/drain-cleaning" },
+  openGraph: { title, description },
 };
 
 export default function DrainCleaningPage() {
   return (
     <ServiceShell
+      serviceName="Drain Cleaning"
+      slug="drain-cleaning"
       title="Professional Drain Cleaning in Los Angeles & Ventura County"
       intro="Camera-diagnosed, flat-rate cleared, guaranteed for 30 days — or you don't pay."
       scheduleLabel="Schedule a Drain Cleaning"

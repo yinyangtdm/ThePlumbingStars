@@ -4,7 +4,7 @@ import { isEmailConfigured, sendLeadEmail, type LeadData } from "@/lib/mailer";
 export async function POST(req: NextRequest) {
   // Parse & validate
   const body = await req.json();
-  const { name, phone, email, address, service, preferredDate, preferredTime, description, region } =
+  const { name, phone, email, address, service, preferredDate, preferredTime, description, region, coupon } =
     body as Partial<LeadData & { preferredDate: string; preferredTime: string }>;
 
   if (!name || !phone || !address || !service) {
@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
     preferredTime,
     description,
     region: region ?? "losangeles",
+    coupon,
   };
 
   // Tier 2 — Email

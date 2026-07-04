@@ -1,22 +1,18 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import CountyPageShell from "@/components/CountyPageShell";
-import { buildLocationsFromGeoJson } from "@/lib/serviceLocations";
 import fs from "fs";
 import path from "path";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import CountyPageShell from "@/components/CountyPageShell";
+import { buildLocationsFromGeoJson } from "@/lib/serviceLocations";
 
 export const metadata: Metadata = {
-  title: "The Plumbing Stars | Los Angeles Plumbing Services",
+  title: "Los Angeles County Plumbing Services",
   description:
     "Licensed plumbers serving 75+ LA communities — San Fernando Valley, Westside, Glendale, Pasadena & more. Drain cleaning, sewer repair, hydro jetting. 24/7. (747) 463-1853.",
+  alternates: { canonical: "/losangeles" },
 };
-
-const navLinks = [
-  { label: "All Areas", href: "/" },
-  { label: "Services", href: "/#services" },
-  { label: "Book Now", href: "/schedule" },
-];
 
 const cities = [
   "Agoura Hills", "Altadena", "Arleta", "Atwater Village",
@@ -64,8 +60,15 @@ export default async function LosAngelesPage({
 
   return (
     <>
-      <Header links={navLinks} />
+      <Header />
       <main>
+        <Breadcrumbs
+          items={[
+            { name: "Home", path: "/" },
+            { name: "Service Areas", path: "/service-areas" },
+            { name: "Los Angeles County", path: "/losangeles" },
+          ]}
+        />
         <CountyPageShell
           region="losangeles"
           countyLabel="Los Angeles County"

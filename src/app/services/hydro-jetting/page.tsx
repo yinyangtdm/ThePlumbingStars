@@ -2,15 +2,22 @@ import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
 import { hydroJettingFaqs } from "@/lib/faqs";
 
+const title = "Hydro Jetting Services in Los Angeles & Ventura County";
+const description =
+  "High-pressure water clearing for grease, roots, and mineral scale. No chemicals. Flat-rate pricing. LA and Ventura County. (747) 463-1853.";
+
 export const metadata: Metadata = {
-  title: "Hydro Jetting Services in Los Angeles & Ventura County | The Plumbing Stars",
-  description:
-    "High-pressure water clearing for grease, roots, and mineral scale. No chemicals. Flat-rate pricing. LA and Ventura County. (747) 463-1853.",
+  title,
+  description,
+  alternates: { canonical: "/services/hydro-jetting" },
+  openGraph: { title, description },
 };
 
 export default function HydroJettingPage() {
   return (
     <ServiceShell
+      serviceName="Hydro Jetting"
+      slug="hydro-jetting"
       title="Hydro Jetting Services in Los Angeles & Ventura County"
       intro="High-pressure water that scours pipe walls completely clean — no chemicals, no residue, no recurrence."
       scheduleLabel="Schedule a Hydro Jetting"

@@ -2,15 +2,22 @@ import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
 import { cameraInspectionFaqs } from "@/lib/faqs";
 
+const title = "Sewer Camera Inspection in Los Angeles & Ventura County";
+const description =
+  "HD sewer camera inspection — see inside your pipes before any work begins. Footage is yours to keep. Serving LA and Ventura County. (747) 463-1853.";
+
 export const metadata: Metadata = {
-  title: "Sewer Camera Inspection in Los Angeles & Ventura County | The Plumbing Stars",
-  description:
-    "HD sewer camera inspection — see inside your pipes before any work begins. Footage is yours to keep. Serving LA and Ventura County. (747) 463-1853.",
+  title,
+  description,
+  alternates: { canonical: "/services/camera-inspection" },
+  openGraph: { title, description },
 };
 
 export default function CameraInspectionPage() {
   return (
     <ServiceShell
+      serviceName="Camera Inspection"
+      slug="camera-inspection"
       title="Sewer Camera Inspection in Los Angeles & Ventura County"
       intro="See exactly what is inside your pipes — before you agree to anything, before any work begins."
       scheduleLabel="Schedule a Camera Inspection"

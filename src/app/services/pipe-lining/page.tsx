@@ -2,15 +2,22 @@ import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
 import { pipeLiningFaqs } from "@/lib/faqs";
 
+const title = "CIPP Pipe Lining in Los Angeles & Ventura County";
+const description =
+  "Cured-In-Place Pipe lining restores damaged sewer lines without excavation. 50-year service life. Flat-rate pricing. LA and Ventura County. (747) 463-1853.";
+
 export const metadata: Metadata = {
-  title: "CIPP Pipe Lining in Los Angeles & Ventura County | The Plumbing Stars",
-  description:
-    "Cured-In-Place Pipe lining restores damaged sewer lines without excavation. 50-year service life. Flat-rate pricing. LA and Ventura County. (747) 463-1853.",
+  title,
+  description,
+  alternates: { canonical: "/services/pipe-lining" },
+  openGraph: { title, description },
 };
 
 export default function PipeLiningPage() {
   return (
     <ServiceShell
+      serviceName="Pipe Lining"
+      slug="pipe-lining"
       title="CIPP Pipe Lining in Los Angeles & Ventura County"
       intro="A new pipe inside your existing one — no digging, no disruption, 50-year service life."
       scheduleLabel="Schedule a Pipe Lining"

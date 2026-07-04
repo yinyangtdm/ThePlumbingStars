@@ -89,6 +89,7 @@ export interface LeadData {
   preferredTime?: string;
   description?: string;
   region: "losangeles" | "ventura";
+  coupon?: string;
 }
 
 export interface ReviewData {
@@ -112,6 +113,7 @@ export async function sendLeadEmail(data: LeadData): Promise<void> {
         <tr><td><strong>Email</strong></td><td>${data.email ?? "—"}</td></tr>
         <tr><td><strong>Address / ZIP</strong></td><td>${data.address}</td></tr>
         <tr><td><strong>Service</strong></td><td>${data.service}</td></tr>
+        <tr><td><strong>Coupon</strong></td><td>${data.coupon ?? "—"}</td></tr>
         <tr><td><strong>Preferred Date</strong></td><td>${data.preferredDate ?? "—"}</td></tr>
         <tr><td><strong>Preferred Time</strong></td><td>${data.preferredTime ?? "—"}</td></tr>
         <tr><td><strong>Description</strong></td><td>${data.description ?? "—"}</td></tr>

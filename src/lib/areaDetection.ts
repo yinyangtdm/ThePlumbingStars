@@ -44,7 +44,7 @@ async function getVenturaRing(): Promise<GeoJsonRing | null> {
   return venturaRingCache;
 }
 
-export function regionForCoords(
+function regionForCoords(
   lat: number,
   lng: number,
   laRing: GeoJsonRing | null,
@@ -55,7 +55,7 @@ export function regionForCoords(
   return null;
 }
 
-export type AreaDetectionResult = {
+type AreaDetectionResult = {
   city: string;
   coords: [number, number];
   region: ServiceRegion;

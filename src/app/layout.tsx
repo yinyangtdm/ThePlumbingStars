@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope, DM_Serif_Display } from "next/font/google";
+import JsonLd from "@/components/JsonLd";
+import { localBusinessSchema } from "@/lib/structuredData";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE_DEFAULT, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -14,18 +17,25 @@ const dmSerifDisplay = DM_Serif_Display({
 });
 
 export const metadata: Metadata = {
-  title: "The Plumbing Stars | Expert Plumbing Services",
-  description:
-    "Licensed & insured plumbers available 24/7. Drain cleaning, water heater repair, pipe replacement, and emergency plumbing. Fast, reliable service.",
-  metadataBase: new URL("https://theplumbingstars.com"),
+  title: {
+    default: SITE_TITLE_DEFAULT,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  metadataBase: new URL(SITE_URL),
+  alternates: { canonical: "/" },
   icons: { icon: "/logo.svg" },
   openGraph: {
-    title: "The Plumbing Stars | Expert Plumbing Services",
-    description:
-      "Licensed & insured plumbers available 24/7. Fast, reliable service.",
-    url: "https://theplumbingstars.com",
-    siteName: "The Plumbing Stars",
+    title: SITE_TITLE_DEFAULT,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
     type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
 };
 
@@ -39,7 +49,10 @@ export default function RootLayout({
       lang="en"
       className={`${manrope.variable} ${dmSerifDisplay.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <JsonLd data={localBusinessSchema()} />
+        {children}
+      </body>
     </html>
   );
 }

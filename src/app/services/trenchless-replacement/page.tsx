@@ -2,15 +2,22 @@ import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
 import { trenchlessReplacementFaqs } from "@/lib/faqs";
 
+const title = "Trenchless Sewer Replacement in Los Angeles & Ventura County";
+const description =
+  "Replace your sewer line without excavation. Pipe bursting and CIPP lining. No driveway damage, 1–2 day completion. LA and Ventura County. (747) 463-1853.";
+
 export const metadata: Metadata = {
-  title: "Trenchless Sewer Replacement in Los Angeles & Ventura County | The Plumbing Stars",
-  description:
-    "Replace your sewer line without excavation. Pipe bursting and CIPP lining. No driveway damage, 1–2 day completion. LA and Ventura County. (747) 463-1853.",
+  title,
+  description,
+  alternates: { canonical: "/services/trenchless-replacement" },
+  openGraph: { title, description },
 };
 
 export default function TrenchlessReplacementPage() {
   return (
     <ServiceShell
+      serviceName="Trenchless Replacement"
+      slug="trenchless-replacement"
       title="Trenchless Sewer Replacement in Los Angeles & Ventura County"
       intro="A new sewer line without excavating your yard, driveway, or landscaping — completed in one to two days."
       scheduleLabel="Schedule a Trenchless Replacement"

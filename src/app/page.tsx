@@ -1,49 +1,9 @@
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ServiceAreaRouter from "@/components/ServiceAreaRouter";
 import ContactCards from "@/components/ContactCards";
-
-const services = [
-  {
-    name: "Drain Cleaning",
-    description:
-      "Kitchens, bathrooms, laundry rooms, and main lines — diagnosed by camera, cleared at a flat rate, and guaranteed for thirty days.",
-    href: "/services/drain-cleaning",
-  },
-  {
-    name: "Sewer Line Repair",
-    description:
-      "From a hairline crack to a collapsed main line, we'll show you the footage, propose two options, and finish on time.",
-    href: "/services/sewer-repair",
-  },
-  {
-    name: "Hydro Jetting",
-    description:
-      "The pressurised, no-chemical method that scours roots, grease, and scale until pipes look factory-new.",
-    href: "/services/hydro-jetting",
-  },
-  {
-    name: "Camera Inspection",
-    description: "HD video down the line so you understand the problem before you understand the bill.",
-    href: "/services/camera-inspection",
-  },
-  {
-    name: "Trenchless Replacement",
-    description:
-      "No-dig pipe bursting and lining — for the homeowner who'd rather not lose a driveway, lawn, or weekend.",
-    href: "/services/trenchless-replacement",
-  },
-  {
-    name: "Pipe Lining",
-    description: "CIPP trenchless lining restores aging pipes from the inside without excavation.",
-    href: "/services/pipe-lining",
-  },
-  {
-    name: "Water Heater Replacement",
-    description: "Tank & tankless replacement — install, haul-away, same-afternoon turnaround.",
-    href: "/services/water-heater",
-  },
-];
+import { services, servicePath } from "@/lib/services";
+import { PHONE_DISPLAY, PHONE_TEL, LICENSE_NUMBER } from "@/lib/site";
 
 const whyUs = [
   {
@@ -85,8 +45,6 @@ export default function Home() {
             </p>
             <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
               Expert Drain &amp; Sewer Pros.
-              <br className="hidden sm:block" />
-              No surprises. Ever.
             </h1>
             <p className="text-white/80 text-lg sm:text-xl max-w-2xl mx-auto mb-8">
               Licensed technicians with 25+ years on the job. We show up fast, quote flat rates in
@@ -94,17 +52,17 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
               <a
-                href="tel:+17474631853"
+                href={`tel:${PHONE_TEL}`}
                 className="bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-4 rounded-[3px] text-lg transition-colors"
               >
-                Call (747) 463-1853
+                Call {PHONE_DISPLAY}
               </a>
-              <a
+              <Link
                 href="/schedule"
                 className="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-[3px] text-lg transition-colors border border-white/30"
               >
                 Schedule a Service
-              </a>
+              </Link>
             </div>
             <div className="grid grid-cols-3 gap-6 max-w-xs mx-auto text-center">
               <div>
@@ -126,14 +84,12 @@ export default function Home() {
         {/* Trust bar */}
         <div className="bg-brand-red-dark text-white py-3">
           <div className="max-w-4xl mx-auto px-4 flex flex-wrap justify-center gap-x-8 gap-y-1 text-sm font-medium text-center">
-            <span>&#10003; Licensed &amp; Bonded — CA Lic. #998456</span>
+            <span>&#10003; Licensed &amp; Bonded — CA Lic. #{LICENSE_NUMBER}</span>
             <span>&#10003; Written Guarantee</span>
             <span>&#10003; Flat-Rate Pricing</span>
             <span>&#10003; No Trip Charges</span>
           </div>
         </div>
-
-        {/* quick lookup removed per request */}
 
         {/* Services */}
         <section id="services" className="py-16 px-4 sm:px-6">
@@ -146,9 +102,9 @@ export default function Home() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((service) => (
-                <a
-                  key={service.name}
-                  href={service.href}
+                <Link
+                  key={service.slug}
+                  href={servicePath(service.slug)}
                   className="group border border-gray-200 rounded-xl p-6 hover:border-brand-navy hover:shadow-sm transition-all"
                 >
                   <h3 className="font-bold text-gray-900 mb-2 group-hover:text-brand-navy transition-colors">
@@ -156,7 +112,7 @@ export default function Home() {
                   </h3>
                   <p className="text-gray-600 text-sm leading-relaxed mb-3">{service.description}</p>
                   <span className="text-brand-navy text-sm font-medium">Learn more &rarr;</span>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -170,12 +126,12 @@ export default function Home() {
             <p className="text-white/80 mb-6">
               And if we can&apos;t clear it, you owe us nothing.
             </p>
-            <a
+            <Link
               href="/schedule"
               className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-4 rounded-[3px] text-lg transition-colors"
             >
               Schedule a Service
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -196,18 +152,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Service Areas */}
-        <section id="service-areas" className="py-16 px-4 sm:px-6">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Find your service area.</h2>
-            <p className="text-gray-500 mb-8">
-              Enter your ZIP code or choose your county to schedule a service and see area-specific
-              pricing and availability.
-            </p>
-            <ServiceAreaRouter />
           </div>
         </section>
 

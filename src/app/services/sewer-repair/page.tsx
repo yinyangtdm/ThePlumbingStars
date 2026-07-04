@@ -2,15 +2,22 @@ import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
 import { sewerRepairFaqs } from "@/lib/faqs";
 
+const title = "Sewer Line Repair in Los Angeles & Ventura County";
+const description =
+  "HD camera diagnosis, two written options, flat-rate repair. Serving LA and Ventura County 24/7. Spot repairs to full replacements. (747) 463-1853.";
+
 export const metadata: Metadata = {
-  title: "Sewer Line Repair in Los Angeles & Ventura County | The Plumbing Stars",
-  description:
-    "HD camera diagnosis, two written options, flat-rate repair. Serving LA and Ventura County 24/7. Spot repairs to full replacements. (747) 463-1853.",
+  title,
+  description,
+  alternates: { canonical: "/services/sewer-repair" },
+  openGraph: { title, description },
 };
 
 export default function SewerRepairPage() {
   return (
     <ServiceShell
+      serviceName="Sewer Line Repair"
+      slug="sewer-repair"
       title="Sewer Line Repair in Los Angeles & Ventura County"
       intro="We show you the footage, present two written options, and fix it on schedule — no guesswork, no surprises."
       scheduleLabel="Schedule a Sewer Line Repair"

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { getRegionByZip } from "@/lib/zipLookup";
 import { countyPathForRegion } from "@/lib/serviceLocations";
 
-export default function ChooseArea() {
+export default function ChooseAreaClient() {
   const [zip, setZip] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -28,9 +28,12 @@ export default function ChooseArea() {
 
   return (
     <form onSubmit={onSubmit} className="space-y-3">
-      <label className="block text-sm font-medium text-brand-navy">Enter ZIP code</label>
+      <label htmlFor="area-zip" className="block text-sm font-medium text-brand-navy">
+        Enter ZIP code
+      </label>
       <div className="flex gap-2 items-center">
         <input
+          id="area-zip"
           value={zip}
           onChange={(e) => setZip(e.target.value)}
           placeholder="e.g. 91301"
@@ -44,4 +47,3 @@ export default function ChooseArea() {
     </form>
   );
 }
-

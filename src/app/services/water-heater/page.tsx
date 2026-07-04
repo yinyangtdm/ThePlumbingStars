@@ -2,15 +2,22 @@ import type { Metadata } from "next";
 import ServiceShell from "@/components/ServiceShell";
 import { waterHeaterFaqs } from "@/lib/faqs";
 
+const title = "Water Heater Replacement in Los Angeles & Ventura County";
+const description =
+  "Tank and tankless water heater replacement. Same-day installation, haul-away included. Flat-rate pricing. LA and Ventura County. (747) 463-1853.";
+
 export const metadata: Metadata = {
-  title: "Water Heater Replacement in Los Angeles & Ventura County | The Plumbing Stars",
-  description:
-    "Tank and tankless water heater replacement. Same-day installation, haul-away included. Flat-rate pricing. LA and Ventura County. (747) 463-1853.",
+  title,
+  description,
+  alternates: { canonical: "/services/water-heater" },
+  openGraph: { title, description },
 };
 
 export default function WaterHeaterPage() {
   return (
     <ServiceShell
+      serviceName="Water Heater Replacement"
+      slug="water-heater"
       title="Water Heater Replacement in Los Angeles & Ventura County"
       intro="Tank and tankless replacement, same-day installation, haul-away included — no second trips."
       scheduleLabel="Schedule a Water Heater Replacement"

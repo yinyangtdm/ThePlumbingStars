@@ -1,22 +1,18 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import CountyPageShell from "@/components/CountyPageShell";
-import { buildLocationsFromGeoJson } from "@/lib/serviceLocations";
 import fs from "fs";
 import path from "path";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import CountyPageShell from "@/components/CountyPageShell";
+import { buildLocationsFromGeoJson } from "@/lib/serviceLocations";
 
 export const metadata: Metadata = {
-  title: "The Plumbing Stars | Ventura County Plumbing Services",
+  title: "Ventura County Plumbing Services",
   description:
     "Licensed plumbers serving Ventura, Oxnard, Thousand Oaks, Camarillo & Simi Valley. Drain cleaning, sewer repair, hydro jetting. 24/7. (747) 463-1853.",
+  alternates: { canonical: "/ventura" },
 };
-
-const navLinks = [
-  { label: "All Areas", href: "/" },
-  { label: "Services", href: "/#services" },
-  { label: "Book Now", href: "/schedule" },
-];
 
 const cities = [
   "Ventura",
@@ -60,8 +56,15 @@ export default async function VenturaPage({
 
   return (
     <>
-      <Header links={navLinks} />
+      <Header />
       <main>
+        <Breadcrumbs
+          items={[
+            { name: "Home", path: "/" },
+            { name: "Service Areas", path: "/service-areas" },
+            { name: "Ventura County", path: "/ventura" },
+          ]}
+        />
         <CountyPageShell
           region="ventura"
           countyLabel="Ventura County"
