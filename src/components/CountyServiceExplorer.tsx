@@ -258,7 +258,7 @@ export default function CountyServiceExplorer({
           <div className="order-2 lg:order-1 lg:flex-1 lg:min-w-0">
             <div
               ref={listRef}
-              className="flex flex-col gap-4 overflow-visible lg:h-[var(--explorer-height)] lg:overflow-y-auto lg:p-1"
+              className="flex flex-col gap-4 overflow-visible lg:h-[var(--explorer-height)] lg:overflow-y-auto lg:p-1 city-list-scrollbar"
             >
               {locations.length === 0 ? (
                 <>
@@ -274,6 +274,18 @@ export default function CountyServiceExplorer({
               ) : (
                 locations.map(renderLocationCard)
               )}
+            </div>
+            {/* Downward arrow below the list (desktop only) */}
+            <div className="hidden lg:flex justify-center mt-3" aria-hidden="true">
+              <svg
+                className="w-6 h-6 text-brand-navy"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </div>
           </div>
 
