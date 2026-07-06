@@ -32,7 +32,7 @@ export default function FaqPage() {
         <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-2">
-              Got Questions?
+              NEED ANSWERS?
             </p>
             <h1 className="text-4xl sm:text-5xl font-bold">Frequently Asked Questions</h1>
           </div>
