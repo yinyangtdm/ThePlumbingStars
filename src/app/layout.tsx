@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, DM_Serif_Display } from "next/font/google";
 import JsonLd from "@/components/JsonLd";
+import ScrollRestoration from "@/components/ScrollRestoration";
 import { localBusinessSchema } from "@/lib/structuredData";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE_DEFAULT, SITE_URL } from "@/lib/site";
 import "./globals.css";
@@ -50,6 +51,7 @@ export default function RootLayout({
       className={`${manrope.variable} ${dmSerifDisplay.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <ScrollRestoration />
         <JsonLd data={localBusinessSchema()} />
         {children}
       </body>

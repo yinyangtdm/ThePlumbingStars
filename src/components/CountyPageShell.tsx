@@ -32,15 +32,7 @@ export default function CountyPageShell({
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
-    }
     window.scrollTo(0, 0);
-    return () => {
-      if ("scrollRestoration" in history) {
-        history.scrollRestoration = "auto";
-      }
-    };
   }, [initialZip, region]);
 
   useEffect(() => {
