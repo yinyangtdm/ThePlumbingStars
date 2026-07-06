@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { SITE_URL } from "@/lib/site";
 
 export function isEmailConfigured(): boolean {
   return !!(
@@ -119,7 +120,7 @@ export async function sendLeadEmail(data: LeadData): Promise<void> {
         <tr><td><strong>Description</strong></td><td>${data.description ?? "—"}</td></tr>
       </table>
       <hr style="margin-top:24px"/>
-      <p style="color:#888;font-size:12px">Submitted via theplumbingstars.com/${data.region}</p>
+      <p style="color:#888;font-size:12px">Submitted via ${SITE_URL}/${data.region}</p>
     `,
   });
 }
@@ -139,7 +140,7 @@ export async function sendReviewEmail(data: ReviewData): Promise<void> {
         <tr><td valign="top"><strong>Review</strong></td><td>${data.review.replace(/\n/g, "<br/>")}</td></tr>
       </table>
       <hr style="margin-top:24px"/>
-      <p style="color:#888;font-size:12px">Submitted via theplumbingstars.com/leave-review</p>
+      <p style="color:#888;font-size:12px">Submitted via ${SITE_URL}/leave-review</p>
     `,
   });
 }

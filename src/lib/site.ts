@@ -1,5 +1,5 @@
 /** Canonical site-wide constants reused across metadata, structured data, and the sitemap. */
-export const SITE_URL = "https://theplumbingstars.com";
+export const SITE_URL = "https://www.theplumbingstars.com";
 export const SITE_NAME = "The Plumbing Stars";
 export const SITE_TITLE_DEFAULT = "The Plumbing Stars | Expert Plumbing Services";
 export const SITE_DESCRIPTION =

@@ -5,6 +5,16 @@ const nextConfig: NextConfig = {
   // bookmarked/indexed links after the URL structure was reorganized.
   async redirects() {
     return [
+      // The apex domain is only kept around for legacy links/bookmarks — the
+      // canonical host is the www subdomain (matches SITE_URL in
+      // src/lib/site.ts). Codified here so it doesn't depend solely on the
+      // Vercel dashboard's domain redirect setting.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "theplumbingstars.com" }],
+        destination: "https://www.theplumbingstars.com/:path*",
+        permanent: true,
+      },
       // Legacy marketing domains — once attached to this Vercel project,
       // any request to these hosts is sent straight to the matching county
       // page on the primary domain. Add/remove `has.value` entries here if
@@ -12,25 +22,25 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         has: [{ type: "host", value: "theplumbingstarslosangeles.com" }],
-        destination: "https://theplumbingstars.com/losangeles",
+        destination: "https://www.theplumbingstars.com/losangeles",
         permanent: true,
       },
       {
         source: "/:path*",
         has: [{ type: "host", value: "www.theplumbingstarslosangeles.com" }],
-        destination: "https://theplumbingstars.com/losangeles",
+        destination: "https://www.theplumbingstars.com/losangeles",
         permanent: true,
       },
       {
         source: "/:path*",
         has: [{ type: "host", value: "theplumbingstarsventura.com" }],
-        destination: "https://theplumbingstars.com/ventura",
+        destination: "https://www.theplumbingstars.com/ventura",
         permanent: true,
       },
       {
         source: "/:path*",
         has: [{ type: "host", value: "www.theplumbingstarsventura.com" }],
-        destination: "https://theplumbingstars.com/ventura",
+        destination: "https://www.theplumbingstars.com/ventura",
         permanent: true,
       },
       {
