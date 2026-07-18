@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Coupon } from "@/lib/coupons";
+import { HONEYPOT_FIELD } from "@/lib/formProtection";
 import type { ServiceRegion } from "@/lib/serviceLocations";
 import { bookingFormServiceOptions } from "@/lib/services";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
@@ -32,6 +33,7 @@ export default function BookingForm({
     date: "",
     time: "",
     description: "",
+    [HONEYPOT_FIELD]: "",
   });
 
   function set(field: string) {
@@ -50,7 +52,7 @@ export default function BookingForm({
         body: JSON.stringify({
           name: form.name,
           phone: form.phone,
-          email: form.email || undefined,
+          email: form.email,
           address: form.address,
           service: form.service,
           preferredDate: form.date || undefined,
@@ -58,6 +60,7 @@ export default function BookingForm({
           description: form.description || undefined,
           region: form.region,
           coupon: coupon ? `${coupon.offer} — ${coupon.title}` : undefined,
+          [HONEYPOT_FIELD]: form[HONEYPOT_FIELD],
         }),
       });
       if (!res.ok) throw new Error("Request failed");
@@ -75,8 +78,8 @@ export default function BookingForm({
         <div className="text-green-600 text-5xl mb-3">&#10003;</div>
         <h3 className="text-xl font-bold text-gray-900 mb-2">Request Received</h3>
         <p className="text-gray-600 mb-6">
-          A real person will follow up within 5 minutes during business hours. For emergencies,
-          call us directly.
+          A confirmation email is on its way. A real person will follow up within 5 minutes during
+          business hours. For emergencies, call us directly.
         </p>
         <a
           href={`tel:${PHONE_TEL}`}
@@ -93,6 +96,18 @@ export default function BookingForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+        <label htmlFor={`book-${HONEYPOT_FIELD}`}>Website</label>
+        <input
+          id={`book-${HONEYPOT_FIELD}`}
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={form[HONEYPOT_FIELD]}
+          onChange={set(HONEYPOT_FIELD)}
+        />
+      </div>
+
       {coupon && (
         <div className="p-4 bg-brand-sky-light border border-brand-sky rounded-lg">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-navy/70 mb-1">
@@ -141,8 +156,16 @@ export default function BookingForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-        <input type="email" value={form.email} onChange={set("email")} className={inputClass} />
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Email Address <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="email"
+          required
+          value={form.email}
+          onChange={set("email")}
+          className={inputClass}
+        />
       </div>
 
       <div>

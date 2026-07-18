@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { HONEYPOT_FIELD } from "@/lib/formProtection";
 import { PHONE_DISPLAY } from "@/lib/site";
 
 function StarIcon({ filled }: { filled: boolean }) {
@@ -59,9 +60,10 @@ export default function LeaveReviewForm() {
     city: "",
     rating: 0,
     review: "",
+    [HONEYPOT_FIELD]: "",
   });
 
-  function set(field: "name" | "city" | "review") {
+  function set(field: "name" | "city" | "review" | typeof HONEYPOT_FIELD) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       setForm((prev) => ({ ...prev, [field]: e.target.value }));
   }
@@ -106,7 +108,19 @@ export default function LeaveReviewForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-xl p-6 shadow-sm space-y-4">
+    <form onSubmit={handleSubmit} className="bg-white rounded-xl p-6 shadow-sm space-y-4 relative">
+      <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+        <label htmlFor={`review-${HONEYPOT_FIELD}`}>Website</label>
+        <input
+          id={`review-${HONEYPOT_FIELD}`}
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={form[HONEYPOT_FIELD]}
+          onChange={set(HONEYPOT_FIELD)}
+        />
+      </div>
+
       <div>
         <label htmlFor="review-name" className="block text-sm font-medium text-gray-700 mb-1">
           Name <span className="text-red-500">*</span>

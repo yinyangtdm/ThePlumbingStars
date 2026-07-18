@@ -51,9 +51,8 @@ export function servicePath(slug: string): string {
   return `/services/${slug}`;
 }
 
-/** Options for the booking form's service dropdown — the bookable pages plus a few catch-all inquiry types. */
+/** Options for the booking form's service dropdown — the bookable pages plus a few catch-all types. */
 export const bookingFormServiceOptions: string[] = [
-  "General Inquiry",
   ...services.map((service) => service.name),
   "Epoxy Brush Coating",
   "Other / Not Sure",

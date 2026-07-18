@@ -4,7 +4,7 @@ import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 export default function ContactCards() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div className="bg-white rounded-xl p-6 shadow-sm flex flex-col items-start gap-4">
         <h3 className="text-xl font-bold">Schedule a Service</h3>
         <p className="text-gray-600">
@@ -19,6 +19,19 @@ export default function ContactCards() {
             className="inline-block w-full text-center bg-brand-red hover:bg-brand-red-dark text-white font-bold px-4 py-3 rounded-md transition-colors"
           >
             Schedule Online
+          </Link>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl p-6 shadow-sm flex flex-col items-start gap-4">
+        <h3 className="text-xl font-bold">Contact Us</h3>
+        <p className="text-gray-600">Have a question? Send us a message and we&apos;ll get back to you.</p>
+        <div className="mt-auto w-full">
+          <Link
+            href="/contact"
+            className="inline-block w-full text-center bg-brand-navy hover:bg-brand-navy-dark text-white font-bold px-4 py-3 rounded-md transition-colors"
+          >
+            Ask a Question
           </Link>
         </div>
       </div>

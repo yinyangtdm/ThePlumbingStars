@@ -55,6 +55,15 @@ function regionForCoords(
   return null;
 }
 
+/** Resolves which service-area polygon (if any) a coordinate falls inside. */
+export async function resolveRegionForCoords(
+  lat: number,
+  lng: number
+): Promise<ServiceRegion | null> {
+  const [laRing, venturaRing] = await Promise.all([getLaRing(), getVenturaRing()]);
+  return regionForCoords(lat, lng, laRing, venturaRing);
+}
+
 type AreaDetectionResult = {
   city: string;
   coords: [number, number];
@@ -74,8 +83,7 @@ export async function detectUserArea(
     const city = typeof data.city === "string" ? data.city.trim() : "";
     if (!Number.isFinite(lat) || !Number.isFinite(lng) || !city) return null;
 
-    const [laRing, venturaRing] = await Promise.all([getLaRing(), getVenturaRing()]);
-    const region = regionForCoords(lat, lng, laRing, venturaRing);
+    const region = await resolveRegionForCoords(lat, lng);
     if (!region) return null;
     if (expectedRegion && region !== expectedRegion) return null;
 

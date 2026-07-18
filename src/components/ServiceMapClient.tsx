@@ -6,19 +6,26 @@ import "leaflet/dist/leaflet.css";
 import { useEffect, useMemo } from "react";
 import type { ServiceLocation } from "@/lib/serviceLocations";
 
-function makeStarIcon(active: boolean) {
-  const size = active ? 28 : 22;
+function makeStarIcon(active: boolean, isDefault: boolean) {
+  const starSize = active ? 28 : 22;
+  const size = isDefault ? starSize + 12 : starSize;
   const anchor = size / 2;
+  const starOffset = (size - starSize) / 2;
+  const halo = isDefault
+    ? `<circle cx="${anchor}" cy="${anchor}" r="${size / 2 - 1.5}" fill="none" stroke="#b81f2a" stroke-width="2.5" />`
+    : "";
   return L.divIcon({
     className: "",
-    html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="${size}" height="${size}" style="display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4))"><path fill="#b81f2a" stroke="#7c1018" stroke-width="0.6" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+    html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" style="display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4))">${halo}<g transform="translate(${starOffset}, ${starOffset})"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="${starSize}" height="${starSize}"><path fill="#b81f2a" stroke="#7c1018" stroke-width="0.6" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></g></svg>`,
     iconSize: [size, size],
     iconAnchor: [anchor, anchor],
   });
 }
 
-const STAR_ICON = makeStarIcon(false);
-const STAR_ICON_ACTIVE = makeStarIcon(true);
+const STAR_ICON = makeStarIcon(false, false);
+const STAR_ICON_ACTIVE = makeStarIcon(true, false);
+const STAR_ICON_DEFAULT = makeStarIcon(false, true);
+const STAR_ICON_DEFAULT_ACTIVE = makeStarIcon(true, true);
 
 // GeoJSON uses [lng, lat]; Leaflet expects [lat, lng] — always swap when rendering.
 const LA_POLYGON: [number, number][] = [
@@ -151,6 +158,7 @@ interface Props {
   selectedId?: string;
   onSelectLocation?: (id: string) => void;
   height?: number;
+  defaultLocationId?: string;
 }
 
 export default function ServiceMapClient({
@@ -159,6 +167,7 @@ export default function ServiceMapClient({
   selectedId,
   onSelectLocation,
   height = 412,
+  defaultLocationId,
 }: Props) {
   const mapLocations = useMemo(() => locations ?? [], [locations]);
 
@@ -206,11 +215,19 @@ export default function ServiceMapClient({
       {showMarkers &&
         mapLocations.map((loc) => {
           const active = loc.id === selectedId;
+          const isDefault = loc.id === defaultLocationId;
+          const icon = isDefault
+            ? active
+              ? STAR_ICON_DEFAULT_ACTIVE
+              : STAR_ICON_DEFAULT
+            : active
+              ? STAR_ICON_ACTIVE
+              : STAR_ICON;
           return (
             <Marker
               key={loc.id}
               position={loc.coords}
-              icon={active ? STAR_ICON_ACTIVE : STAR_ICON}
+              icon={icon}
               eventHandlers={{
                 click: () => onSelectLocation?.(loc.id),
               }}

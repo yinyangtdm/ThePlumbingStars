@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import fs from "fs";
-import path from "path";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CountyPageShell from "@/components/CountyPageShell";
-import { buildLocationsFromGeoJson } from "@/lib/serviceLocations";
+import { getCityHubs, toServiceLocation } from "@/lib/cityHubs";
 
 export const metadata: Metadata = {
   title: "Ventura County Plumbing Services",
@@ -31,20 +29,6 @@ const cities = [
   "Westlake Village",
 ];
 
-function loadInitialLocations() {
-  try {
-    const jsonPath = path.join(process.cwd(), "public", "ventura-service-area.geojson");
-    if (fs.existsSync(jsonPath)) {
-      const raw = fs.readFileSync(jsonPath, "utf8");
-      const geo = JSON.parse(raw);
-      return buildLocationsFromGeoJson(geo, "ventura");
-    }
-  } catch {
-    // fall through
-  }
-  return [];
-}
-
 export default async function VenturaPage({
   searchParams,
 }: {
@@ -52,7 +36,7 @@ export default async function VenturaPage({
 }) {
   const params = await searchParams;
   const initialZip = params.zip ?? "";
-  const initialLocations = loadInitialLocations();
+  const initialLocations = getCityHubs("ventura").map(toServiceLocation);
 
   return (
     <>
@@ -61,7 +45,6 @@ export default async function VenturaPage({
         <Breadcrumbs
           items={[
             { name: "Home", path: "/" },
-            { name: "Service Areas", path: "/service-areas" },
             { name: "Ventura County", path: "/ventura" },
           ]}
         />

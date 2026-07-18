@@ -4,12 +4,12 @@ import {
   getClientIp,
   isHoneypotTripped,
 } from "@/lib/formProtection";
-import { validateReviewBody } from "@/lib/formValidation";
-import { isEmailConfigured, sendReviewEmail } from "@/lib/mailer";
+import { validateContactBody } from "@/lib/formValidation";
+import { isEmailConfigured, sendContactEmail } from "@/lib/mailer";
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
-  if (!checkRateLimit("review", ip)) {
+  if (!checkRateLimit("contact", ip)) {
     return NextResponse.json(
       { error: "Too many requests. Please try again in a few minutes." },
       { status: 429 },
@@ -27,29 +27,29 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  const parsed = validateReviewBody(body);
+  const parsed = validateContactBody(body);
   if (!parsed.ok) {
     return NextResponse.json({ error: parsed.error }, { status: 400 });
   }
 
-  const reviewData = parsed.data;
+  const contact = parsed.data;
 
-  console.info("[review] review received", reviewData);
+  console.info("[contact] message received", contact);
 
   if (!isEmailConfigured()) {
-    console.error("[review] Email not configured — review retained in logs only:", reviewData);
+    console.error("[contact] Email not configured — message retained in logs only:", contact);
     return NextResponse.json(
-      { error: "Email is not configured. Please try again later." },
+      { error: "Email is not configured. Please call us to complete your request." },
       { status: 503 },
     );
   }
 
   try {
-    await sendReviewEmail(reviewData);
+    await sendContactEmail(contact);
   } catch (err) {
-    console.error("[review] Owner notification failed:", err, reviewData);
+    console.error("[contact] Owner notification failed:", err, contact);
     return NextResponse.json(
-      { error: "Unable to submit your review. Please try again later." },
+      { error: "Unable to send your message. Please call us directly." },
       { status: 502 },
     );
   }

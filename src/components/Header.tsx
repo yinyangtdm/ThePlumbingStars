@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
+import LocationIndicatorBar from "./LocationIndicatorBar";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 export default function Header() {
@@ -36,9 +37,6 @@ export default function Header() {
                   </Link>
                   <Link href="/ventura" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Ventura County
-                  </Link>
-                  <Link href="/service-areas" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light border-t border-gray-100 rounded">
-                    All Service Areas
                   </Link>
                 </div>
               </div>
@@ -83,6 +81,9 @@ export default function Header() {
                 <div className="hidden group-hover:block absolute left-2 top-full w-64 bg-white border shadow-lg rounded-md z-50 p-3">
                   <Link href="/schedule" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Schedule a Service
+                  </Link>
+                  <Link href="/contact" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
+                    Contact Us
                   </Link>
                   <Link href="/search" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Find a Plumbing Star Nearby
@@ -165,6 +166,7 @@ export default function Header() {
 
         </div>
       </div>
+      <LocationIndicatorBar />
     </header>
   );
 }

@@ -11,6 +11,7 @@ interface Props {
   selectedId?: string;
   onSelectLocation?: (id: string) => void;
   height?: number;
+  defaultLocationId?: string;
 }
 
 export default function ServiceMap({
@@ -19,6 +20,7 @@ export default function ServiceMap({
   selectedId,
   onSelectLocation,
   height,
+  defaultLocationId,
 }: Props) {
   return (
     <ServiceMapClient
@@ -27,6 +29,7 @@ export default function ServiceMap({
       selectedId={selectedId}
       onSelectLocation={onSelectLocation}
       height={height}
+      defaultLocationId={defaultLocationId}
     />
   );
 }

@@ -7,8 +7,12 @@ import {
   PHONE_TEL,
   SITE_NAME,
 } from "@/lib/site";
+import { cityHubPath, getCityHubs } from "@/lib/cityHubs";
 
 export default function Footer() {
+  const laHubs = getCityHubs("losangeles");
+  const venturaHubs = getCityHubs("ventura");
+
   return (
     <footer className="bg-brand-navy-dark text-white/70 py-10 mt-auto">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between gap-8">
@@ -23,6 +27,11 @@ export default function Footer() {
 
         <div className="text-sm space-y-1">
           <p className="text-white font-medium mb-1">Contact</p>
+          <p>
+            <Link href="/contact" className="hover:text-white transition-colors">
+              Contact Us
+            </Link>
+          </p>
           <p>
             <a href={`tel:${PHONE_TEL}`} className="hover:text-white transition-colors">
               {PHONE_DISPLAY}
@@ -48,11 +57,40 @@ export default function Footer() {
               Ventura County
             </Link>
           </p>
-          <p>
-            <Link href="/service-areas" className="hover:text-white transition-colors">
-              All Service Areas
-            </Link>
-          </p>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-10 pt-8 border-t border-white/10">
+        <p className="text-white font-medium text-sm mb-4">Popular Service Areas</p>
+        <div className="grid sm:grid-cols-2 gap-8 text-sm">
+          <div>
+            <p className="text-white/90 font-semibold mb-2">Los Angeles County</p>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+              {laHubs.map((hub) => (
+                <Link
+                  key={hub.slug}
+                  href={cityHubPath(hub)}
+                  className="hover:text-white transition-colors"
+                >
+                  {hub.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="text-white/90 font-semibold mb-2">Ventura County</p>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+              {venturaHubs.map((hub) => (
+                <Link
+                  key={hub.slug}
+                  href={cityHubPath(hub)}
+                  className="hover:text-white transition-colors"
+                >
+                  {hub.name}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

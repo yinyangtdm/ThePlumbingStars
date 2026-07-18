@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import fs from "fs";
-import path from "path";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CountyPageShell from "@/components/CountyPageShell";
-import { buildLocationsFromGeoJson } from "@/lib/serviceLocations";
+import { getCityHubs, toServiceLocation } from "@/lib/cityHubs";
 
 export const metadata: Metadata = {
   title: "Los Angeles County Plumbing Services",
@@ -35,20 +33,6 @@ const cities = [
   "Winnetka", "Woodland Hills",
 ];
 
-function loadInitialLocations() {
-  try {
-    const jsonPath = path.join(process.cwd(), "public", "la-service-area.geojson");
-    if (fs.existsSync(jsonPath)) {
-      const raw = fs.readFileSync(jsonPath, "utf8");
-      const geo = JSON.parse(raw);
-      return buildLocationsFromGeoJson(geo, "losangeles");
-    }
-  } catch {
-    // fall through
-  }
-  return [];
-}
-
 export default async function LosAngelesPage({
   searchParams,
 }: {
@@ -56,7 +40,7 @@ export default async function LosAngelesPage({
 }) {
   const params = await searchParams;
   const initialZip = params.zip ?? "";
-  const initialLocations = loadInitialLocations();
+  const initialLocations = getCityHubs("losangeles").map(toServiceLocation);
 
   return (
     <>
@@ -65,7 +49,6 @@ export default async function LosAngelesPage({
         <Breadcrumbs
           items={[
             { name: "Home", path: "/" },
-            { name: "Service Areas", path: "/service-areas" },
             { name: "Los Angeles County", path: "/losangeles" },
           ]}
         />

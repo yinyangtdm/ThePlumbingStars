@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ServiceMap from "./ServiceMap";
+import { useLocationContext } from "./LocationProvider";
 import {
   sortLocationsByDistance,
   type ServiceLocation,
@@ -64,6 +65,7 @@ export default function CountyServiceExplorer({
   geoPrimaryId,
 }: Props) {
   const router = useRouter();
+  const { defaultLocation, setDefaultLocation } = useLocationContext();
   const [manualSelection, setManualSelection] = useState<ManualSelection | null>(null);
   const [zip, setZip] = useState(initialZip);
   const [zipError, setZipError] = useState("");
@@ -71,10 +73,17 @@ export default function CountyServiceExplorer({
   const listRef = useRef<HTMLDivElement>(null);
   const mobileScrollDone = useRef(false);
 
-  // Manual selection (ZIP search / map click) takes priority over IP-based geolocation,
-  // which in turn takes priority over the ZIP passed in via the URL on first load.
-  const anchor = manualSelection?.anchor ?? geoAnchor;
-  const anchorPrimaryId = manualSelection ? manualSelection.primaryId : geoPrimaryId;
+  const isDefaultHere = defaultLocation?.region === region;
+  const defaultAnchor = isDefaultHere ? defaultLocation!.coords : null;
+  const defaultPrimaryId = isDefaultHere ? defaultLocation!.id : undefined;
+
+  // Manual selection (ZIP search / map click) takes priority over the persisted default
+  // location (when it belongs to this county), which takes priority over IP-based
+  // geolocation, which in turn takes priority over the ZIP passed in via the URL on first load.
+  const anchor = manualSelection?.anchor ?? defaultAnchor ?? geoAnchor;
+  const anchorPrimaryId = manualSelection
+    ? manualSelection.primaryId
+    : defaultPrimaryId ?? geoPrimaryId;
 
   const locations = useMemo(() => {
     if (anchor) return sortLocationsByDistance(initialLocations, anchor, anchorPrimaryId);
@@ -153,8 +162,9 @@ export default function CountyServiceExplorer({
       setZipError("");
       const nearest = sortLocationsByDistance(initialLocations, coords)[0];
       selectLocation(coords, nearest?.id);
+      if (nearest) setDefaultLocation(nearest.id);
     },
-    [selectLocation, initialLocations, region, router]
+    [selectLocation, initialLocations, region, router, setDefaultLocation]
   );
 
   function handleZipSubmit(e: React.FormEvent) {
@@ -166,17 +176,30 @@ export default function CountyServiceExplorer({
     const loc = initialLocations.find((l) => l.id === id);
     if (!loc) return;
     selectLocation(loc.coords, id);
+    setDefaultLocation(id);
   }
 
   function renderLocationCard(loc: ServiceLocation) {
+    const isDefault = loc.id === defaultLocation?.id;
     return (
       <article
         key={loc.id}
         className={`bg-white rounded shadow p-4 transition ring-2 shrink-0 ${
-          loc.id === primaryId ? "ring-brand-red" : "ring-transparent"
+          loc.id === primaryId || isDefault ? "ring-brand-red" : "ring-transparent"
         }`}
       >
-        <h3 className="text-lg font-semibold mb-1">{loc.name}</h3>
+        <div className="flex items-start justify-between gap-2 mb-1">
+          <h3 className="text-lg font-semibold">{loc.name}</h3>
+          <label className="flex items-center gap-1.5 text-xs font-medium text-gray-600 whitespace-nowrap cursor-pointer select-none pt-1">
+            <input
+              type="checkbox"
+              checked={isDefault}
+              onChange={() => setDefaultLocation(loc.id)}
+              className="w-3.5 h-3.5 rounded border-gray-300 text-brand-red focus:ring-brand-red focus:ring-offset-0"
+            />
+            Default
+          </label>
+        </div>
         <p className="text-sm text-gray-600 mb-3">
           Serving {loc.name} and surrounding areas.
         </p>
@@ -200,7 +223,13 @@ export default function CountyServiceExplorer({
             Coupons
           </Link>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 space-y-2">
+          <Link
+            href={`/${region === "losangeles" ? "losangeles" : "ventura"}/${loc.id}`}
+            className="block w-full text-center border border-brand-navy text-brand-navy font-semibold px-4 py-2.5 rounded hover:bg-brand-sky-light transition-colors"
+          >
+            View full {loc.name} page
+          </Link>
           <Link
             href={`/schedule?region=${region}`}
             className="block w-full text-center bg-brand-red text-white font-bold px-4 py-3 rounded"
@@ -297,6 +326,7 @@ export default function CountyServiceExplorer({
               selectedId={primaryId}
               onSelectLocation={handleSelectLocation}
               height={MAP_HEIGHT_PX}
+              defaultLocationId={isDefaultHere ? defaultLocation?.id : undefined}
             />
           </div>
         </div>

@@ -54,13 +54,13 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/areas",
-        destination: "/service-areas",
+        source: "/service-areas",
+        destination: "/losangeles",
         permanent: true,
       },
       {
-        source: "/contact",
-        destination: "/#contact",
+        source: "/areas",
+        destination: "/losangeles",
         permanent: true,
       },
       {

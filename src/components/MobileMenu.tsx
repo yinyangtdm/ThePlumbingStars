@@ -65,9 +65,6 @@ export default function MobileMenu() {
                   <Link href="/ventura" onClick={closeMenu} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
                     Ventura County
                   </Link>
-                  <Link href="/service-areas" onClick={closeMenu} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
-                    All Service Areas
-                  </Link>
                 </div>
               )}
             </div>
@@ -135,6 +132,9 @@ export default function MobileMenu() {
                 <div className="bg-brand-navy-dark">
                   <Link href="/schedule" onClick={closeMenu} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
                     Schedule a Service
+                  </Link>
+                  <Link href="/contact" onClick={closeMenu} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
+                    Contact Us
                   </Link>
                   <Link href="/search" onClick={closeMenu} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
                     Find a Plumbing Star Nearby

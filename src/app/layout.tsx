@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Manrope, DM_Serif_Display } from "next/font/google";
 import JsonLd from "@/components/JsonLd";
 import ScrollRestoration from "@/components/ScrollRestoration";
+import { LocationProvider } from "@/components/LocationProvider";
 import { localBusinessSchema } from "@/lib/structuredData";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE_DEFAULT, SITE_URL } from "@/lib/site";
+import { getAllCityHubs, toServiceLocation } from "@/lib/cityHubs";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -45,6 +47,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const allLocations = getAllCityHubs().map(toServiceLocation);
+
   return (
     <html
       lang="en"
@@ -53,7 +57,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ScrollRestoration />
         <JsonLd data={localBusinessSchema()} />
-        {children}
+        <LocationProvider allLocations={allLocations}>{children}</LocationProvider>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { countyPathForRegion, findCityByName } from "@/lib/serviceLocations";
+import { cityHubPath, findCityHubByName } from "@/lib/cityHubs";
 import { getRegionByZip } from "@/lib/zipLookup";
 
 export default function SearchForm() {
@@ -34,6 +35,11 @@ export default function SearchForm() {
     }
 
     if (cleanedCity) {
+      const hub = findCityHubByName(cleanedCity);
+      if (hub) {
+        router.push(cityHubPath(hub));
+        return;
+      }
       const match = findCityByName(cleanedCity);
       if (!match) {
         setError(
