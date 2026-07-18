@@ -40,6 +40,8 @@ export default function CityHubShell({ hub }: { hub: CityHub }) {
           countyName: countyLabel,
           description: hub.intro,
           path,
+          latitude: hub.coords[0],
+          longitude: hub.coords[1],
         })}
       />
       {hub.faqs.length > 0 && <JsonLd data={faqPageSchema(hub.faqs)} />}

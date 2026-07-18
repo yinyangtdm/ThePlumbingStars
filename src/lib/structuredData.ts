@@ -148,27 +148,42 @@ export function citySchema({
   countyName,
   description,
   path,
+  latitude,
+  longitude,
 }: {
   cityName: string;
   countyName: string;
   description: string;
   path: string;
+  latitude?: number;
+  longitude?: number;
 }) {
+  const areaServed: Record<string, unknown> = {
+    "@type": "City",
+    name: cityName,
+    containedInPlace: {
+      "@type": "AdministrativeArea",
+      name: `${countyName}, CA`,
+    },
+  };
+
+  if (latitude != null && longitude != null) {
+    areaServed.geo = {
+      "@type": "GeoCoordinates",
+      latitude,
+      longitude,
+    };
+  }
+
   return {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": `${absoluteUrl(path)}#service`,
     serviceType: "Plumbing",
     name: `Plumbing Services in ${cityName} | ${SITE_NAME}`,
     description,
     url: absoluteUrl(path),
     provider: { "@id": `${SITE_URL}/#business` },
-    areaServed: {
-      "@type": "City",
-      name: cityName,
-      containedInPlace: {
-        "@type": "AdministrativeArea",
-        name: `${countyName}, CA`,
-      },
-    },
+    areaServed,
   };
 }

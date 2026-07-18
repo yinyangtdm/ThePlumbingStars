@@ -545,6 +545,49 @@ export const CITY_HUBS: CityHub[] = [
     ],
   },
   {
+    slug: "malibu",
+    name: "Malibu",
+    region: "losangeles",
+    coords: [34.0259, -118.7798],
+    permittingAuthority:
+      "Malibu is an independently incorporated city — plumbing permits are issued by the City of Malibu Building Safety / Community Development department, not LADBS.",
+    housingNote:
+      "Malibu’s housing ranges from beach cottages and mid-century canyon homes to large hillside estates. Many properties rely on septic systems or long private laterals rather than dense municipal sewer grids, and coastal moisture accelerates corrosion on aging metal supply lines and water heaters.",
+    terrainNote:
+      "Steep canyon and bluff lots are common west of PCH. Long sewer or septic runs, ejector pumps, and limited excavation access make camera diagnosis and trenchless options especially valuable before any dig.",
+    treeNote:
+      "Mature oaks and canyon vegetation increase root intrusion risk in older clay and cast-iron laterals — camera inspection is strongly recommended before major drain or sewer work.",
+    serviceOrder: [
+      "camera-inspection",
+      "drain-cleaning",
+      "hydro-jetting",
+      "trenchless-replacement",
+      "pipe-lining",
+      "sewer-repair",
+      "water-heater",
+    ],
+    intro:
+      "Licensed plumbers serving Malibu’s coastal homes, canyon estates, and Pacific Coast Highway corridors. Drain cleaning, camera inspections, trenchless sewer repair, and water heater service with City of Malibu permit coordination.",
+    faqs: [
+      {
+        q: "Who issues plumbing permits in Malibu?",
+        a: "The City of Malibu Building Safety / Community Development department. Malibu is its own city — not LADBS territory. We coordinate Malibu permits when your job requires them.",
+      },
+      {
+        q: "Do Malibu homes often use septic instead of sewer?",
+        a: "Many do, especially on hillside and canyon lots. We diagnose drain and tank-related issues carefully and recommend camera inspection before any major excavation or replacement.",
+      },
+      {
+        q: "Why recommend trenchless methods in Malibu?",
+        a: "Steep grades, landscaped bluffs, and limited street access make open-trench work expensive and disruptive. Pipe lining and trenchless replacement often restore lines with far less surface damage.",
+      },
+      {
+        q: "Do you offer same-day emergency plumbing in Malibu?",
+        a: "Yes. Emergency drain and sewer calls are prioritized with flat-rate pricing and no after-hours surcharge.",
+      },
+    ],
+  },
+  {
     slug: "beverly-hills",
     name: "Beverly Hills",
     region: "losangeles",

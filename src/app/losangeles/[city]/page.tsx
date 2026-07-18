@@ -15,10 +15,25 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const hub = getCityHub("losangeles", city);
   if (!hub) return { title: "City Not Found" };
 
+  const title = `Plumbing Services in ${hub.name}`;
+  const description = `${hub.intro} Call ${PHONE_DISPLAY}.`;
+  const canonical = `/losangeles/${hub.slug}`;
+
   return {
-    title: `Plumbing Services in ${hub.name}`,
-    description: `${hub.intro} Call ${PHONE_DISPLAY}.`,
-    alternates: { canonical: `/losangeles/${hub.slug}` },
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
   };
 }
 
