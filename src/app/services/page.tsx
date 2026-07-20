@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { services, servicePath } from "@/lib/services";
+import ServiceCards from "@/components/ServiceCards";
 
 const title = "Plumbing Services";
 const description =
@@ -36,19 +35,10 @@ export default function ServicesIndex() {
         <div className="py-16 px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <p className="text-gray-600 mb-6">Select a service to learn more and book an appointment.</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {services.map((service) => (
-                <Link
-                  key={service.slug}
-                  href={servicePath(service.slug)}
-                  className="block p-6 border rounded-lg hover:shadow-sm"
-                >
-                  <h2 className="font-bold text-lg mb-1">{service.name}</h2>
-                  <p className="text-sm text-gray-500 mb-2">{service.description}</p>
-                  <span className="text-sm text-brand-navy font-medium">Learn more →</span>
-                </Link>
-              ))}
-            </div>
+            <ServiceCards
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+              cardClassName="block p-6 border rounded-lg hover:shadow-sm"
+            />
           </div>
         </div>
       </main>

@@ -84,6 +84,21 @@ const nextConfig: NextConfig = {
         destination: "/losangeles/woodland-hills",
         permanent: true,
       },
+      {
+        source: "/losangeles/sherman-oaks",
+        destination: "/losangeles/van-nuys",
+        permanent: true,
+      },
+      {
+        source: "/ventura/port-hueneme",
+        destination: "/ventura/oxnard",
+        permanent: true,
+      },
+      {
+        source: "/ventura/port-hueneme/:service",
+        destination: "/ventura/oxnard/:service",
+        permanent: true,
+      },
     ];
   },
 };

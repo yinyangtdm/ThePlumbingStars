@@ -1,5 +1,9 @@
 import type { Faq } from "./faqs";
 import type { ServiceLocation, ServiceRegion } from "./serviceLocations";
+import {
+  formatCityList,
+  SURROUNDING_CITIES_BY_HUB,
+} from "./surroundingCities";
 
 export type CityHub = {
   slug: string;
@@ -35,10 +39,14 @@ const RETIRED_CITY_HUB_ALIASES: Record<string, string> = {
   reseda: "northridge",
   "canoga park": "woodland-hills",
   "canoga-park": "woodland-hills",
+  "sherman oaks": "van-nuys",
+  "sherman-oaks": "van-nuys",
+  "port hueneme": "oxnard",
+  "port-hueneme": "oxnard",
 };
 
 export const CITY_HUBS: CityHub[] = [
-  // ── Los Angeles County (12) ──────────────────────────────────────────────
+  // ── Los Angeles County (14) ──────────────────────────────────────────────
   {
     slug: "encino",
     name: "Encino",
@@ -79,49 +87,6 @@ export const CITY_HUBS: CityHub[] = [
       {
         q: "How fast can you arrive for an Encino emergency?",
         a: "We typically arrive within about 60 minutes for true emergencies across the San Fernando Valley, including Encino. You’ll get a text when we’re en route.",
-      },
-    ],
-  },
-  {
-    slug: "sherman-oaks",
-    name: "Sherman Oaks",
-    region: "losangeles",
-    coords: [34.1514, -118.4426],
-    permittingAuthority:
-      "Sherman Oaks is a City of Los Angeles neighborhood — permits are issued by LADBS.",
-    housingNote:
-      "Sherman Oaks mixes mid-century Valley homes south of the hills with denser multifamily near Ventura Boulevard. Many 1940s–60s residences still have original cast-iron drains and aging water heaters.",
-    terrainNote:
-      "The south slope of the Santa Monica Mountains creates hillside laterals with steeper grades; the flatter areas toward Van Nuys Boulevard see more typical Valley-floor sewer layouts.",
-    treeNote:
-      "Older tree-lined streets (especially toward the hills) mean root intrusion is a recurring cause of slow drains and main-line backups.",
-    serviceOrder: [
-      "drain-cleaning",
-      "camera-inspection",
-      "hydro-jetting",
-      "sewer-repair",
-      "trenchless-replacement",
-      "water-heater",
-      "pipe-lining",
-    ],
-    intro:
-      "Expert plumbing for Sherman Oaks homeowners — from Ventura Boulevard condos to hillside houses. Drain cleaning, camera inspections, hydro jetting, and sewer repair with transparent flat-rate pricing.",
-    faqs: [
-      {
-        q: "Is Sherman Oaks covered by LA City plumbing codes?",
-        a: "Yes. Sherman Oaks follows City of Los Angeles plumbing codes and LADBS permitting. We pull permits when your repair or replacement requires them.",
-      },
-      {
-        q: "What causes recurring kitchen clogs in Sherman Oaks?",
-        a: "Grease buildup in older cast-iron kitchen lines is common, especially in mid-century homes. Hydro jetting clears grease and scale more thoroughly than a basic snake.",
-      },
-      {
-        q: "Do you service Sherman Oaks apartments and condos?",
-        a: "Yes. We work with homeowners, HOAs, and property managers on unit-level and building drain issues — and we’ll tell you clearly when a shared main line is the real culprit.",
-      },
-      {
-        q: "Should I camera-inspect before selling my Sherman Oaks home?",
-        a: "A pre-sale camera inspection is one of the smartest due-diligence steps for Valley homes with older laterals. Buyers and escrow often ask for video proof of sewer condition.",
       },
     ],
   },
@@ -298,6 +263,49 @@ export const CITY_HUBS: CityHub[] = [
     ],
   },
   {
+    slug: "san-fernando",
+    name: "San Fernando",
+    region: "losangeles",
+    coords: [34.2819, -118.4389],
+    permittingAuthority:
+      "San Fernando is an independently incorporated city — plumbing permits are issued by the City of San Fernando Community Development Department / Building & Safety, not LADBS.",
+    housingNote:
+      "San Fernando’s housing stock includes postwar bungalows, mid-century tract homes, and multifamily near the downtown corridor. Many older residences still have original cast-iron drains and aging water heaters.",
+    terrainNote:
+      "Generally flat northeastern Valley terrain with standard sewer laterals; some larger lots have longer runs to the street main.",
+    treeNote:
+      "Mature street trees and private landscaping increase root-intrusion risk in aging clay and cast-iron laterals.",
+    serviceOrder: [
+      "drain-cleaning",
+      "camera-inspection",
+      "sewer-repair",
+      "hydro-jetting",
+      "water-heater",
+      "trenchless-replacement",
+      "pipe-lining",
+    ],
+    intro:
+      "Licensed plumbers serving San Fernando — drain cleaning, camera inspections, sewer repair, and water heater service with City of San Fernando permit coordination and flat-rate pricing.",
+    faqs: [
+      {
+        q: "Is San Fernando under LADBS for plumbing permits?",
+        a: "No. San Fernando is its own city with its own Building & Safety department. We pull San Fernando permits when your repair or replacement requires them.",
+      },
+      {
+        q: "What causes recurring drain clogs in San Fernando homes?",
+        a: "Grease, scale, and root intrusion in older cast-iron and clay laterals are common. Hydro jetting and camera inspection show whether you’re dealing with a simple blockage or a damaged pipe.",
+      },
+      {
+        q: "Can you clear a main-line backup same day in San Fernando?",
+        a: "Yes in most cases. We clear the line, camera it, and give you a flat-rate recommendation if repair is needed.",
+      },
+      {
+        q: "Do you serve nearby Sylmar and Pacoima addresses too?",
+        a: "Yes. Surrounding northeast Valley communities are in our Los Angeles County service area — permitting rules depend on whether the address is City of San Fernando or City of LA.",
+      },
+    ],
+  },
+  {
     slug: "burbank",
     name: "Burbank",
     region: "losangeles",
@@ -430,7 +438,7 @@ export const CITY_HUBS: CityHub[] = [
     slug: "malibu",
     name: "Malibu",
     region: "losangeles",
-    coords: [34.0259, -118.7798],
+    coords: [34.048, -118.71],
     permittingAuthority:
       "Malibu is an independently incorporated city — plumbing permits are issued by the City of Malibu Building Safety / Community Development department, not LADBS.",
     housingNote:
@@ -509,6 +517,50 @@ export const CITY_HUBS: CityHub[] = [
       {
         q: "Will you provide video of the sewer inspection?",
         a: "Yes. Camera inspections include video so you can see exactly what we found before approving repair work.",
+      },
+    ],
+  },
+  {
+    slug: "los-angeles",
+    name: "Los Angeles",
+    region: "losangeles",
+    // Just north of Koreatown (central LA star)
+    coords: [34.082, -118.301],
+    permittingAuthority:
+      "Most of central Los Angeles is City of Los Angeles territory — plumbing permits go through the Los Angeles Department of Building and Safety (LADBS).",
+    housingNote:
+      "Central Los Angeles mixes pre-war bungalows, courtyard apartments, mid-rise multifamily, and remodeled craft homes. Older buildings frequently retain cast-iron drains, galvanized supply lines, and shared laterals that need careful diagnosis.",
+    terrainNote:
+      "Mostly gentle basin grades with dense urban lots. Access constraints, alley laterals, and shared building mains matter more than steep hillside terrain.",
+    treeNote:
+      "Mature street trees on older residential blocks remain a common source of root intrusion into clay and cast-iron sewer laterals.",
+    serviceOrder: [
+      "drain-cleaning",
+      "camera-inspection",
+      "hydro-jetting",
+      "sewer-repair",
+      "water-heater",
+      "pipe-lining",
+      "trenchless-replacement",
+    ],
+    intro:
+      "Licensed plumbers serving central Los Angeles — from Koreatown and Mid-Wilshire to surrounding neighborhoods. Drain cleaning, camera inspections, hydro jetting, and sewer repair with LADBS permit coordination and flat-rate pricing.",
+    faqs: [
+      {
+        q: "Do central LA homes need LADBS permits for sewer work?",
+        a: "Yes. Most sewer lateral replacements and significant plumbing alterations inside the City of Los Angeles require LADBS permits. We handle the permit process when your job needs one.",
+      },
+      {
+        q: "Can you tell if a clog is my unit or the building main?",
+        a: "Usually yes. We check fixtures and run a camera when needed so you (or your landlord) know who owns the problem before authorizing major work.",
+      },
+      {
+        q: "Do you service apartments and condos in central LA?",
+        a: "Yes. We work with homeowners, HOAs, and property managers on unit-level and building drain issues — and we’ll tell you clearly when a shared main line is the real culprit.",
+      },
+      {
+        q: "How fast can you arrive for a Los Angeles emergency?",
+        a: "We typically arrive within about 60 minutes for true emergencies across central Los Angeles. You’ll get a text when we’re en route.",
       },
     ],
   },
@@ -600,6 +652,50 @@ export const CITY_HUBS: CityHub[] = [
   },
 
   // ── Ventura County (8) ───────────────────────────────────────────────────
+  {
+    slug: "ventura",
+    name: "Ventura",
+    region: "ventura",
+    // Just east of downtown Ventura / map label
+    coords: [34.281, -119.26],
+    permittingAuthority:
+      "The City of Ventura (San Buenaventura) is independently incorporated. Plumbing and sewer permits are issued by the City of Ventura Community Development Department / Building & Safety — not Ventura County Building & Safety, and not LADBS.",
+    housingNote:
+      "Ventura’s stock spans Craftsman and Spanish Revival homes downtown and in Midtown, mid-century tract near the Avenue and College area, Pierpont beach cottages, and hillside properties toward the foothills. Older laterals are often original cast iron or clay; coastal moisture accelerates corrosion on tank water heaters and exposed metal supply lines.",
+    terrainNote:
+      "Downtown, Midtown, and Pierpont sit on relatively level coastal plain with conventional gravity laterals. Foothill and Arundell-adjacent properties climb quickly — longer laterals, steeper grades, and occasional ejector systems are common repair topics above Main Street and toward the hills.",
+    treeNote:
+      "Mature street trees along Midtown, the Avenue, and older residential blocks drive root intrusion into aging clay and cast-iron laterals. Camera inspection before major drain or sewer work is strongly recommended in those neighborhoods.",
+    serviceOrder: [
+      "drain-cleaning",
+      "camera-inspection",
+      "water-heater",
+      "sewer-repair",
+      "hydro-jetting",
+      "pipe-lining",
+      "trenchless-replacement",
+    ],
+    intro:
+      "Licensed plumbers serving the City of Ventura — from Downtown and Midtown to Pierpont, the Avenue, and foothill neighborhoods. Drain cleaning, camera inspections, water heater replacement, and sewer repair with City of Ventura permit coordination and flat-rate pricing.",
+    faqs: [
+      {
+        q: "Who issues plumbing permits in the City of Ventura?",
+        a: "City of Ventura Building & Safety (Community Development), not the county. We confirm jurisdiction for your parcel and pull Ventura city permits when your repair or replacement requires them.",
+      },
+      {
+        q: "Do Pierpont and beach-area homes need different plumbing care?",
+        a: "Coastal moisture can speed exterior corrosion on water heaters and exposed metal. Interior issues are still usually aging laterals, grease, or roots — we camera-diagnose before recommending repair or replacement.",
+      },
+      {
+        q: "Why do Midtown and Avenue drains clog repeatedly?",
+        a: "Older cast-iron and clay laterals plus mature street trees mean roots and scale are common. Hydro jetting clears buildup more thoroughly than a basic snake; camera video shows whether the pipe itself needs lining or replacement.",
+      },
+      {
+        q: "Can you clear a Ventura sewer backup the same day?",
+        a: "Yes in most emergency cases. We clear the line, camera it when appropriate, and give you a written flat-rate quote before any repair work continues — including nights and weekends at the same rate.",
+      },
+    ],
+  },
   {
     slug: "thousand-oaks",
     name: "Thousand Oaks",
@@ -901,49 +997,6 @@ export const CITY_HUBS: CityHub[] = [
       },
     ],
   },
-  {
-    slug: "port-hueneme",
-    name: "Port Hueneme",
-    region: "ventura",
-    coords: [34.1478, -119.1951],
-    permittingAuthority:
-      "Port Hueneme is an independently incorporated city — plumbing permits go through the City of Port Hueneme Community Development / Building Division.",
-    housingNote:
-      "Coastal Port Hueneme housing includes mid-century homes and multifamily near the harbor. Coastal moisture and aging tank water heaters are frequent service drivers.",
-    terrainNote:
-      "Flat coastal plain with conventional gravity laterals and relatively short runs compared with hillside communities.",
-    treeNote:
-      "Older residential blocks with mature trees can see root intrusion; overall less hillside complexity than inland cities.",
-    serviceOrder: [
-      "drain-cleaning",
-      "water-heater",
-      "camera-inspection",
-      "sewer-repair",
-      "hydro-jetting",
-      "pipe-lining",
-      "trenchless-replacement",
-    ],
-    intro:
-      "Plumbing Stars serving Port Hueneme — drain cleaning, water heater replacement, camera inspections, and sewer repair for coastal Ventura County homes.",
-    faqs: [
-      {
-        q: "Who permits plumbing in Port Hueneme?",
-        a: "The City of Port Hueneme Building Division for work inside city limits.",
-      },
-      {
-        q: "Does coastal living affect plumbing equipment?",
-        a: "Exterior corrosion on water heaters and exposed metal can progress faster near the ocean. We inspect condition and recommend replacement when corrosion or age make failure likely.",
-      },
-      {
-        q: "Can you clear a sewer backup same day?",
-        a: "Yes in most emergency cases. We’ll clear the line and advise if camera inspection or repair is the next step.",
-      },
-      {
-        q: "Do you serve nearby Oxnard addresses too?",
-        a: "Yes. Oxnard and Port Hueneme are both in our Ventura County service area — each has its own city permitting rules.",
-      },
-    ],
-  },
 ];
 
 export function getAllCityHubs(): CityHub[] {
@@ -982,7 +1035,56 @@ export function findCityHubByName(query: string): CityHub | null {
   if (aliasSlug) {
     return CITY_HUBS.find((hub) => hub.slug === aliasSlug) ?? null;
   }
+
+  const surroundingMatch = CITY_HUBS.find((hub) =>
+    surroundingCitiesFor(hub).some((city) => city.toLowerCase() === normalized)
+  );
+  if (surroundingMatch) return surroundingMatch;
+
+  const surroundingPartial = CITY_HUBS.filter((hub) =>
+    surroundingCitiesFor(hub).some((city) => city.toLowerCase().includes(normalized))
+  );
+  if (surroundingPartial.length === 1) return surroundingPartial[0];
+
   return null;
+}
+
+/** Nearby communities that route to / are covered by this hub page. */
+export function surroundingCitiesFor(hub: Pick<CityHub, "slug">): string[] {
+  return SURROUNDING_CITIES_BY_HUB[hub.slug] ?? [];
+}
+
+/** Short label for titles: "Encino, Lake Balboa" or "Encino & Nearby Areas". */
+export function hubTitleArea(hub: CityHub): string {
+  const nearby = surroundingCitiesFor(hub);
+  if (nearby.length === 0) return hub.name;
+  if (nearby.length <= 2) return `${hub.name}, ${formatCityList(nearby)}`;
+  return `${hub.name} & Nearby Areas`;
+}
+
+/** Full service-area phrase naming the hub and every surrounding community. */
+export function hubServiceAreaPhrase(hub: CityHub): string {
+  const nearby = surroundingCitiesFor(hub);
+  if (nearby.length === 0) return hub.name;
+  return `${hub.name} and surrounding communities including ${formatCityList(nearby)}`;
+}
+
+/** Hero / JSON-LD body: hub intro plus explicit surrounding-city coverage. */
+export function hubPageIntro(hub: CityHub): string {
+  const nearby = surroundingCitiesFor(hub);
+  if (nearby.length === 0) {
+    return `${hub.intro} This page is for homeowners in ${hub.name}.`;
+  }
+  return `${hub.intro} This page covers ${hub.name} and surrounding communities including ${formatCityList(nearby)}.`;
+}
+
+/** Meta description with city names for SEO. */
+export function hubMetaDescription(hub: CityHub, suffix?: string): string {
+  const nearby = surroundingCitiesFor(hub);
+  const named =
+    nearby.length > 0 ? `${hub.name}, ${formatCityList(nearby)}` : hub.name;
+  const base = `${hub.intro} Serving ${named}.`;
+  return suffix ? `${base} ${suffix}` : base;
 }
 
 export function toServiceLocation(hub: CityHub): ServiceLocation {
@@ -996,6 +1098,10 @@ export function toServiceLocation(hub: CityHub): ServiceLocation {
 
 export function cityHubPath(hub: CityHub): string {
   return hub.region === "losangeles" ? `/losangeles/${hub.slug}` : `/ventura/${hub.slug}`;
+}
+
+export function cityServicePath(hub: CityHub, serviceSlug: string): string {
+  return `${cityHubPath(hub)}/${serviceSlug}`;
 }
 
 export function orderedServicesForHub(hub: CityHub): string[] {

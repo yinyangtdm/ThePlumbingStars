@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { services, servicePath } from "@/lib/services";
 import { SITE_URL } from "@/lib/site";
-import { cityHubPath, getAllCityHubs } from "@/lib/cityHubs";
+import { cityHubPath, cityServicePath, getAllCityHubs } from "@/lib/cityHubs";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -31,5 +31,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...cityRoutes];
+  const cityServiceRoutes: MetadataRoute.Sitemap = getAllCityHubs().flatMap((hub) =>
+    services.map((service) => ({
+      url: `${SITE_URL}${cityServicePath(hub, service.slug)}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    }))
+  );
+
+  return [...staticRoutes, ...serviceRoutes, ...cityRoutes, ...cityServiceRoutes];
 }

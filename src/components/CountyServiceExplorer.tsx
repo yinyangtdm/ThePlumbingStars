@@ -11,6 +11,7 @@ import {
   type ServiceRegion,
 } from "@/lib/serviceLocations";
 import { getRegionByZip, getZipCoordinates } from "@/lib/zipLookup";
+import { formatCityList, SURROUNDING_CITIES_BY_HUB } from "@/lib/surroundingCities";
 import { PHONE_TEL } from "@/lib/site";
 
 /** Must match ServiceMapClient map height. Sized for two full city cards + gap. */
@@ -201,7 +202,13 @@ export default function CountyServiceExplorer({
           </label>
         </div>
         <p className="text-sm text-gray-600 mb-3">
-          Serving {loc.name} and surrounding areas.
+          {(() => {
+            const nearby = SURROUNDING_CITIES_BY_HUB[loc.id] ?? [];
+            if (nearby.length === 0) {
+              return `Serving ${loc.name} and surrounding areas.`;
+            }
+            return `Serving ${loc.name} and surrounding communities including ${formatCityList(nearby)}.`;
+          })()}
         </p>
         <div className="grid grid-cols-3 gap-2 w-full">
           <a

@@ -150,6 +150,7 @@ export function citySchema({
   path,
   latitude,
   longitude,
+  additionalCities = [],
 }: {
   cityName: string;
   countyName: string;
@@ -157,23 +158,35 @@ export function citySchema({
   path: string;
   latitude?: number;
   longitude?: number;
+  additionalCities?: string[];
 }) {
-  const areaServed: Record<string, unknown> = {
+  const containedInPlace = {
+    "@type": "AdministrativeArea",
+    name: `${countyName}, CA`,
+  };
+
+  const primaryCity: Record<string, unknown> = {
     "@type": "City",
     name: cityName,
-    containedInPlace: {
-      "@type": "AdministrativeArea",
-      name: `${countyName}, CA`,
-    },
+    containedInPlace,
   };
 
   if (latitude != null && longitude != null) {
-    areaServed.geo = {
+    primaryCity.geo = {
       "@type": "GeoCoordinates",
       latitude,
       longitude,
     };
   }
+
+  const areaServed = [
+    primaryCity,
+    ...additionalCities.map((name) => ({
+      "@type": "City",
+      name,
+      containedInPlace,
+    })),
+  ];
 
   return {
     "@context": "https://schema.org",
@@ -181,6 +194,67 @@ export function citySchema({
     "@id": `${absoluteUrl(path)}#service`,
     serviceType: "Plumbing",
     name: `Plumbing Services in ${cityName} | ${SITE_NAME}`,
+    description,
+    url: absoluteUrl(path),
+    provider: { "@id": `${SITE_URL}/#business` },
+    areaServed,
+  };
+}
+
+/** JSON-LD for a city-specific service page (e.g. Drain Cleaning in Encino). */
+export function cityServiceSchema({
+  serviceName,
+  cityName,
+  countyName,
+  description,
+  path,
+  latitude,
+  longitude,
+  additionalCities = [],
+}: {
+  serviceName: string;
+  cityName: string;
+  countyName: string;
+  description: string;
+  path: string;
+  latitude?: number;
+  longitude?: number;
+  additionalCities?: string[];
+}) {
+  const containedInPlace = {
+    "@type": "AdministrativeArea",
+    name: `${countyName}, CA`,
+  };
+
+  const primaryCity: Record<string, unknown> = {
+    "@type": "City",
+    name: cityName,
+    containedInPlace,
+  };
+
+  if (latitude != null && longitude != null) {
+    primaryCity.geo = {
+      "@type": "GeoCoordinates",
+      latitude,
+      longitude,
+    };
+  }
+
+  const areaServed = [
+    primaryCity,
+    ...additionalCities.map((name) => ({
+      "@type": "City",
+      name,
+      containedInPlace,
+    })),
+  ];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${absoluteUrl(path)}#service`,
+    serviceType: serviceName,
+    name: `${serviceName} in ${cityName} | ${SITE_NAME}`,
     description,
     url: absoluteUrl(path),
     provider: { "@id": `${SITE_URL}/#business` },

@@ -9,13 +9,14 @@ import {
   hubPageIntro,
   hubServiceAreaPhrase,
   hubTitleArea,
-  orderedServicesForHub,
   surroundingCitiesFor,
   type CityHub,
 } from "@/lib/cityHubs";
-import { services } from "@/lib/services";
+import type { ServiceInfo } from "@/lib/services";
+import { servicePath } from "@/lib/services";
+import type { Faq } from "@/lib/faqs";
 import { formatCityList } from "@/lib/surroundingCities";
-import { citySchema, faqPageSchema } from "@/lib/structuredData";
+import { cityServiceSchema, faqPageSchema } from "@/lib/structuredData";
 import { LICENSE_NUMBER, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 import type { ServiceRegion } from "@/lib/serviceLocations";
 
@@ -29,58 +30,65 @@ const COUNTY_PATH: Record<ServiceRegion, string> = {
   ventura: "/ventura",
 };
 
-export default function CityHubShell({ hub }: { hub: CityHub }) {
-  const path = cityHubPath(hub);
+export default function CityServiceShell({
+  hub,
+  service,
+  faqs,
+}: {
+  hub: CityHub;
+  service: ServiceInfo;
+  faqs: Faq[];
+}) {
+  const path = cityServicePath(hub, service.slug);
+  const hubPath = cityHubPath(hub);
   const countyLabel = COUNTY_LABEL[hub.region];
   const countyPath = COUNTY_PATH[hub.region];
   const nearby = surroundingCitiesFor(hub);
   const areaPhrase = hubServiceAreaPhrase(hub);
   const titleArea = hubTitleArea(hub);
-  const pageIntro = hubPageIntro(hub);
-  const orderedSlugs = orderedServicesForHub(hub);
-  const orderedServices = orderedSlugs
-    .map((slug) => services.find((s) => s.slug === slug))
-    .filter((s): s is (typeof services)[number] => Boolean(s));
+  const title = `${service.name} in ${titleArea}`;
+  const intro = `${hubPageIntro(hub)} Our ${service.name.toLowerCase()} work across ${areaPhrase} is camera-diagnosed when needed, quoted flat-rate in writing, and backed by a written guarantee.`;
 
   return (
     <>
       <JsonLd
-        data={citySchema({
+        data={cityServiceSchema({
+          serviceName: service.name,
           cityName: hub.name,
           countyName: countyLabel,
-          description: pageIntro,
+          description: intro,
           path,
           latitude: hub.coords[0],
           longitude: hub.coords[1],
           additionalCities: nearby,
         })}
       />
-      {hub.faqs.length > 0 && <JsonLd data={faqPageSchema(hub.faqs)} />}
+      {faqs.length > 0 && <JsonLd data={faqPageSchema(faqs)} />}
       <Header />
       <main>
         <Breadcrumbs
           items={[
             { name: "Home", path: "/" },
             { name: countyLabel, path: countyPath },
-            { name: hub.name, path },
+            { name: hub.name, path: hubPath },
+            { name: service.name, path },
           ]}
         />
 
         <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-2">
-              {countyLabel}
+              {hub.name}
+              {nearby.length > 0 ? ` & nearby` : ""}
             </p>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">
-              Expert Plumbing in {titleArea}
-            </h1>
-            <p className="text-white/80 text-lg max-w-2xl mb-8">{pageIntro}</p>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{title}</h1>
+            <p className="text-white/80 text-lg max-w-2xl mb-8">{intro}</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href={`/schedule?region=${hub.region}`}
                 className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
               >
-                Schedule in {hub.name}
+                Schedule {service.name} in {hub.name}
               </Link>
               <a
                 href={`tel:${PHONE_TEL}`}
@@ -105,11 +113,11 @@ export default function CityHubShell({ hub }: { hub: CityHub }) {
           <section className="py-10 px-4 sm:px-6 bg-brand-sky-light/40 border-b border-brand-sky">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-xl font-bold text-gray-900 mb-2">
-                Also serving communities near {hub.name}
+                {service.name} near {hub.name}
               </h2>
               <p className="text-gray-700 text-sm leading-relaxed">
-                This {hub.name} page is the local hub for {formatCityList(nearby)}. Search or
-                ZIP lookups for those areas route here for scheduling and service details.
+                This page covers {service.name.toLowerCase()} for {hub.name} and surrounding
+                communities including {formatCityList(nearby)}.
               </p>
             </div>
           </section>
@@ -118,7 +126,7 @@ export default function CityHubShell({ hub }: { hub: CityHub }) {
         <section className="py-14 px-4 sm:px-6 bg-white">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Local know-how for {areaPhrase}
+              Local know-how for {service.name.toLowerCase()} in {areaPhrase}
             </h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="rounded-lg border border-brand-sky bg-brand-sky-light/50 p-5">
@@ -143,38 +151,34 @@ export default function CityHubShell({ hub }: { hub: CityHub }) {
 
         <section className="py-14 px-4 sm:px-6 bg-brand-light">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Plumbing services in {areaPhrase}
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              {service.name} for {areaPhrase}
             </h2>
-            <p className="text-gray-600 text-sm mb-8">
-              All seven core services — ordered for what homeowners in {hub.name}
-              {nearby.length > 0 ? ` and nearby areas like ${formatCityList(nearby.slice(0, 3))}` : ""}{" "}
-              ask for most.
+            <p className="text-gray-600 leading-relaxed mb-6">{service.description}</p>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              Prefer the county-wide overview? See our{" "}
+              <Link href={servicePath(service.slug)} className="text-brand-navy font-medium underline">
+                {service.name.toLowerCase()} service page
+              </Link>
+              , or return to{" "}
+              <Link href={hubPath} className="text-brand-navy font-medium underline">
+                plumbing in {hub.name}
+                {nearby.length > 0 ? ` and nearby areas` : ""}
+              </Link>
+              .
             </p>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {orderedServices.map((service) => (
-                <Link
-                  key={service.slug}
-                  href={cityServicePath(hub, service.slug)}
-                  className="block bg-white rounded-lg border border-gray-200 p-5 hover:border-brand-navy hover:shadow-sm transition-colors"
-                >
-                  <h3 className="font-bold text-brand-navy mb-1">{service.name}</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">{service.description}</p>
-                </Link>
-              ))}
-            </div>
           </div>
         </section>
 
-        {hub.faqs.length > 0 && (
+        {faqs.length > 0 && (
           <section className="py-14 px-4 sm:px-6 bg-white">
             <div className="max-w-2xl mx-auto">
               <h2 className="text-2xl font-bold text-gray-900 mb-8">
-                Common questions about plumbing in {hub.name}
+                Common questions about {service.name.toLowerCase()} in {hub.name}
                 {nearby.length > 0 ? ` and nearby communities` : ""}
               </h2>
               <div className="space-y-6">
-                {hub.faqs.map((faq) => (
+                {faqs.map((faq) => (
                   <div key={faq.q} className="border-b border-gray-200 pb-6 last:border-0 last:pb-0">
                     <h3 className="font-bold text-gray-900 mb-2">{faq.q}</h3>
                     <p className="text-gray-600 text-sm leading-relaxed">{faq.a}</p>
@@ -188,7 +192,7 @@ export default function CityHubShell({ hub }: { hub: CityHub }) {
         <section className="py-14 px-4 sm:px-6 bg-brand-navy text-white">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-              Need a plumber in {titleArea}?
+              Need {service.name.toLowerCase()} in {titleArea}?
             </h2>
             <p className="text-white/80 mb-8">
               Flat-rate pricing, camera diagnostics, and 24/7 emergency response for {areaPhrase}.
@@ -201,10 +205,10 @@ export default function CityHubShell({ hub }: { hub: CityHub }) {
                 Book Now
               </Link>
               <Link
-                href={countyPath}
+                href={hubPath}
                 className="inline-block bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
               >
-                More {countyLabel} cities
+                More {hub.name} services
               </Link>
             </div>
           </div>

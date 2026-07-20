@@ -96,6 +96,18 @@ const LA_ZIP_COORDS: Record<string, [number, number]> = {
   // Tarzana → nearest remaining hub: Woodland Hills
   "91356": [34.1483, -118.556],
   "91357": [34.1483, -118.556],
+  // Sherman Oaks → nearest remaining hub: Van Nuys
+  "91403": [34.1514, -118.4426],
+  "91413": [34.1514, -118.4426],
+  "91423": [34.1514, -118.4426],
+};
+
+/** Exact ZIP centroids for retired Ventura hubs so searches resolve to the nearest star. */
+const VENTURA_ZIP_COORDS: Record<string, [number, number]> = {
+  // Port Hueneme → nearest remaining hub: Oxnard
+  "93041": [34.1478, -119.1951],
+  "93043": [34.1478, -119.1951],
+  "93044": [34.1478, -119.1951],
 };
 
 const VENTURA_PREFIX_COORDS: Record<string, [number, number]> = {
@@ -109,5 +121,5 @@ export function getZipCoordinates(zip: string): [number, number] | null {
   if (region === "losangeles") {
     return LA_ZIP_COORDS[zip] ?? LA_PREFIX_COORDS[zip.slice(0, 3)] ?? [34.11, -118.35];
   }
-  return VENTURA_PREFIX_COORDS[zip.slice(0, 3)] ?? [34.2, -119.1];
+  return VENTURA_ZIP_COORDS[zip] ?? VENTURA_PREFIX_COORDS[zip.slice(0, 3)] ?? [34.2, -119.1];
 }

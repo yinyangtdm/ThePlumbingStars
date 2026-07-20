@@ -20,7 +20,7 @@ const cities = [
   "Fairfax", "Glendale", "Granada Hills", "Hancock Park",
   "Hidden Hills", "Highland Park", "Hollywood", "Holmby Hills",
   "Koreatown", "La Cañada Flintridge", "La Crescenta", "Lake Balboa",
-  "Larchmont", "Los Feliz", "Malibu", "Mar Vista",
+  "Larchmont", "Los Angeles", "Los Feliz", "Malibu", "Mar Vista",
   "Mid-City", "Mid-Wilshire", "Mission Hills", "Montrose",
   "Mount Washington", "North Hills", "North Hollywood", "Northridge",
   "Pacific Palisades", "Pacoima", "Palms", "Panorama City",

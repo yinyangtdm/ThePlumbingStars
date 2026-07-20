@@ -175,3 +175,7 @@ export const faqGroups: FaqGroup[] = [
   { id: "pipe-lining", label: "Pipe Lining", faqs: pipeLiningFaqs },
   { id: "water-heater", label: "Water Heater Replacement", faqs: waterHeaterFaqs },
 ];
+
+export function faqsForServiceSlug(slug: string): Faq[] {
+  return faqGroups.find((group) => group.id === slug)?.faqs ?? [];
+}

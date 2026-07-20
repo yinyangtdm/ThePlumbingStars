@@ -40,6 +40,7 @@ const CITY_REGION: Record<string, ServiceRegion> = {
   "La Crescenta": "losangeles",
   "Lake Balboa": "losangeles",
   Larchmont: "losangeles",
+  "Los Angeles": "losangeles",
   "Los Feliz": "losangeles",
   Malibu: "losangeles",
   "Mar Vista": "losangeles",

@@ -51,6 +51,20 @@ export function servicePath(slug: string): string {
   return `/services/${slug}`;
 }
 
+export function getServiceBySlug(slug: string): ServiceInfo | undefined {
+  return services.find((service) => service.slug === slug);
+}
+
+/** County-wide service URL, or city-scoped when a starred hub location is known. */
+export function servicePathForLocation(
+  location: { id: string; region: "losangeles" | "ventura" } | null | undefined,
+  serviceSlug: string
+): string {
+  if (!location) return servicePath(serviceSlug);
+  const base = location.region === "losangeles" ? "/losangeles" : "/ventura";
+  return `${base}/${location.id}/${serviceSlug}`;
+}
+
 /** Options for the booking form's service dropdown — the bookable pages plus a few catch-all types. */
 export const bookingFormServiceOptions: string[] = [
   ...services.map((service) => service.name),

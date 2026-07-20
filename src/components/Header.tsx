@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
 import LocationIndicatorBar from "./LocationIndicatorBar";
+import ServicesNavLinks from "./ServicesNavLinks";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 export default function Header() {
@@ -48,27 +49,7 @@ export default function Header() {
                 </button>
                 <div className="hidden group-hover:block absolute left-2 top-full w-64 bg-white border shadow-lg rounded-md z-50 p-3">
                   <div className="grid grid-cols-1 gap-1">
-                    <Link href="/services/drain-cleaning" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
-                      Drain Cleaning
-                    </Link>
-                    <Link href="/services/sewer-repair" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
-                      Sewer Repair
-                    </Link>
-                    <Link href="/services/hydro-jetting" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
-                      Hydro Jetting
-                    </Link>
-                    <Link href="/services/camera-inspection" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
-                      Camera Inspection
-                    </Link>
-                    <Link href="/services/trenchless-replacement" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
-                      Trenchless Replacement
-                    </Link>
-                    <Link href="/services/pipe-lining" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
-                      Pipe Lining
-                    </Link>
-                    <Link href="/services/water-heater" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
-                      Water Heater Replacement
-                    </Link>
+                    <ServicesNavLinks linkClassName="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded" />
                   </div>
                 </div>
               </div>

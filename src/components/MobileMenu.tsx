@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import ServicesNavLinks from "./ServicesNavLinks";
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -87,27 +88,10 @@ export default function MobileMenu() {
               {servicesOpen && (
                 <div className="bg-brand-navy-dark p-3">
                   <div className="grid grid-cols-1 gap-1">
-                    <Link href="/services/drain-cleaning" onClick={closeMenu} className="block px-3 py-2 text-white hover:bg-brand-navy-dark rounded">
-                      Drain Cleaning
-                    </Link>
-                    <Link href="/services/sewer-repair" onClick={closeMenu} className="block px-3 py-2 text-white hover:bg-brand-navy-dark rounded">
-                      Sewer Repair
-                    </Link>
-                    <Link href="/services/hydro-jetting" onClick={closeMenu} className="block px-3 py-2 text-white hover:bg-brand-navy-dark rounded">
-                      Hydro Jetting
-                    </Link>
-                    <Link href="/services/camera-inspection" onClick={closeMenu} className="block px-3 py-2 text-white hover:bg-brand-navy-dark rounded">
-                      Camera Inspection
-                    </Link>
-                    <Link href="/services/trenchless-replacement" onClick={closeMenu} className="block px-3 py-2 text-white hover:bg-brand-navy-dark rounded">
-                      Trenchless Replacement
-                    </Link>
-                    <Link href="/services/pipe-lining" onClick={closeMenu} className="block px-3 py-2 text-white hover:bg-brand-navy-dark rounded">
-                      Pipe Lining
-                    </Link>
-                    <Link href="/services/water-heater" onClick={closeMenu} className="block px-3 py-2 text-white hover:bg-brand-navy-dark rounded">
-                      Water Heater Replacement
-                    </Link>
+                    <ServicesNavLinks
+                      onNavigate={closeMenu}
+                      linkClassName="block px-3 py-2 text-white hover:bg-brand-navy-dark rounded"
+                    />
                   </div>
                 </div>
               )}

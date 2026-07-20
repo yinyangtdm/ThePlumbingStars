@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CityHubShell from "@/components/CityHubShell";
-import { getCityHub, getCityHubs } from "@/lib/cityHubs";
+import {
+  getCityHub,
+  getCityHubs,
+  hubMetaDescription,
+  hubTitleArea,
+} from "@/lib/cityHubs";
 import { PHONE_DISPLAY } from "@/lib/site";
 
 type Params = Promise<{ city: string }>;
@@ -15,8 +20,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const hub = getCityHub("ventura", city);
   if (!hub) return { title: "City Not Found" };
 
-  const title = `Plumbing Services in ${hub.name}`;
-  const description = `${hub.intro} Call ${PHONE_DISPLAY}.`;
+  const title = `Plumbing Services in ${hubTitleArea(hub)}`;
+  const description = hubMetaDescription(hub, `Call ${PHONE_DISPLAY}.`);
   const canonical = `/ventura/${hub.slug}`;
 
   return {
