@@ -1,9 +1,9 @@
 const laZips = new Set([
   // San Fernando Valley
-  "91301", "91302", "91303", "91304", "91306", "91307", "91311", "91316",
-  "91324", "91325", "91326", "91330", "91331", "91335",
+  "91301", "91302", "91303", "91304", "91305", "91306", "91307", "91308", "91309", "91311", "91316",
+  "91324", "91325", "91326", "91330", "91331", "91335", "91337",
   "91340", "91341", "91342", "91343", "91344", "91345", "91346",
-  "91350", "91351", "91352", "91356", "91364", "91367",
+  "91350", "91351", "91352", "91356", "91357", "91364", "91367",
   "91401", "91402", "91403", "91405", "91406", "91411", "91423", "91436",
   // Burbank / Glendale
   "91201", "91202", "91203", "91204", "91205", "91206", "91207", "91208", "91214",
@@ -79,6 +79,25 @@ const LA_PREFIX_COORDS: Record<string, [number, number]> = {
   "916": [34.17, -118.39],
 };
 
+/**
+ * Exact ZIP centroids for areas whose former hub stars were removed, so searches
+ * resolve to the nearest remaining starred city (Woodland Hills / Northridge / etc.).
+ */
+const LA_ZIP_COORDS: Record<string, [number, number]> = {
+  // Canoga Park → nearest remaining hub: Woodland Hills
+  "91303": [34.2011, -118.6057],
+  "91304": [34.2011, -118.6057],
+  "91305": [34.2011, -118.6057],
+  "91308": [34.2011, -118.6057],
+  "91309": [34.2011, -118.6057],
+  // Reseda → nearest remaining hub: Northridge
+  "91335": [34.2014, -118.5362],
+  "91337": [34.2014, -118.5362],
+  // Tarzana → nearest remaining hub: Woodland Hills
+  "91356": [34.1483, -118.556],
+  "91357": [34.1483, -118.556],
+};
+
 const VENTURA_PREFIX_COORDS: Record<string, [number, number]> = {
   "913": [34.17, -118.84],
   "930": [34.22, -119.05],
@@ -87,9 +106,8 @@ const VENTURA_PREFIX_COORDS: Record<string, [number, number]> = {
 export function getZipCoordinates(zip: string): [number, number] | null {
   const region = getRegionByZip(zip);
   if (!region) return null;
-  const prefix = zip.slice(0, 3);
   if (region === "losangeles") {
-    return LA_PREFIX_COORDS[prefix] ?? [34.11, -118.35];
+    return LA_ZIP_COORDS[zip] ?? LA_PREFIX_COORDS[zip.slice(0, 3)] ?? [34.11, -118.35];
   }
-  return VENTURA_PREFIX_COORDS[prefix] ?? [34.2, -119.1];
+  return VENTURA_PREFIX_COORDS[zip.slice(0, 3)] ?? [34.2, -119.1];
 }

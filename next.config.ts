@@ -68,6 +68,22 @@ const nextConfig: NextConfig = {
         destination: "/coupons",
         permanent: true,
       },
+      // Retired city hub pages — remap to the nearest remaining starred city.
+      {
+        source: "/losangeles/tarzana",
+        destination: "/losangeles/woodland-hills",
+        permanent: true,
+      },
+      {
+        source: "/losangeles/reseda",
+        destination: "/losangeles/northridge",
+        permanent: true,
+      },
+      {
+        source: "/losangeles/canoga-park",
+        destination: "/losangeles/woodland-hills",
+        permanent: true,
+      },
     ];
   },
 };

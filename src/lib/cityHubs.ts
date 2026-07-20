@@ -26,8 +26,19 @@ const DEFAULT_SERVICE_ORDER = [
   "water-heater",
 ];
 
+/**
+ * Former hub cities no longer get their own star/page. Name/slug searches and
+ * stale localStorage ids resolve to the geographically nearest remaining hub.
+ */
+const RETIRED_CITY_HUB_ALIASES: Record<string, string> = {
+  tarzana: "woodland-hills",
+  reseda: "northridge",
+  "canoga park": "woodland-hills",
+  "canoga-park": "woodland-hills",
+};
+
 export const CITY_HUBS: CityHub[] = [
-  // ── Los Angeles County (15) ──────────────────────────────────────────────
+  // ── Los Angeles County (12) ──────────────────────────────────────────────
   {
     slug: "encino",
     name: "Encino",
@@ -158,49 +169,6 @@ export const CITY_HUBS: CityHub[] = [
     ],
   },
   {
-    slug: "tarzana",
-    name: "Tarzana",
-    region: "losangeles",
-    coords: [34.1483, -118.556],
-    permittingAuthority:
-      "Tarzana is a Los Angeles city neighborhood — plumbing permits go through LADBS.",
-    housingNote:
-      "Tarzana’s housing ranges from postwar ranch homes to larger estates. Mid-century galvanized water lines and cast-iron drains remain a frequent source of low pressure and recurring clogs.",
-    terrainNote:
-      "Most of Tarzana sits on the Valley floor with relatively gentle grades, though properties closer to the southern hills can have steeper laterals.",
-    treeNote:
-      "Large private yards and mature trees mean root intrusion into older sewer laterals is a common call-out.",
-    serviceOrder: [
-      "drain-cleaning",
-      "hydro-jetting",
-      "sewer-repair",
-      "camera-inspection",
-      "water-heater",
-      "pipe-lining",
-      "trenchless-replacement",
-    ],
-    intro:
-      "Trusted plumbers for Tarzana homes — drain cleaning, hydro jetting, sewer repair, and water heater replacement with flat rates and written guarantees.",
-    faqs: [
-      {
-        q: "Why is water pressure low in my Tarzana home?",
-        a: "Aging galvanized supply lines often scale up from the inside, reducing flow. We can diagnose whether the issue is the main, branch lines, or the water heater.",
-      },
-      {
-        q: "Can hydro jetting damage older Tarzana pipes?",
-        a: "We camera-inspect first. Jetting is safe on sound laterals and is often the best way to clear roots and grease — we’ll recommend repair instead if the pipe is already collapsed.",
-      },
-      {
-        q: "Do you install tankless water heaters in Tarzana?",
-        a: "Yes. We size, permit (when required), install, and haul away the old tank — often same day for straightforward replacements.",
-      },
-      {
-        q: "Are Tarzana plumbing jobs under LA City rules?",
-        a: "Yes. Tarzana follows City of Los Angeles codes and LADBS permitting.",
-      },
-    ],
-  },
-  {
     slug: "van-nuys",
     name: "Van Nuys",
     region: "losangeles",
@@ -287,49 +255,6 @@ export const CITY_HUBS: CityHub[] = [
     ],
   },
   {
-    slug: "reseda",
-    name: "Reseda",
-    region: "losangeles",
-    coords: [34.2014, -118.5362],
-    permittingAuthority:
-      "Reseda is within the City of Los Angeles — plumbing permits are handled by LADBS.",
-    housingNote:
-      "Reseda’s postwar tract homes and remodeled mid-century houses often still rely on original drain laterals. Many homeowners also face aging tank water heaters from 15+ years of service.",
-    terrainNote:
-      "Flat Valley floor with standard gravity sewer connections — straightforward layouts, but decades of deferred maintenance show up as recurring clogs.",
-    treeNote:
-      "Parkway trees and mature backyard landscaping drive root intrusion into clay and cast-iron laterals.",
-    serviceOrder: [
-      "drain-cleaning",
-      "hydro-jetting",
-      "water-heater",
-      "camera-inspection",
-      "sewer-repair",
-      "pipe-lining",
-      "trenchless-replacement",
-    ],
-    intro:
-      "Local plumbers for Reseda — drain cleaning, hydro jetting, water heater replacement, and sewer repair with same-day emergency options.",
-    faqs: [
-      {
-        q: "Why does my Reseda kitchen sink keep clogging?",
-        a: "Grease and food waste in older cast-iron kitchen lines is the usual culprit. Hydro jetting clears the line more thoroughly than repeated snaking.",
-      },
-      {
-        q: "Can you replace a water heater the same day in Reseda?",
-        a: "Often yes for standard tank swaps when the location and venting allow. Tankless conversions may need additional permitting and gas/electric prep.",
-      },
-      {
-        q: "Do Reseda homes need LA City permits for plumbing?",
-        a: "Yes when the work scope requires them — Reseda is City of LA territory under LADBS.",
-      },
-      {
-        q: "Is trenchless repair available on Reseda lots?",
-        a: "Yes. Many laterals can be renewed with pipe bursting or lining while protecting yards and driveways.",
-      },
-    ],
-  },
-  {
     slug: "northridge",
     name: "Northridge",
     region: "losangeles",
@@ -369,49 +294,6 @@ export const CITY_HUBS: CityHub[] = [
       {
         q: "Who issues Northridge plumbing permits?",
         a: "LADBS — Northridge is City of Los Angeles.",
-      },
-    ],
-  },
-  {
-    slug: "canoga-park",
-    name: "Canoga Park",
-    region: "losangeles",
-    coords: [34.2011, -118.6057],
-    permittingAuthority:
-      "Canoga Park is a City of Los Angeles neighborhood — permits go through LADBS.",
-    housingNote:
-      "Canoga Park’s housing stock includes postwar homes and denser multifamily near commercial corridors. Aging drain laterals and tank water heaters are frequent service calls.",
-    terrainNote:
-      "Western Valley floor — mostly level lots with conventional gravity laterals.",
-    treeNote:
-      "Street trees and mature yards contribute to root-related sewer issues on older laterals.",
-    serviceOrder: [
-      "drain-cleaning",
-      "water-heater",
-      "sewer-repair",
-      "camera-inspection",
-      "hydro-jetting",
-      "pipe-lining",
-      "trenchless-replacement",
-    ],
-    intro:
-      "Reliable plumbing for Canoga Park — drain cleaning, water heater replacement, sewer repair, and camera diagnostics with flat-rate pricing.",
-    faqs: [
-      {
-        q: "Do you replace water heaters in Canoga Park apartments?",
-        a: "Yes, when authorized by the owner or manager. We’ll confirm access, venting, and shutoffs before quoting a flat rate.",
-      },
-      {
-        q: "What’s the most common Canoga Park drain call?",
-        a: "Kitchen and bathroom clogs in older homes, plus main-line backups caused by roots or grease. Camera inspection confirms the cause.",
-      },
-      {
-        q: "Is Canoga Park under LA City building rules?",
-        a: "Yes. LADBS handles permitting for this neighborhood.",
-      },
-      {
-        q: "Can trenchless methods save my driveway?",
-        a: "Often. We recommend trenchless when the camera shows a repairable lateral and surface restoration would be costly.",
       },
     ],
   },
@@ -1076,13 +958,31 @@ export function getCityHub(region: ServiceRegion, slug: string): CityHub | undef
   return CITY_HUBS.find((hub) => hub.region === region && hub.slug === slug);
 }
 
+/** Maps a retired hub slug (or city name) to the nearest remaining hub slug, if any. */
+export function resolveRetiredCityHubSlug(query: string): string | null {
+  const normalized = query.trim().toLowerCase().replace(/-/g, " ");
+  if (!normalized) return null;
+  const dashed = normalized.replace(/\s+/g, "-");
+  return (
+    RETIRED_CITY_HUB_ALIASES[normalized] ??
+    RETIRED_CITY_HUB_ALIASES[dashed] ??
+    null
+  );
+}
+
 export function findCityHubByName(query: string): CityHub | null {
   const normalized = query.trim().toLowerCase();
   if (!normalized) return null;
   const exact = CITY_HUBS.find((hub) => hub.name.toLowerCase() === normalized);
   if (exact) return exact;
   const partial = CITY_HUBS.filter((hub) => hub.name.toLowerCase().includes(normalized));
-  return partial.length === 1 ? partial[0] : null;
+  if (partial.length === 1) return partial[0];
+
+  const aliasSlug = resolveRetiredCityHubSlug(normalized);
+  if (aliasSlug) {
+    return CITY_HUBS.find((hub) => hub.slug === aliasSlug) ?? null;
+  }
+  return null;
 }
 
 export function toServiceLocation(hub: CityHub): ServiceLocation {

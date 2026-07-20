@@ -11,6 +11,7 @@ import {
 } from "react";
 import type { ServiceLocation } from "@/lib/serviceLocations";
 import { detectDefaultLocation } from "@/lib/detectDefaultLocation";
+import { resolveRetiredCityHubSlug } from "@/lib/cityHubs";
 import {
   readStoredDefaultLocationId,
   writeStoredDefaultLocationId,
@@ -27,13 +28,29 @@ type LocationContextValue = {
 
 const LocationContext = createContext<LocationContextValue | null>(null);
 
+function locationFromStoredId(
+  allLocations: ServiceLocation[],
+  storedId: string | null
+): ServiceLocation | null {
+  if (!storedId) return null;
+  const direct = allLocations.find((loc) => loc.id === storedId);
+  if (direct) return direct;
+  const remappedSlug = resolveRetiredCityHubSlug(storedId);
+  if (!remappedSlug) return null;
+  return allLocations.find((loc) => loc.id === remappedSlug) ?? null;
+}
+
 /** Checks localStorage first; only runs the detection cascade if nothing valid is stored. */
 async function resolveInitialDefaultLocation(
   allLocations: ServiceLocation[]
 ): Promise<{ location: ServiceLocation | null; persist: boolean }> {
   const storedId = readStoredDefaultLocationId();
-  const stored = storedId ? allLocations.find((loc) => loc.id === storedId) ?? null : null;
-  if (stored) return { location: stored, persist: false };
+  const stored = locationFromStoredId(allLocations, storedId);
+  if (stored) {
+    // Rewrite retired hub ids (e.g. tarzana → woodland-hills) so storage stays current.
+    const needsRewrite = storedId !== stored.id;
+    return { location: stored, persist: needsRewrite };
+  }
 
   const detected = await detectDefaultLocation(allLocations);
   return { location: detected, persist: true };
