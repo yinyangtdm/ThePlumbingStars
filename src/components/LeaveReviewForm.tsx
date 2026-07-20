@@ -127,6 +127,8 @@ export default function LeaveReviewForm() {
         </label>
         <input
           id="review-name"
+          name="name"
+          autoComplete="name"
           required
           value={form.name}
           onChange={set("name")}
@@ -140,6 +142,8 @@ export default function LeaveReviewForm() {
         </label>
         <input
           id="review-city"
+          name="address-level2"
+          autoComplete="address-level2"
           required
           value={form.city}
           onChange={set("city")}

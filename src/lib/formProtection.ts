@@ -1,10 +1,13 @@
 import type { NextRequest } from "next/server";
+import { SITE_URL } from "@/lib/site";
 
 /** Honeypot field — bots that fill it are silently discarded. */
 export const HONEYPOT_FIELD = "website";
 
 const WINDOW_MS = 15 * 60 * 1000;
 const MAX_REQUESTS = 5;
+/** Reject oversized JSON bodies before parsing. */
+export const MAX_JSON_BODY_BYTES = 64 * 1024;
 
 // In-memory only — resets per serverless isolate; first-line defense, not global.
 const hits = new Map<string, number[]>();
@@ -37,4 +40,22 @@ export function checkRateLimit(routeKey: string, ip: string): boolean {
 export function isHoneypotTripped(body: Record<string, unknown>): boolean {
   const value = body[HONEYPOT_FIELD];
   return typeof value === "string" && value.trim().length > 0;
+}
+
+/** Reject browser POSTs from unexpected Origins (missing Origin allowed for non-browser clients). */
+export function isAllowedFormOrigin(req: NextRequest): boolean {
+  const origin = req.headers.get("origin");
+  if (!origin) return true;
+  try {
+    return new URL(origin).origin === new URL(SITE_URL).origin;
+  } catch {
+    return false;
+  }
+}
+
+export function isJsonBodyTooLarge(req: NextRequest): boolean {
+  const raw = req.headers.get("content-length");
+  if (!raw) return false;
+  const length = Number(raw);
+  return Number.isFinite(length) && length > MAX_JSON_BODY_BYTES;
 }

@@ -1078,13 +1078,16 @@ export function hubPageIntro(hub: CityHub): string {
   return `${hub.intro} This page covers ${hub.name} and surrounding communities including ${formatCityList(nearby)}.`;
 }
 
-/** Meta description with city names for SEO. */
+/** Meta description with city names for SEO (kept under ~155–160 chars). */
 export function hubMetaDescription(hub: CityHub, suffix?: string): string {
   const nearby = surroundingCitiesFor(hub);
   const named =
-    nearby.length > 0 ? `${hub.name}, ${formatCityList(nearby)}` : hub.name;
-  const base = `${hub.intro} Serving ${named}.`;
-  return suffix ? `${base} ${suffix}` : base;
+    nearby.length > 0
+      ? `${hub.name}, ${formatCityList(nearby.slice(0, 3))}${nearby.length > 3 ? ", and nearby areas" : ""}`
+      : hub.name;
+  const core = `Licensed plumbers in ${named}. Flat-rate pricing, camera diagnostics, 24/7 emergency response.`;
+  const withSuffix = suffix ? `${core} ${suffix}` : core;
+  return withSuffix.length <= 160 ? withSuffix : `${withSuffix.slice(0, 157).trimEnd()}…`;
 }
 
 export function toServiceLocation(hub: CityHub): ServiceLocation {

@@ -10,10 +10,14 @@ export function isNonProductionEmailEnv(): boolean {
 }
 
 export function isEmailConfigured(): boolean {
-  return !!(
+  const hasTransport = !!(
     process.env.RESEND_API_KEY ||
     (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD)
   );
+  if (!hasTransport) return false;
+  // Resend requires a verified From; do not fall back to onboarding@resend.dev.
+  if (process.env.RESEND_API_KEY && !process.env.EMAIL_FROM?.trim()) return false;
+  return true;
 }
 
 /** Strip CR/LF and other control chars from values used in email headers. */
@@ -84,8 +88,10 @@ async function sendViaResend({ to, subject, html, replyTo }: OutboundEmail): Pro
     throw new Error("RESEND_API_KEY is not set");
   }
 
-  const from =
-    process.env.EMAIL_FROM ?? "The Plumbing Stars <onboarding@resend.dev>";
+  const from = process.env.EMAIL_FROM?.trim();
+  if (!from) {
+    throw new Error("EMAIL_FROM is not set");
+  }
 
   const recipients = Array.isArray(to) ? to : [to];
 

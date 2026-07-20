@@ -8,7 +8,6 @@ import {
   hubMetaDescription,
   hubTitleArea,
 } from "@/lib/cityHubs";
-import { faqsForServiceSlug } from "@/lib/faqs";
 import { getServiceBySlug, services } from "@/lib/services";
 import { PHONE_DISPLAY } from "@/lib/site";
 
@@ -57,7 +56,7 @@ export default async function VenturaCityServicePage({ params }: { params: Param
   const service = getServiceBySlug(serviceSlug);
   if (!hub || !service) notFound();
 
-  const faqs = [...hub.faqs, ...faqsForServiceSlug(service.slug)];
+  const faqs = hub.faqs;
 
   return <CityServiceShell hub={hub} service={service} faqs={faqs} />;
 }

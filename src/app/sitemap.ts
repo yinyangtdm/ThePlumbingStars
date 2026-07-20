@@ -4,29 +4,25 @@ import { SITE_URL } from "@/lib/site";
 import { cityHubPath, cityServicePath, getAllCityHubs } from "@/lib/cityHubs";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${SITE_URL}/`, lastModified: now, changeFrequency: "monthly", priority: 1 },
-    { url: `${SITE_URL}/services`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${SITE_URL}/losangeles`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${SITE_URL}/ventura`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${SITE_URL}/coupons`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
-    { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${SITE_URL}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${SITE_URL}/reviews`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
+    { url: `${SITE_URL}/`, changeFrequency: "monthly", priority: 1 },
+    { url: `${SITE_URL}/services`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_URL}/losangeles`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/ventura`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/coupons`, changeFrequency: "weekly", priority: 0.6 },
+    { url: `${SITE_URL}/contact`, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${SITE_URL}/faq`, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${SITE_URL}/reviews`, changeFrequency: "weekly", priority: 0.6 },
   ];
 
   const serviceRoutes: MetadataRoute.Sitemap = services.map((service) => ({
     url: `${SITE_URL}${servicePath(service.slug)}`,
-    lastModified: now,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
 
   const cityRoutes: MetadataRoute.Sitemap = getAllCityHubs().map((hub) => ({
     url: `${SITE_URL}${cityHubPath(hub)}`,
-    lastModified: now,
     changeFrequency: "monthly",
     priority: 0.7,
   }));
@@ -34,7 +30,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const cityServiceRoutes: MetadataRoute.Sitemap = getAllCityHubs().flatMap((hub) =>
     services.map((service) => ({
       url: `${SITE_URL}${cityServicePath(hub, service.slug)}`,
-      lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.75,
     }))

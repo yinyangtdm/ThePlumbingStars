@@ -19,6 +19,7 @@ export const FIELD_LIMITS = {
 const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
 
 const VALID_REGIONS = new Set(["losangeles", "ventura"]);
+const VALID_PREFERRED_TIMES = new Set(["morning", "afternoon", "evening", "emergency"]);
 
 export type ValidationResult<T> = { ok: true; data: T } | { ok: false; error: string };
 
@@ -48,7 +49,7 @@ function optionalText(
   return { ok: true, data: trimmed };
 }
 
-export function isValidEmailFormat(email: string): boolean {
+function isValidEmailFormat(email: string): boolean {
   return email.length <= FIELD_LIMITS.email && EMAIL_RE.test(email);
 }
 
@@ -115,6 +116,9 @@ export function validateBookingBody(body: unknown): ValidationResult<LeadData> {
   if (!preferredDate.ok) return preferredDate;
   const preferredTime = optionalText(raw.preferredTime, "Preferred time", FIELD_LIMITS.preferredTime);
   if (!preferredTime.ok) return preferredTime;
+  if (preferredTime.data && !VALID_PREFERRED_TIMES.has(preferredTime.data)) {
+    return { ok: false, error: "Invalid preferred time" };
+  }
   const description = optionalText(raw.description, "Description", FIELD_LIMITS.description);
   if (!description.ok) return description;
   const coupon = optionalText(raw.coupon, "Coupon", FIELD_LIMITS.coupon);

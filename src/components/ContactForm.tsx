@@ -92,19 +92,31 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="contact-name" className="block text-sm font-medium text-gray-700 mb-1">
           Full Name <span className="text-red-500">*</span>
         </label>
-        <input type="text" required value={form.name} onChange={set("name")} className={inputClass} />
+        <input
+          id="contact-name"
+          type="text"
+          name="name"
+          autoComplete="name"
+          required
+          value={form.name}
+          onChange={set("name")}
+          className={inputClass}
+        />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="contact-email" className="block text-sm font-medium text-gray-700 mb-1">
             Email Address <span className="text-red-500">*</span>
           </label>
           <input
+            id="contact-email"
             type="email"
+            name="email"
+            autoComplete="email"
             required
             value={form.email}
             onChange={set("email")}
@@ -112,16 +124,28 @@ export default function ContactForm() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-          <input type="tel" value={form.phone} onChange={set("phone")} className={inputClass} />
+          <label htmlFor="contact-phone" className="block text-sm font-medium text-gray-700 mb-1">
+            Phone Number
+          </label>
+          <input
+            id="contact-phone"
+            type="tel"
+            name="tel"
+            autoComplete="tel"
+            value={form.phone}
+            onChange={set("phone")}
+            className={inputClass}
+          />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="contact-message" className="block text-sm font-medium text-gray-700 mb-1">
           Message <span className="text-red-500">*</span>
         </label>
         <textarea
+          id="contact-message"
+          name="message"
           required
           rows={5}
           value={form.message}

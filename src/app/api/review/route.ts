@@ -2,12 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   checkRateLimit,
   getClientIp,
+  isAllowedFormOrigin,
   isHoneypotTripped,
+  isJsonBodyTooLarge,
 } from "@/lib/formProtection";
 import { validateReviewBody } from "@/lib/formValidation";
 import { isEmailConfigured, sendReviewEmail } from "@/lib/mailer";
 
 export async function POST(req: NextRequest) {
+  if (!isAllowedFormOrigin(req)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+  if (isJsonBodyTooLarge(req)) {
+    return NextResponse.json({ error: "Request too large" }, { status: 413 });
+  }
+
   const ip = getClientIp(req);
   if (!checkRateLimit("review", ip)) {
     return NextResponse.json(
@@ -32,12 +41,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: parsed.error }, { status: 400 });
   }
 
-  const reviewData = parsed.data;
-
-  console.info("[review] review received", reviewData);
+  console.info("[review] review received", {
+    rating: parsed.data.rating,
+    cityLength: parsed.data.city.length,
+  });
 
   if (!isEmailConfigured()) {
-    console.error("[review] Email not configured — review retained in logs only:", reviewData);
+    console.error("[review] Email not configured — review not emailed");
     return NextResponse.json(
       { error: "Email is not configured. Please try again later." },
       { status: 503 },
@@ -45,9 +55,12 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await sendReviewEmail(reviewData);
+    await sendReviewEmail(parsed.data);
   } catch (err) {
-    console.error("[review] Owner notification failed:", err, reviewData);
+    console.error(
+      "[review] Owner notification failed:",
+      err instanceof Error ? err.message : err,
+    );
     return NextResponse.json(
       { error: "Unable to submit your review. Please try again later." },
       { status: 502 },

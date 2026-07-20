@@ -121,10 +121,11 @@ export default function BookingForm({
       )}
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="book-region" className="block text-sm font-medium text-gray-700 mb-1">
           Service Area <span className="text-red-500">*</span>
         </label>
         <select
+          id="book-region"
           required
           value={form.region}
           onChange={(e) =>
@@ -142,25 +143,46 @@ export default function BookingForm({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="book-name" className="block text-sm font-medium text-gray-700 mb-1">
             Full Name <span className="text-red-500">*</span>
           </label>
-          <input type="text" required value={form.name} onChange={set("name")} className={inputClass} />
+          <input
+            id="book-name"
+            type="text"
+            name="name"
+            autoComplete="name"
+            required
+            value={form.name}
+            onChange={set("name")}
+            className={inputClass}
+          />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="book-phone" className="block text-sm font-medium text-gray-700 mb-1">
             Phone Number <span className="text-red-500">*</span>
           </label>
-          <input type="tel" required value={form.phone} onChange={set("phone")} className={inputClass} />
+          <input
+            id="book-phone"
+            type="tel"
+            name="tel"
+            autoComplete="tel"
+            required
+            value={form.phone}
+            onChange={set("phone")}
+            className={inputClass}
+          />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="book-email" className="block text-sm font-medium text-gray-700 mb-1">
           Email Address <span className="text-red-500">*</span>
         </label>
         <input
+          id="book-email"
           type="email"
+          name="email"
+          autoComplete="email"
           required
           value={form.email}
           onChange={set("email")}
@@ -169,11 +191,14 @@ export default function BookingForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="book-address" className="block text-sm font-medium text-gray-700 mb-1">
           Service Address / ZIP <span className="text-red-500">*</span>
         </label>
         <input
+          id="book-address"
           type="text"
+          name="street-address"
+          autoComplete="street-address"
           required
           value={form.address}
           onChange={set("address")}
@@ -182,10 +207,16 @@ export default function BookingForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="book-service" className="block text-sm font-medium text-gray-700 mb-1">
           What Do You Need Help With? <span className="text-red-500">*</span>
         </label>
-        <select required value={form.service} onChange={set("service")} className={inputClass}>
+        <select
+          id="book-service"
+          required
+          value={form.service}
+          onChange={set("service")}
+          className={inputClass}
+        >
           <option value="">Select a service…</option>
           {bookingFormServiceOptions.map((s) => (
             <option key={s} value={s}>
@@ -197,12 +228,22 @@ export default function BookingForm({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
-          <input type="date" value={form.date} onChange={set("date")} className={inputClass} />
+          <label htmlFor="book-date" className="block text-sm font-medium text-gray-700 mb-1">
+            Preferred Date
+          </label>
+          <input
+            id="book-date"
+            type="date"
+            value={form.date}
+            onChange={set("date")}
+            className={inputClass}
+          />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
-          <select value={form.time} onChange={set("time")} className={inputClass}>
+          <label htmlFor="book-time" className="block text-sm font-medium text-gray-700 mb-1">
+            Preferred Time
+          </label>
+          <select id="book-time" value={form.time} onChange={set("time")} className={inputClass}>
             <option value="">Any time works</option>
             <option value="morning">Morning (8am – 12pm)</option>
             <option value="afternoon">Afternoon (12pm – 4pm)</option>
@@ -213,8 +254,11 @@ export default function BookingForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Describe the Issue</label>
+        <label htmlFor="book-description" className="block text-sm font-medium text-gray-700 mb-1">
+          Describe the Issue
+        </label>
         <textarea
+          id="book-description"
           rows={4}
           value={form.description}
           onChange={set("description")}

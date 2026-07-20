@@ -2,12 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   checkRateLimit,
   getClientIp,
+  isAllowedFormOrigin,
   isHoneypotTripped,
+  isJsonBodyTooLarge,
 } from "@/lib/formProtection";
 import { validateContactBody } from "@/lib/formValidation";
 import { isEmailConfigured, sendContactEmail } from "@/lib/mailer";
 
 export async function POST(req: NextRequest) {
+  if (!isAllowedFormOrigin(req)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+  if (isJsonBodyTooLarge(req)) {
+    return NextResponse.json({ error: "Request too large" }, { status: 413 });
+  }
+
   const ip = getClientIp(req);
   if (!checkRateLimit("contact", ip)) {
     return NextResponse.json(
@@ -32,12 +41,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: parsed.error }, { status: 400 });
   }
 
-  const contact = parsed.data;
-
-  console.info("[contact] message received", contact);
+  console.info("[contact] message received", {
+    hasEmail: Boolean(parsed.data.email),
+    hasPhone: Boolean(parsed.data.phone),
+  });
 
   if (!isEmailConfigured()) {
-    console.error("[contact] Email not configured — message retained in logs only:", contact);
+    console.error("[contact] Email not configured — message not emailed");
     return NextResponse.json(
       { error: "Email is not configured. Please call us to complete your request." },
       { status: 503 },
@@ -45,9 +55,12 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await sendContactEmail(contact);
+    await sendContactEmail(parsed.data);
   } catch (err) {
-    console.error("[contact] Owner notification failed:", err, contact);
+    console.error(
+      "[contact] Owner notification failed:",
+      err instanceof Error ? err.message : err,
+    );
     return NextResponse.json(
       { error: "Unable to send your message. Please call us directly." },
       { status: 502 },

@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   checkRateLimit,
   getClientIp,
+  isAllowedFormOrigin,
   isHoneypotTripped,
+  isJsonBodyTooLarge,
 } from "@/lib/formProtection";
 import { validateBookingBody } from "@/lib/formValidation";
 import {
@@ -12,6 +14,13 @@ import {
 } from "@/lib/mailer";
 
 export async function POST(req: NextRequest) {
+  if (!isAllowedFormOrigin(req)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+  if (isJsonBodyTooLarge(req)) {
+    return NextResponse.json({ error: "Request too large" }, { status: 413 });
+  }
+
   const ip = getClientIp(req);
   if (!checkRateLimit("book", ip)) {
     return NextResponse.json(
@@ -38,11 +47,15 @@ export async function POST(req: NextRequest) {
 
   const lead = parsed.data;
 
-  // Always retain the lead in logs so a delivery failure never loses customer data.
-  console.info("[book] lead received", lead);
+  console.info("[book] lead received", {
+    service: lead.service,
+    region: lead.region,
+    hasEmail: Boolean(lead.email),
+    hasPhone: Boolean(lead.phone),
+  });
 
   if (!isEmailConfigured()) {
-    console.error("[book] Email not configured — lead retained in logs only:", lead);
+    console.error("[book] Email not configured — lead not emailed");
     return NextResponse.json(
       { error: "Email is not configured. Please call us to complete your request." },
       { status: 503 },
@@ -52,18 +65,20 @@ export async function POST(req: NextRequest) {
   try {
     await sendLeadEmail(lead);
   } catch (err) {
-    console.error("[book] Owner notification failed:", err, lead);
+    console.error("[book] Owner notification failed:", err instanceof Error ? err.message : err);
     return NextResponse.json(
       { error: "Unable to send your request. Please call us directly." },
       { status: 502 },
     );
   }
 
-  // Customer confirmation is best-effort — never undo a successful owner notify.
   try {
     await sendBookingConfirmationEmail(lead);
   } catch (err) {
-    console.error("[book] Customer confirmation failed (owner was notified):", err);
+    console.error(
+      "[book] Customer confirmation failed (owner was notified):",
+      err instanceof Error ? err.message : err,
+    );
   }
 
   return NextResponse.json({ ok: true });

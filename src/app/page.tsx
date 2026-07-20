@@ -1,9 +1,16 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactCards from "@/components/ContactCards";
 import ServiceCards from "@/components/ServiceCards";
-import { PHONE_DISPLAY, PHONE_TEL, LICENSE_NUMBER } from "@/lib/site";
+import { PHONE_DISPLAY, PHONE_TEL, LICENSE_NUMBER, SITE_DESCRIPTION, SITE_TITLE_DEFAULT } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  title: { absolute: SITE_TITLE_DEFAULT },
+  description: SITE_DESCRIPTION,
+};
 
 const whyUs = [
   {
