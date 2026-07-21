@@ -124,12 +124,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/ventura/westlake-village",
-        destination: "/ventura/thousand-oaks",
+        destination: "/losangeles/malibu",
         permanent: true,
       },
       {
         source: "/ventura/westlake-village/:service",
-        destination: "/ventura/thousand-oaks/:service",
+        destination: "/losangeles/malibu/:service",
         permanent: true,
       },
     ];

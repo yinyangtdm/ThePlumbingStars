@@ -2,6 +2,10 @@
  * Nearby communities associated with each starred hub for SEO copy and name→hub
  * search routing. Prefer one primary hub per community (no duplicate assignments).
  * Retired hub aliases (Tarzana, Reseda, etc.) are listed under their target hub.
+ *
+ * Only list communities whose centroids fall inside the county service-area polygon
+ * (see public/la-service-area.geojson and public/ventura-service-area.geojson).
+ * Run `node scripts/check-cities-in-polygon.mjs` after edits.
  */
 export const SURROUNDING_CITIES_BY_HUB: Record<string, string[]> = {
   // Los Angeles
@@ -18,19 +22,18 @@ export const SURROUNDING_CITIES_BY_HUB: Record<string, string[]> = {
   "van-nuys": ["Sherman Oaks", "Valley Glen", "Panorama City"],
   "north-hollywood": ["Studio City", "Valley Village", "Toluca Lake"],
   northridge: ["Reseda", "Granada Hills", "North Hills", "Porter Ranch"],
-  "san-fernando": ["Pacoima", "Sylmar", "Mission Hills", "Arleta", "Sun Valley"],
+  "san-fernando": ["Pacoima", "Mission Hills", "Arleta", "Sun Valley"],
   burbank: ["Sunland-Tujunga"],
   glendale: [
     "Eagle Rock",
     "Atwater Village",
-    "La Crescenta",
     "Montrose",
     "La Cañada Flintridge",
     "Highland Park",
     "Mount Washington",
   ],
   "santa-monica": ["Pacific Palisades", "Venice", "Mar Vista", "Brentwood"],
-  malibu: ["Topanga", "Agoura Hills"],
+  malibu: ["Topanga", "Agoura Hills", "Westlake Village"],
   "beverly-hills": [
     "Bel Air",
     "West Hollywood",
@@ -54,12 +57,12 @@ export const SURROUNDING_CITIES_BY_HUB: Record<string, string[]> = {
   pasadena: ["Altadena", "South Pasadena"],
 
   // Ventura
-  ventura: ["Oak View", "Ojai", "Santa Paula"],
-  "thousand-oaks": ["Westlake Village"],
+  ventura: [],
+  "thousand-oaks": [],
   "simi-valley": [],
   camarillo: ["Somis"],
   oxnard: ["Port Hueneme"],
-  moorpark: ["Fillmore"],
+  moorpark: [],
   "newbury-park": [],
 };
 

@@ -43,8 +43,8 @@ const RETIRED_CITY_HUB_ALIASES: Record<string, string> = {
   "sherman-oaks": "van-nuys",
   "port hueneme": "oxnard",
   "port-hueneme": "oxnard",
-  "westlake village": "thousand-oaks",
-  "westlake-village": "thousand-oaks",
+  "westlake village": "malibu",
+  "westlake-village": "malibu",
 };
 
 export const CITY_HUBS: CityHub[] = [
@@ -302,7 +302,7 @@ export const CITY_HUBS: CityHub[] = [
         a: "Yes in most cases. We clear the line, camera it, and give you a flat-rate recommendation if repair is needed.",
       },
       {
-        q: "Do you serve nearby Sylmar and Pacoima addresses too?",
+        q: "Do you serve nearby Pacoima and Sun Valley addresses too?",
         a: "Yes. Surrounding northeast Valley communities are in our Los Angeles County service area — permitting rules depend on whether the address is City of San Fernando or City of LA.",
       },
     ],

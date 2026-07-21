@@ -20,13 +20,8 @@ const cities = [
   "Simi Valley",
   "Moorpark",
   "Newbury Park",
-  "Santa Paula",
-  "Fillmore",
-  "Ojai",
   "Port Hueneme",
-  "Oak View",
   "Somis",
-  "Westlake Village",
 ];
 
 export default async function VenturaPage({

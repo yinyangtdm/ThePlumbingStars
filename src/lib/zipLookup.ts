@@ -2,7 +2,7 @@ const laZips = new Set([
   // San Fernando Valley
   "91301", "91302", "91303", "91304", "91305", "91306", "91307", "91308", "91309", "91311", "91316",
   "91324", "91325", "91326", "91330", "91331", "91335", "91337",
-  "91340", "91341", "91342", "91343", "91344", "91345", "91346",
+  "91340", "91341", "91343", "91344", "91345", "91346",
   "91350", "91351", "91352", "91356", "91357", "91364", "91367",
   "91401", "91402", "91403", "91405", "91406", "91411", "91423", "91436",
   // Burbank / Glendale
@@ -17,8 +17,8 @@ const laZips = new Set([
   // Westside
   "90024", "90025", "90034", "90049", "90064", "90066", "90230", "90232",
   "90272", "90291", "90292", "90401", "90402", "90403", "90404", "90405",
-  // Malibu / Topanga
-  "90265", "90290",
+  // Malibu / Topanga / Westlake Village (LA County side)
+  "90265", "90290", "91362",
   // Beverly Hills / West Hollywood
   "90210", "90211", "90212", "90046", "90048", "90069",
   // Central LA
@@ -35,26 +35,16 @@ const venturaZips = new Set([
   "93001", "93003", "93004",
   // Camarillo
   "93010", "93012",
-  // Fillmore
-  "93015", "93016",
   // Moorpark
   "93020", "93021",
-  // Oak View / Lake Sherwood
-  "93022",
-  // Ojai
-  "93023", "93024",
   // Oxnard
   "93030", "93033", "93035", "93036",
   // Port Hueneme
   "93041", "93043", "93044",
-  // Santa Paula
-  "93060", "93061",
   // Simi Valley
   "93063", "93065",
   // Thousand Oaks / Newbury Park
   "91320", "91360", "91361",
-  // Westlake Village (Ventura County side)
-  "91362",
   // Somis / El Rio
   "93066",
 ]);
@@ -108,8 +98,6 @@ const VENTURA_ZIP_COORDS: Record<string, [number, number]> = {
   "93041": [34.1478, -119.1951],
   "93043": [34.1478, -119.1951],
   "93044": [34.1478, -119.1951],
-  // Westlake Village → nearest remaining hub: Thousand Oaks
-  "91362": [34.1464, -118.807],
 };
 
 const VENTURA_PREFIX_COORDS: Record<string, [number, number]> = {
