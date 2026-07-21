@@ -30,7 +30,7 @@ export const SURROUNDING_CITIES_BY_HUB: Record<string, string[]> = {
     "Mount Washington",
   ],
   "santa-monica": ["Pacific Palisades", "Venice", "Mar Vista", "Brentwood"],
-  malibu: ["Topanga"],
+  malibu: ["Topanga", "Agoura Hills"],
   "beverly-hills": [
     "Bel Air",
     "West Hollywood",
@@ -55,13 +55,12 @@ export const SURROUNDING_CITIES_BY_HUB: Record<string, string[]> = {
 
   // Ventura
   ventura: ["Oak View", "Ojai", "Santa Paula"],
-  "thousand-oaks": [],
+  "thousand-oaks": ["Westlake Village"],
   "simi-valley": [],
   camarillo: ["Somis"],
   oxnard: ["Port Hueneme"],
   moorpark: ["Fillmore"],
   "newbury-park": [],
-  "westlake-village": ["Agoura Hills"],
 };
 
 /** Formats ["A","B","C"] → "A, B, and C" (Oxford comma). */

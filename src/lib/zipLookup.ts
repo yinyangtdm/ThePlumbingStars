@@ -108,6 +108,8 @@ const VENTURA_ZIP_COORDS: Record<string, [number, number]> = {
   "93041": [34.1478, -119.1951],
   "93043": [34.1478, -119.1951],
   "93044": [34.1478, -119.1951],
+  // Westlake Village → nearest remaining hub: Thousand Oaks
+  "91362": [34.1464, -118.807],
 };
 
 const VENTURA_PREFIX_COORDS: Record<string, [number, number]> = {

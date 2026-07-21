@@ -122,6 +122,16 @@ const nextConfig: NextConfig = {
         destination: "/ventura/oxnard/:service",
         permanent: true,
       },
+      {
+        source: "/ventura/westlake-village",
+        destination: "/ventura/thousand-oaks",
+        permanent: true,
+      },
+      {
+        source: "/ventura/westlake-village/:service",
+        destination: "/ventura/thousand-oaks/:service",
+        permanent: true,
+      },
     ];
   },
 };

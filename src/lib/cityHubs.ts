@@ -43,6 +43,8 @@ const RETIRED_CITY_HUB_ALIASES: Record<string, string> = {
   "sherman-oaks": "van-nuys",
   "port hueneme": "oxnard",
   "port-hueneme": "oxnard",
+  "westlake village": "thousand-oaks",
+  "westlake-village": "thousand-oaks",
 };
 
 export const CITY_HUBS: CityHub[] = [
@@ -951,49 +953,6 @@ export const CITY_HUBS: CityHub[] = [
       {
         q: "Can you same-day replace a water heater in Newbury Park?",
         a: "Often for standard tank swaps. We’ll confirm venting, access, and any permit needs up front.",
-      },
-    ],
-  },
-  {
-    slug: "westlake-village",
-    name: "Westlake Village",
-    region: "ventura",
-    coords: [34.1464, -118.807],
-    permittingAuthority:
-      "Westlake Village is an independently incorporated city that straddles the Los Angeles–Ventura county line. Addresses on the Ventura County side are permitted through the City of Westlake Village; we confirm the correct jurisdiction for your parcel.",
-    housingNote:
-      "Westlake Village’s planned community housing from the late 1960s onward often needs water heater upgrades and careful sewer maintenance to protect landscaped lots and shared community aesthetics.",
-    terrainNote:
-      "Master-planned grades around the lake and hillsides — trenchless methods are popular where open trenches would damage landscaping or driveways.",
-    treeNote:
-      "Mature community landscaping and private yards increase root-intrusion risk as laterals age.",
-    serviceOrder: [
-      "trenchless-replacement",
-      "pipe-lining",
-      "camera-inspection",
-      "water-heater",
-      "drain-cleaning",
-      "sewer-repair",
-      "hydro-jetting",
-    ],
-    intro:
-      "Discreet plumbing for Westlake Village — trenchless sewer solutions, camera inspections, water heater replacement, and drain cleaning with careful attention to landscaped lots and city permitting.",
-    faqs: [
-      {
-        q: "Is Westlake Village in LA County or Ventura County?",
-        a: "Both — the city spans the county line. We confirm your parcel’s county and city permitting requirements before work begins.",
-      },
-      {
-        q: "Why emphasize trenchless repairs here?",
-        a: "Landscaped lots, shared aesthetics, and driveway access make low-disruption lining and bursting especially valuable compared with open-trench excavation.",
-      },
-      {
-        q: "Do HOAs need to approve plumbing work?",
-        a: "Sometimes for exterior or shared improvements. We can provide camera video and written scopes that boards often request.",
-      },
-      {
-        q: "Do you offer emergency service in Westlake Village?",
-        a: "Yes — 24/7 emergency response with the same flat-rate pricing as daytime calls.",
       },
     ],
   },
