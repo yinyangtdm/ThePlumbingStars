@@ -36,10 +36,11 @@ const cities = [
 export default async function LosAngelesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ zip?: string }>;
+  searchParams: Promise<{ zip?: string; city?: string }>;
 }) {
   const params = await searchParams;
   const initialZip = params.zip ?? "";
+  const initialCity = params.city ?? "";
   const initialLocations = getCityHubs("losangeles").map(toServiceLocation);
 
   return (
@@ -59,6 +60,7 @@ export default async function LosAngelesPage({
           initialLocations={initialLocations}
           fallbackCities={cities}
           initialZip={initialZip}
+          initialCity={initialCity}
         />
       </main>
       <Footer />

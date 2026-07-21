@@ -6,10 +6,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ServiceMap from "./ServiceMap";
 import { useLocationContext } from "./LocationProvider";
 import {
+  countyPathForRegion,
+  findCityByName,
   sortLocationsByDistance,
   type ServiceLocation,
   type ServiceRegion,
 } from "@/lib/serviceLocations";
+import { findCityHubByName, getCityHub, type CityHub } from "@/lib/cityHubs";
 import { getRegionByZip, getZipCoordinates } from "@/lib/zipLookup";
 import { formatCityList, SURROUNDING_CITIES_BY_HUB } from "@/lib/surroundingCities";
 import { PHONE_TEL } from "@/lib/site";
@@ -22,6 +25,7 @@ interface Props {
   region: ServiceRegion;
   fallbackCities?: string[];
   initialZip?: string;
+  initialCity?: string;
   geoAnchor?: [number, number] | null;
   geoPrimaryId?: string;
 }
@@ -54,6 +58,38 @@ function nearestIdFromZip(
   return sorted?.[0]?.id;
 }
 
+function hubFromCityQuery(cityQuery: string, region: ServiceRegion): CityHub | null {
+  const trimmed = cityQuery.trim();
+  if (!trimmed) return null;
+
+  const bySlug = getCityHub(region, trimmed);
+  if (bySlug) return bySlug;
+
+  const byName = findCityHubByName(trimmed);
+  if (byName?.region === region) return byName;
+
+  return null;
+}
+
+function sortedFromCity(
+  locations: ServiceLocation[],
+  cityQuery: string,
+  region: ServiceRegion
+): ServiceLocation[] | null {
+  const hub = hubFromCityQuery(cityQuery, region);
+  if (!hub) return null;
+  return sortLocationsByDistance(locations, hub.coords, hub.slug);
+}
+
+function nearestIdFromCity(
+  locations: ServiceLocation[],
+  cityQuery: string,
+  region: ServiceRegion
+): string | undefined {
+  const sorted = sortedFromCity(locations, cityQuery, region);
+  return sorted?.[0]?.id;
+}
+
 /** A user-driven (ZIP search or map click) override of which location is highlighted. */
 type ManualSelection = { anchor: [number, number]; primaryId?: string };
 
@@ -62,14 +98,15 @@ export default function CountyServiceExplorer({
   region,
   fallbackCities = [],
   initialZip = "",
+  initialCity = "",
   geoAnchor = null,
   geoPrimaryId,
 }: Props) {
   const router = useRouter();
   const { defaultLocation, setDefaultLocation } = useLocationContext();
   const [manualSelection, setManualSelection] = useState<ManualSelection | null>(null);
-  const [zip, setZip] = useState(initialZip);
-  const [zipError, setZipError] = useState("");
+  const [searchQuery, setSearchQuery] = useState(initialZip || initialCity);
+  const [searchError, setSearchError] = useState("");
   const citiesHeadingRef = useRef<HTMLHeadingElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const mobileScrollDone = useRef(false);
@@ -88,14 +125,22 @@ export default function CountyServiceExplorer({
 
   const locations = useMemo(() => {
     if (anchor) return sortLocationsByDistance(initialLocations, anchor, anchorPrimaryId);
-    return sortedFromZip(initialLocations, initialZip, region) ?? initialLocations;
-  }, [initialLocations, anchor, anchorPrimaryId, initialZip, region]);
+    if (initialZip) {
+      return sortedFromZip(initialLocations, initialZip, region) ?? initialLocations;
+    }
+    if (initialCity) {
+      return sortedFromCity(initialLocations, initialCity, region) ?? initialLocations;
+    }
+    return initialLocations;
+  }, [initialLocations, anchor, anchorPrimaryId, initialZip, initialCity, region]);
 
   const primaryId = anchor
     ? anchorPrimaryId
     : initialZip
       ? nearestIdFromZip(initialLocations, initialZip, region)
-      : undefined;
+      : initialCity
+        ? nearestIdFromCity(initialLocations, initialCity, region)
+        : undefined;
 
   const selectLocation = useCallback((selectedAnchor: [number, number], primary?: string) => {
     setManualSelection({ anchor: selectedAnchor, primaryId: primary });
@@ -137,40 +182,78 @@ export default function CountyServiceExplorer({
     return () => window.clearTimeout(timer);
   }, [locations]);
 
-  const handleZipSearch = useCallback(
-    (zipCode: string) => {
-      const trimmed = zipCode.trim();
-      if (trimmed.length !== 5) {
-        setZipError("Please enter a valid 5-digit ZIP code.");
+  const handleAreaSearch = useCallback(
+    (query: string) => {
+      const trimmed = query.trim();
+      if (!trimmed) {
+        setSearchError("Enter a ZIP code or city name.");
         return;
       }
-      const matchedRegion = getRegionByZip(trimmed);
-      if (!matchedRegion) {
-        setZipError(
-          "We couldn't match that ZIP to a service area. Please select your region below or call us."
+
+      if (/^\d+$/.test(trimmed)) {
+        if (trimmed.length !== 5) {
+          setSearchError("Please enter a valid 5-digit ZIP code.");
+          return;
+        }
+        const matchedRegion = getRegionByZip(trimmed);
+        if (!matchedRegion) {
+          setSearchError(
+            "We couldn't match that ZIP to a service area. Please select your region below or call us."
+          );
+          return;
+        }
+        if (matchedRegion !== region) {
+          router.push(`${otherCountyPath(region)}?zip=${trimmed}`);
+          return;
+        }
+        const coords = getZipCoordinates(trimmed);
+        if (!coords) {
+          setSearchError("We couldn't locate that ZIP. Please try again or call us.");
+          return;
+        }
+        setSearchError("");
+        const nearest = sortLocationsByDistance(initialLocations, coords)[0];
+        selectLocation(coords, nearest?.id);
+        if (nearest) setDefaultLocation(nearest.id);
+        return;
+      }
+
+      const hub = findCityHubByName(trimmed);
+      if (hub) {
+        if (hub.region !== region) {
+          router.push(`${countyPathForRegion(hub.region)}?city=${encodeURIComponent(hub.slug)}`);
+          return;
+        }
+        setSearchError("");
+        selectLocation(hub.coords, hub.slug);
+        setDefaultLocation(hub.slug);
+        return;
+      }
+
+      const match = findCityByName(trimmed);
+      if (match) {
+        if (match.region !== region) {
+          router.push(
+            `${countyPathForRegion(match.region)}?city=${encodeURIComponent(match.name)}`
+          );
+          return;
+        }
+        setSearchError(
+          `We serve ${match.name}. Enter your ZIP code to find your nearest Plumbing Stars location, or pick a starred city on the map.`
         );
         return;
       }
-      if (matchedRegion !== region) {
-        router.push(`${otherCountyPath(region)}?zip=${trimmed}`);
-        return;
-      }
-      const coords = getZipCoordinates(trimmed);
-      if (!coords) {
-        setZipError("We couldn't locate that ZIP. Please try again or call us.");
-        return;
-      }
-      setZipError("");
-      const nearest = sortLocationsByDistance(initialLocations, coords)[0];
-      selectLocation(coords, nearest?.id);
-      if (nearest) setDefaultLocation(nearest.id);
+
+      setSearchError(
+        "We couldn't find that city in our service area. Try the full city name or search by ZIP."
+      );
     },
     [selectLocation, initialLocations, region, router, setDefaultLocation]
   );
 
-  function handleZipSubmit(e: React.FormEvent) {
+  function handleSearchSubmit(e: React.FormEvent) {
     e.preventDefault();
-    handleZipSearch(zip);
+    handleAreaSearch(searchQuery);
   }
 
   function handleSelectLocation(id: string) {
@@ -258,23 +341,21 @@ export default function CountyServiceExplorer({
           Cities We Serve
         </h2>
         <p className="text-gray-500 text-sm mb-6">
-          Highlighted service cities — search your ZIP or click a star on the map.
+          Highlighted service cities — search by ZIP or city name, or click a star on the map.
         </p>
 
         <form
-          onSubmit={handleZipSubmit}
+          onSubmit={handleSearchSubmit}
           className="flex gap-2 w-full max-w-md mb-4 p-3 rounded-lg bg-brand-sky-light border border-brand-sky shadow-sm"
         >
           <input
             type="text"
-            inputMode="numeric"
-            maxLength={5}
-            value={zip}
+            value={searchQuery}
             onChange={(e) => {
-              setZip(e.target.value.replace(/\D/g, ""));
-              setZipError("");
+              setSearchQuery(e.target.value);
+              setSearchError("");
             }}
-            placeholder="Enter your ZIP code"
+            placeholder="ZIP code or city name"
             className="flex-1 px-3 py-2 text-sm rounded-md border border-brand-sky bg-white focus:outline-none focus:ring-2 focus:ring-brand-navy text-gray-900"
           />
           <button
@@ -284,7 +365,7 @@ export default function CountyServiceExplorer({
             Find My Area
           </button>
         </form>
-        {zipError && <p className="text-red-600 text-sm mb-4">{zipError}</p>}
+        {searchError && <p className="text-red-600 text-sm mb-4">{searchError}</p>}
 
         <div
           className="flex flex-col lg:flex-row lg:gap-6 lg:items-start"

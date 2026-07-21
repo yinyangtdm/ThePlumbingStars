@@ -16,6 +16,7 @@ interface Props {
   initialLocations: ServiceLocation[];
   fallbackCities?: string[];
   initialZip?: string;
+  initialCity?: string;
 }
 
 export default function CountyPageShell({
@@ -25,6 +26,7 @@ export default function CountyPageShell({
   initialLocations,
   fallbackCities = [],
   initialZip = "",
+  initialCity = "",
 }: Props) {
   const [titleName, setTitleName] = useState(countyTitle);
   const [geoAnchor, setGeoAnchor] = useState<[number, number] | null>(null);
@@ -33,10 +35,10 @@ export default function CountyPageShell({
   useEffect(() => {
     if (typeof window === "undefined") return;
     window.scrollTo(0, 0);
-  }, [initialZip, region]);
+  }, [initialZip, initialCity, region]);
 
   useEffect(() => {
-    if (initialZip) return;
+    if (initialZip || initialCity) return;
 
     let mounted = true;
     detectUserArea(region).then((result) => {
@@ -53,7 +55,7 @@ export default function CountyPageShell({
     return () => {
       mounted = false;
     };
-  }, [initialZip, region, initialLocations]);
+  }, [initialZip, initialCity, region, initialLocations]);
 
   return (
     <>
@@ -73,6 +75,7 @@ export default function CountyPageShell({
         region={region}
         fallbackCities={fallbackCities}
         initialZip={initialZip}
+        initialCity={initialCity}
         geoAnchor={geoAnchor}
         geoPrimaryId={geoPrimaryId}
       />
