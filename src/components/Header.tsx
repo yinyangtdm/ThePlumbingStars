@@ -3,7 +3,7 @@ import Link from "next/link";
 import MobileMenu from "./MobileMenu";
 import LocationIndicatorBar from "./LocationIndicatorBar";
 import ServicesNavLinks from "./ServicesNavLinks";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
+import { PHONE_DISPLAY, PHONE_TEL, GOOGLE_REVIEW_URL } from "@/lib/site";
 
 export default function Header() {
   return (
@@ -69,9 +69,14 @@ export default function Header() {
                   <Link href="/search" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
                     Find a Plumbing Star Nearby
                   </Link>
-                  <Link href="/leave-review" className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded">
+                  <a
+                    href={GOOGLE_REVIEW_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block px-3 py-2 text-sm text-brand-navy hover:bg-brand-sky-light rounded"
+                  >
                     Leave a Review
-                  </Link>
+                  </a>
                 </div>
               </div>
 

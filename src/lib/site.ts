@@ -8,6 +8,7 @@ export const PHONE_DISPLAY = "(747) 463-1853";
 export const PHONE_TEL = "+17474631853";
 export const BUSINESS_EMAIL = "info@theplumbingstars.com";
 export const LICENSE_NUMBER = "998456";
+export const GOOGLE_REVIEW_URL = "https://g.page/r/CYGoQChuMWzUEAE/review";
 
 /** Resolve a site-relative path to a fully-qualified absolute URL. */
 export function absoluteUrl(path: string): string {

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import JsonLd from "@/components/JsonLd";
 import ReviewCard from "@/components/ReviewCard";
+import JsonLd from "@/components/JsonLd";
 import { customerReviews } from "@/lib/reviews";
 import { reviewsSchema } from "@/lib/structuredData";
+import { GOOGLE_REVIEW_URL } from "@/lib/site";
 
 const title = "Customer Reviews";
 const description =
@@ -50,12 +50,17 @@ export default function ReviewsPage() {
                 />
               ))}
             </div>
-            <p className="mt-8 text-center text-sm text-gray-600">
-              Had a great experience?{" "}
-              <Link href="/leave-review" className="text-brand-navy font-semibold hover:underline">
-                Leave a review
-              </Link>
-            </p>
+            <p className="mt-8 text-center text-sm text-gray-600">Had a great experience?</p>
+            <div className="mt-4 text-center">
+              <a
+                href={GOOGLE_REVIEW_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-6 py-3 rounded-md transition-colors"
+              >
+                Review Us on Google
+              </a>
+            </div>
           </div>
         </div>
       </main>

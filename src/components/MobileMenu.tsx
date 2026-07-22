@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import ServicesNavLinks from "./ServicesNavLinks";
+import { GOOGLE_REVIEW_URL } from "@/lib/site";
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -123,9 +124,15 @@ export default function MobileMenu() {
                   <Link href="/search" onClick={closeMenu} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
                     Find a Plumbing Star Nearby
                   </Link>
-                  <Link href="/leave-review" onClick={closeMenu} className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800">
+                  <a
+                    href={GOOGLE_REVIEW_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMenu}
+                    className="block px-8 py-3 text-white hover:bg-brand-navy-dark border-t border-blue-800"
+                  >
                     Leave a Review
-                  </Link>
+                  </a>
                 </div>
               )}
             </div>

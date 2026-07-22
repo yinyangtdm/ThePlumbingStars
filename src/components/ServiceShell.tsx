@@ -3,7 +3,9 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Breadcrumbs from "./Breadcrumbs";
 import JsonLd from "./JsonLd";
+import { ServiceExtraImages, ServiceHeroImage } from "./ServicePageImages";
 import type { Faq } from "@/lib/faqs";
+import { getServiceExtraImages, getServiceHeroImage } from "@/lib/serviceImages";
 import { faqPageSchema, serviceSchema } from "@/lib/structuredData";
 import { LICENSE_NUMBER, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
@@ -29,6 +31,8 @@ export default function ServiceShell({
   children,
 }: ServiceShellProps) {
   const path = `/services/${slug}`;
+  const heroImage = getServiceHeroImage(slug);
+  const extraImages = getServiceExtraImages(slug);
 
   return (
     <>
@@ -45,23 +49,32 @@ export default function ServiceShell({
         />
         {/* Hero */}
         <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{title}</h1>
-            <p className="text-white/80 text-lg max-w-2xl mb-8">{intro}</p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/schedule"
-                className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
-              >
-                {scheduleLabel}
-              </Link>
-              <a
-                href={`tel:${PHONE_TEL}`}
-                className="inline-block bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
-              >
-                Call {PHONE_DISPLAY}
-              </a>
+          <div
+            className={`max-w-4xl mx-auto ${heroImage ? "lg:max-w-6xl lg:grid lg:grid-cols-2 lg:gap-10 lg:items-center" : ""}`}
+          >
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{title}</h1>
+              <p className="text-white/80 text-lg max-w-2xl mb-8">{intro}</p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/schedule"
+                  className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
+                >
+                  {scheduleLabel}
+                </Link>
+                <a
+                  href={`tel:${PHONE_TEL}`}
+                  className="inline-block bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
+                >
+                  Call {PHONE_DISPLAY}
+                </a>
+              </div>
             </div>
+            {heroImage && (
+              <div className="mt-10 lg:mt-0">
+                <ServiceHeroImage image={heroImage} />
+              </div>
+            )}
           </div>
         </section>
 
@@ -74,6 +87,8 @@ export default function ServiceShell({
             <span>&#10003; 24/7 Emergency Service</span>
           </div>
         </div>
+
+        <ServiceExtraImages images={extraImages} />
 
         {/* Page-specific content */}
         {children}

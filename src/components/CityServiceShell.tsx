@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Breadcrumbs from "./Breadcrumbs";
 import JsonLd from "./JsonLd";
+import { ServiceExtraImages, ServiceHeroImage } from "./ServicePageImages";
 import {
   cityHubPath,
   cityServicePath,
@@ -14,6 +15,7 @@ import {
 } from "@/lib/cityHubs";
 import type { ServiceInfo } from "@/lib/services";
 import { servicePath } from "@/lib/services";
+import { getServiceExtraImages, getServiceHeroImage } from "@/lib/serviceImages";
 import type { Faq } from "@/lib/faqs";
 import { formatCityList } from "@/lib/surroundingCities";
 import { cityServiceSchema, faqPageSchema } from "@/lib/structuredData";
@@ -48,6 +50,8 @@ export default function CityServiceShell({
   const titleArea = hubTitleArea(hub);
   const title = `${service.name} in ${titleArea}`;
   const intro = `${hubPageIntro(hub)} Our ${service.name.toLowerCase()} work across ${areaPhrase} is camera-diagnosed when needed, quoted flat-rate in writing, and backed by a written guarantee.`;
+  const heroImage = getServiceHeroImage(service.slug);
+  const extraImages = getServiceExtraImages(service.slug);
 
   return (
     <>
@@ -76,27 +80,36 @@ export default function CityServiceShell({
         />
 
         <section className="bg-brand-navy chev-pattern text-white py-14 px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto">
-            <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-2">
-              {hub.name}
-              {nearby.length > 0 ? ` & nearby` : ""}
-            </p>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{title}</h1>
-            <p className="text-white/80 text-lg max-w-2xl mb-8">{intro}</p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href={`/schedule?region=${hub.region}`}
-                className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
-              >
-                Schedule {service.name} in {hub.name}
-              </Link>
-              <a
-                href={`tel:${PHONE_TEL}`}
-                className="inline-block bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
-              >
-                Call {PHONE_DISPLAY}
-              </a>
+          <div
+            className={`max-w-4xl mx-auto ${heroImage ? "lg:max-w-6xl lg:grid lg:grid-cols-2 lg:gap-10 lg:items-center" : ""}`}
+          >
+            <div>
+              <p className="text-brand-red font-semibold uppercase tracking-widest text-sm mb-2">
+                {hub.name}
+                {nearby.length > 0 ? ` & nearby` : ""}
+              </p>
+              <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{title}</h1>
+              <p className="text-white/80 text-lg max-w-2xl mb-8">{intro}</p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href={`/schedule?region=${hub.region}`}
+                  className="inline-block bg-brand-red hover:bg-brand-red-dark text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
+                >
+                  Schedule {service.name} in {hub.name}
+                </Link>
+                <a
+                  href={`tel:${PHONE_TEL}`}
+                  className="inline-block bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-7 py-3 rounded-[3px] transition-colors"
+                >
+                  Call {PHONE_DISPLAY}
+                </a>
+              </div>
             </div>
+            {heroImage && (
+              <div className="mt-10 lg:mt-0">
+                <ServiceHeroImage image={heroImage} />
+              </div>
+            )}
           </div>
         </section>
 
@@ -108,6 +121,8 @@ export default function CityServiceShell({
             <span>&#10003; 24/7 Emergency Service</span>
           </div>
         </div>
+
+        <ServiceExtraImages images={extraImages} />
 
         {nearby.length > 0 && (
           <section className="py-10 px-4 sm:px-6 bg-brand-sky-light/40 border-b border-brand-sky">

@@ -16,7 +16,7 @@ export default function Footer() {
   return (
     <footer className="bg-brand-navy-dark text-white/70 py-10 mt-auto">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-10 border-b border-white/10">
-        <p className="text-white font-medium text-sm mb-4">Popular Service Areas</p>
+        <p className="text-white font-medium text-sm mb-4">Service Areas</p>
         <div className="grid sm:grid-cols-2 gap-8 text-sm">
           <div>
             <Link

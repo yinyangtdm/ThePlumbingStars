@@ -1,6 +1,6 @@
 import Link from "next/link";
 import DetectAreaClient from "./DetectAreaClient";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
+import { PHONE_DISPLAY, PHONE_TEL, GOOGLE_REVIEW_URL } from "@/lib/site";
 
 export default function ContactCards() {
   return (
@@ -55,12 +55,14 @@ export default function ContactCards() {
         <h3 className="text-xl font-bold">Leave a Review</h3>
         <p className="text-gray-600">Tell us how we did — we read every review.</p>
         <div className="mt-auto w-full">
-          <Link
-            href="/leave-review"
+          <a
+            href={GOOGLE_REVIEW_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block w-full text-center bg-brand-sky hover:bg-brand-navy hover:text-white text-brand-navy font-bold px-4 py-3 rounded-md transition-colors"
           >
             Leave a Review
-          </Link>
+          </a>
         </div>
       </div>
     </div>
