@@ -15,7 +15,51 @@ export default function Footer() {
 
   return (
     <footer className="bg-brand-navy-dark text-white/70 py-10 mt-auto">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between gap-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-10 border-b border-white/10">
+        <p className="text-white font-medium text-sm mb-4">Popular Service Areas</p>
+        <div className="grid sm:grid-cols-2 gap-8 text-sm">
+          <div>
+            <Link
+              href="/losangeles"
+              className="text-white/90 font-semibold mb-2 block hover:text-white transition-colors"
+            >
+              Los Angeles County
+            </Link>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+              {laHubs.map((hub) => (
+                <Link
+                  key={hub.slug}
+                  href={cityHubPath(hub)}
+                  className="hover:text-white transition-colors"
+                >
+                  {hub.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div>
+            <Link
+              href="/ventura"
+              className="text-white/90 font-semibold mb-2 block hover:text-white transition-colors"
+            >
+              Ventura County
+            </Link>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+              {venturaHubs.map((hub) => (
+                <Link
+                  key={hub.slug}
+                  href={cityHubPath(hub)}
+                  className="hover:text-white transition-colors"
+                >
+                  {hub.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 flex flex-col md:flex-row justify-between gap-8">
         <div>
           <p className="text-white font-bold text-lg mb-1 flex items-center gap-4">
             <Image src="/logo.svg" alt="" width={144} height={144} unoptimized />
@@ -43,54 +87,6 @@ export default function Footer() {
             </a>
           </p>
           <p>24/7 Emergency Service</p>
-        </div>
-
-        <div className="text-sm space-y-1">
-          <p className="text-white font-medium mb-1">Service Areas</p>
-          <p>
-            <Link href="/losangeles" className="hover:text-white transition-colors">
-              Los Angeles County
-            </Link>
-          </p>
-          <p>
-            <Link href="/ventura" className="hover:text-white transition-colors">
-              Ventura County
-            </Link>
-          </p>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-10 pt-8 border-t border-white/10">
-        <p className="text-white font-medium text-sm mb-4">Popular Service Areas</p>
-        <div className="grid sm:grid-cols-2 gap-8 text-sm">
-          <div>
-            <p className="text-white/90 font-semibold mb-2">Los Angeles County</p>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-              {laHubs.map((hub) => (
-                <Link
-                  key={hub.slug}
-                  href={cityHubPath(hub)}
-                  className="hover:text-white transition-colors"
-                >
-                  {hub.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-          <div>
-            <p className="text-white/90 font-semibold mb-2">Ventura County</p>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-              {venturaHubs.map((hub) => (
-                <Link
-                  key={hub.slug}
-                  href={cityHubPath(hub)}
-                  className="hover:text-white transition-colors"
-                >
-                  {hub.name}
-                </Link>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
 

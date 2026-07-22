@@ -301,7 +301,7 @@ export default function CountyServiceExplorer({
             Call
           </a>
           <Link
-            href="/services"
+            href={`/${region === "losangeles" ? "losangeles" : "ventura"}/${loc.id}`}
             className="flex items-center justify-center px-2 py-2 border border-gray-200 rounded text-sm text-center"
           >
             Services
@@ -313,13 +313,7 @@ export default function CountyServiceExplorer({
             Coupons
           </Link>
         </div>
-        <div className="mt-4 space-y-2">
-          <Link
-            href={`/${region === "losangeles" ? "losangeles" : "ventura"}/${loc.id}`}
-            className="block w-full text-center border border-brand-navy text-brand-navy font-semibold px-4 py-2.5 rounded hover:bg-brand-sky-light transition-colors"
-          >
-            View full {loc.name} page
-          </Link>
+        <div className="mt-4">
           <Link
             href={`/schedule?region=${region}`}
             className="block w-full text-center bg-brand-red text-white font-bold px-4 py-3 rounded"
