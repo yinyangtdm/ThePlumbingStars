@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, DM_Serif_Display } from "next/font/google";
 import JsonLd from "@/components/JsonLd";
+import Script from "next/script";
 import ScrollRestoration from "@/components/ScrollRestoration";
 import { LocationProvider } from "@/components/LocationProvider";
 import { localBusinessSchema } from "@/lib/structuredData";
@@ -55,6 +56,21 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ScrollRestoration />
+        {/* Google Analytics (gtag.js) — loads only when NEXT_PUBLIC_GA_ID is set */ }
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="gtag-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', { page_path: window.location.pathname });`}
+            </Script>
+          </>
+        )}
         <JsonLd data={localBusinessSchema()} />
         <LocationProvider allLocations={allLocations}>{children}</LocationProvider>
       </body>
