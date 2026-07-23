@@ -17,16 +17,6 @@ const serviceImages: Partial<Record<string, ServiceImage[]>> = {
       alt: "Trenchless cured-in-place pipe lining inside a sewer line",
     },
   ],
-  "trenchless-replacement": [
-    {
-      src: "/images/services/trenchless-replacement/trenchless.jpg",
-      alt: "Trenchless sewer replacement equipment at a residential job site",
-    },
-    {
-      src: "/images/services/trenchless-replacement/pipe-bursting.jpg",
-      alt: "Pipe bursting head pulling new sewer pipe through an existing line",
-    },
-  ],
 };
 
 export function getServiceImages(slug: string): ServiceImage[] {
